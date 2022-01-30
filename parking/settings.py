@@ -61,7 +61,7 @@ ROOT_URLCONF = 'parking.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'web/build']
+        'DIRS': [BASE_DIR / 'build']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -180,13 +180,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "web/build/static", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "build/static", "static")
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media", "web/build/static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media", "build/static")
 
-STATICFILES_DIRS = [BASE_DIR / 'web/build/static']
+STATICFILES_DIRS = [BASE_DIR / 'build/static']
 
 
 #STATICFILES_DIRS = [BASE_DIR / 'web/build/static']
