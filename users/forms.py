@@ -17,7 +17,7 @@ class LoginForm(forms.Form):
 
 class RegistrationForm(forms.ModelForm):
     """ Parking User Registration Form"""
-    Please_check_this_if_you_are_a_parking_administrator = forms.BooleanField(required=True)
+    Please_check_this_if_you_are_a_parking_administrator = forms.BooleanField(required=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email',]
