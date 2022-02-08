@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-rg bg-dark">
+    <div class="container-fluid">
+        <ul class="navbar-nav mr-auto">
+            <div class="sidenav" id="customSidenav">
+
+                <a class="navbar-brand text-primary text-center" style="text-shadow: 4px 4px 5px gray;"
+                    href="/">Cash Parking</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <li>
+                    <a href="javascript:void(0)" class="closeout" onclick="navClosed()">&times;</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-3 py-5" href="/home">Home<span class="sr-only">(current)</span></a>
+                </li>
+
+                <div class="form-inline my-2 my-lg-0 pt-5 text-light">
+                    {% if request.user.is_authenticated %}
+                    <div class="py-5">
+                        <div class="py-5 mx-3">
+                            <a class="text-light py-3">
+                                Hello, {{ request.user.first_name }}!
+                            </a>
+                            <a class="text-light py-3" href="{% url 'edit_profile'%}">
+                                Edit Profile
+                                <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-3"
+                                    alt="image avatar" style="width: 50px; height: 50px;">
+                            </a>
+                            <a class="btn btn-outline-primary mx-3 my-2 my-sm-0 text-primary"
+                                href="{% url 'logout' %}">Log
+                                out</a>
+                        </div>
+
+                    </div>
+                    {% else %}
+                    <div class="text-light py-5">
+                    <a class="btn btn-outline-primary mx-3 my-2 my-sm-0" href="{% url 'user_registration' %}">Register</a>
+                        <div class="py-5">
+                            <div class="pt-5">
+                                <a class="nav-item text-light mx-3 pb-2">
+                                    Already have an account?
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <a class="btn btn-outline-primary mx-3 my-2 my-sm-0 text-primary"
+                                href="{% url 'login' %}">Log in</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </ul>
+    </div>
+    <span style="font-size:30px;cursor:pointer" class="text-light" onclick="navOpened()">&#9776; Menu</span>
+</nav>
