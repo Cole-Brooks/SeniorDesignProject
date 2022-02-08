@@ -155,6 +155,13 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'users.User'
 
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           # 'users.authentication.CustomBackendAuthentication',
+                           # 'social_core.backends.facebook.FacebookOAuth2',
+                           # 'social_core.backends.google.GoogleOAuth2',
+                           ]
+
+
 CSRF_COOKIE_NAME = "csrftoken"
 
 # Password validation
