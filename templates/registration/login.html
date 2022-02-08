@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+{% extends "secondbase.html" %}
+{% load static %}
+
+<head>
+    <!-- Required meta templatetags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!--Required for Font Awesome Icons-->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>{% block title %}Login{% endblock %}</title>
+</head>
+
+<body>
+    {% block content %}
+    <div class="container py-5">
+        <div class="py-5">
+            <h2 class="text-center"> Log in</h2>
+        </div>
+    <div class="text-center ">
+        {% if form.errors %}
+        <p class="text-warning">Password or username didn't match. Please enter correct password or username.</p>
+        {% else %}
+        <p class="text-primary">Enter your credentials to sign in to get started:</p>
+        {% endif %}
+        <div class="row">
+
+        <div class="col-sm my-3 pb-5 mx-5 pt-5 bg-light " style="width:50%">
+          <h3 class="text-primary py-2"></h3>
+          <form method="post" class="form-group pt-5 pb-3" action="{% url 'login' %}" >
+                {{ form.as_p }}
+                {% csrf_token %}
+                <p>
+                     <input class="btn btn-primary" type="submit" name="next" value="Log in" />
+                </p>
+            </form>
+
+              <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+             <p>Don't have an account?</p>
+            <div>
+            <a class="btn btn-primary" href="{% url 'user_registration' %}">Register</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

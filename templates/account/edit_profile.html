@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    <title>{% block title %}Edit profile{% endblock %}</title>
+
+    {% block content %}
+    <div class="container text-center bg-light">
+        <h1>Edit your account"</h1>
+        <p>Use the following form to edit your account:</p>
+        <div class="text-left">
+            <form enctype="multipart/form-data" method="post">
+                {{ user_form.as_p }}
+                {{ user_profile_form.as_p }}
+                {% csrf_token %}
+                <p class="text-center"><input type="submit" class="btn btn-primary" value="Save"></p>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
