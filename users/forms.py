@@ -10,14 +10,23 @@ from phonenumber_field.widgets import PhoneNumberPrefixWidget
 class LoginForm(forms.Form):
     """Login form to for authentication system"""
     username = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Username', 'class': 'form-control'}))
+        attrs={'placeholder': 'Username', 'id': 'username', 'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Password', 'class': 'form-control'}))
+        attrs={'placeholder': 'Password', 'id': 'password', 'class': 'form-control'}))
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        queryset = User.objects.filter(username__iexact=username)
+
+        if not queryset.exists():
+            raise forms.ValidationError("Invalid user.")
+        return username
 
 
 class RegistrationForm(forms.ModelForm):
     """ Parking User Registration Form"""
-    Please_check_this_if_you_are_a_parking_administrator = forms.BooleanField(required=False)
+    Please_check_this_if_you_are_a_parking_administrator = forms.BooleanField(
+        required=False, widget=forms.CheckboxInput())
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email',]
@@ -30,12 +39,12 @@ class RegistrationForm(forms.ModelForm):
         attrs={'placeholder': 'Enter last name', 'class': 'form-control'}))
 
     email = forms.EmailField(label='Email', min_length=5, required=True, widget=forms.EmailInput(
-        attrs={'placeholder': 'Enter email', 'class': 'form-control'}))
+        attrs={'placeholder': 'Enter email', 'class': 'form-control'}), help_text="We don't share your email.")
 
     password1 = forms.CharField(label='Password', min_length=8, required=True, widget=forms.PasswordInput(
         attrs={'placeholder': 'Password', 'class': 'form-control'}))
-    password2 = forms.CharField(label='Repeat Password', min_length=8, required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Repeat Password', 'class': 'form-control'}))
+    password2 = forms.CharField(label='Confirm Password', min_length=8, required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}))
 
     class Meta:
         model = User
