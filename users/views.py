@@ -2,21 +2,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse_lazy
 from rest_framework import viewsets
 from django.shortcuts import render, redirect
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib import messages
+from .models import Profile
 from .forms import RegistrationForm, Profile, UserForm, LoginForm, UserProfileForm
-# from .models import User
-# from .serializers import UserSerializer
-#
-#
-# class UserViewSet(viewsets.ModelViewSet):
-#     authentication_classes = [SessionAuthentication, BasicAuthentication]
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = UserSerializer
-#     queryset = User.objects.all()
 
 
 def user_registration(request):
@@ -29,9 +22,7 @@ def user_registration(request):
             user.set_password(form.cleaned_data['password1'])
             user.save()
 
-            administrator = user.Please_check_this_if_you_are_a_parking_administrator
-
-            if administrator:
+            if user.Please_check_this_if_you_are_a_parking_administrator:
                 group = Group.objects.get(name='Administrators')
                 # Add new user to Administrators group
                 user.groups.add(group)
@@ -39,7 +30,7 @@ def user_registration(request):
                 group = Group.objects.get(name='Customers')
                 # Add new user to Customers group
                 user.groups.add(group)
-            # Create Profile for new instructor
+            # Create Profile for new user
             Profile.objects.create(user=user)
 
             login(request, user)
@@ -60,8 +51,11 @@ def user_login(request):
 
             if user is not None:
                 if user.is_active:
-                    login(request, user)
-                    return redirect('home')
+                    if user.Please_check_this_if_you_are_a_parking_administrator:
+                        login(request, user)
+                        return redirect('manage_parking_lots_list')
+                    #if not user.Please_check_this_if_you_are_a_parking_administrator:
+                       # return redirect('manage_cars_list')
                 else:
                     return HttpResponse('Disabled account')
             else:
