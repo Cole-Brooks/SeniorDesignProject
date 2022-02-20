@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 #from django.contrib.auth.models import User
 from django.db import models
-from users.models import User
+from users.models import User, Profile
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
@@ -66,21 +66,6 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    photo = models.ImageField(default='default.jpg', upload_to='users/%Y/%m/%d/', blank=True)
-
-    def __str__(self):
-        return f'Profile for user {self.user.username}'
-
-    @property
-    def get_avatar_url(self):
-        if self.photo and hasattr(self.photo, 'url'):
-            return self.photo.url
-        else:
-            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub.png"
 
 
 class UserProfileForm(forms.ModelForm):
