@@ -4,10 +4,10 @@
 
 {% block content %}
 <div class="container">
-    <h1>Cars List</h1>
+    <h1 class="py-5">Cars List</h1>
     <div>
         <p>
-            <a href="{% url 'parking_create' %}">Add new car</a>
+            <a href="{% url 'car_create' %}">Add new car</a>
         </p>
         <table>
             <caption>Available cars registered in the system</caption>
@@ -16,6 +16,7 @@
                     <th id="name">Make</th>
                     <th id="name">Model</th>
                     <th id="license">License Plate Number</th>
+                    <th id="license">State</th>
                     <th id="actions">Actions</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                     <td>{{ car.make }}</td>
                     <td>{{ car.model }}</td>
                     <td>{{ car.license_plate_number}}</td>
+                    <td>{{ car.state }}</td>
                     <td><a href="{% url 'car_edit' car.id %}" class="btn btn-primary mx-4">Update</a>
                         <a href="{% url 'car_delete' car.id %}" class="btn btn-primary mx-4">Delete</a>
                     </td>
