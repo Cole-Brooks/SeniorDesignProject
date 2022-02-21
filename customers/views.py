@@ -37,7 +37,7 @@ class EditableCreatorMixin(object):
 
 class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin):
     model = Car
-    fields = ['mark', 'model', 'license_plate_number', 'state']
+    fields = ['make', 'model', 'license_plate_number', 'state']
     success_url = reverse_lazy('manage_cars_list')
 
 

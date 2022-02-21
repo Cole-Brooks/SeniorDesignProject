@@ -51,11 +51,11 @@ def user_login(request):
 
             if user is not None:
                 if user.is_active:
-                    if user.Please_check_this_if_you_are_a_parking_administrator:
-                        login(request, user)
-                        return redirect('manage_parking_lots_list')
-                    #if not user.Please_check_this_if_you_are_a_parking_administrator:
-                       # return redirect('manage_cars_list')
+                    # if user.Please_check_this_if_you_are_a_parking_administrator:
+                    login(request, user)
+                    return redirect('home')
+                # if not user.Please_check_this_if_you_are_a_parking_administrator:
+                # return redirect('manage_cars_list')
                 else:
                     return HttpResponse('Disabled account')
             else:

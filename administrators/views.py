@@ -15,9 +15,9 @@ def home(request):
         if request.user.groups.filter(name='Administrators').exists() and \
                 request.user.groups.filter(name='Customers').exists() or \
                 request.user.groups.filter(name='Administrators').exists():
-            return HttpResponseRedirect(reverse_lazy('parking_lots_list'))
+            return HttpResponseRedirect(reverse_lazy('manage_parking_lots_list'))
         else:
-            return HttpResponseRedirect(reverse_lazy('cars_list'))
+            return HttpResponseRedirect(reverse_lazy('manage_cars_list'))
 
     return render(request, 'home.html')
 
@@ -72,19 +72,19 @@ class EditableCreatorMixinParkingLot(CreatorParkingLotMixin, EditableCreatorMixi
 
 class ManageParkingLotListView(CreatorParkingLotMixin, ListView):
     template_name = 'administrators/parking/management/list.html'
-    permission_required = 'administrators.view_parking_lot'
+    permission_required = 'administrators.view_parkinglot'
 
 
 class CreateParkingLotView(EditableCreatorMixinParkingLot, CreateView):
-    permission_required = 'administrators.add_parking_lot'
+    permission_required = 'administrators.add_parkinglot'
 
 
 class UpdateParkingLotView(EditableCreatorMixinParkingLot, UpdateView):
-    permission_required = 'administrators.change_parking_lot'
+    permission_required = 'administrators.change_parkinglot'
 
 
 class DeleteParkingLotView(CreatorParkingLotMixin, DeleteView):
     template_name = 'administrators/parking/management/delete.html'
-    permission_required = 'administrators.delete_parking_lot'
+    permission_required = 'administrators.delete_parkinglot'
 
 
