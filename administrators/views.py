@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -60,10 +61,11 @@ class EditableCreatorMixin(object):
         return super().form_valid(form)
 
 
-class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin):
+class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = ParkingLot
-    fields = ['parking_name', 'street_address', 'city', 'state', 'zip_code', 'phone', 'capacities']
+    fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'capacities']
     success_url = reverse_lazy('manage_parking_lots_list')
+    success_message = "%(parking_name)s was added successfully"
 
 
 class EditableCreatorMixinParkingLot(CreatorParkingLotMixin, EditableCreatorMixin):
@@ -81,10 +83,12 @@ class CreateParkingLotView(EditableCreatorMixinParkingLot, CreateView):
 
 class UpdateParkingLotView(EditableCreatorMixinParkingLot, UpdateView):
     permission_required = 'administrators.change_parkinglot'
+    success_message = "%(parking_name)s was updated successfully"
 
 
 class DeleteParkingLotView(CreatorParkingLotMixin, DeleteView):
     template_name = 'administrators/parking/management/delete.html'
     permission_required = 'administrators.delete_parkinglot'
+    success_message = "The parking was deleted successfully"
 
 

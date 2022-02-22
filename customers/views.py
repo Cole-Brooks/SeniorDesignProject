@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -35,10 +36,11 @@ class EditableCreatorMixin(object):
         return super().form_valid(form)
 
 
-class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin):
+class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = Car
     fields = ['make', 'model', 'license_plate_number', 'state']
     success_url = reverse_lazy('manage_cars_list')
+    success_message = "Your car with %(license_plate_number)s was added successfully"
 
 
 class EditableCreatorMixinCar(CreatorCarMixin, EditableCreatorMixin):
@@ -56,11 +58,13 @@ class CreateCarView(EditableCreatorMixinCar, CreateView):
 
 class UpdateCarView(EditableCreatorMixinCar, UpdateView):
     permission_required = 'customers.change_car'
+    success_message = "Your car with %(license_plate_number)s was updated successfully"
 
 
 class DeleteCarView(CreatorCarMixin, DeleteView):
     template_name = 'customers/car/management/delete.html'
     permission_required = 'customers.delete_car'
+    success_message = "Your car was deleted successfully"
 
 
 class CustomerParkingLotMembershipView(LoginRequiredMixin, FormView):
@@ -70,7 +74,7 @@ class CustomerParkingLotMembershipView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         """Validation of the form for the parking"""
-        self.parking_lot = form.cleaned_data['lesson']
+        self.parking_lot = form.cleaned_data['parking_lot']
         self.parking_lot.customer.add(self.request.user)
         return super().form_valid(form)
 
@@ -94,6 +98,7 @@ class CustomerParkingLotDetailView(DetailView):
     model = ParkingLot
     template_name = 'customers/parking_lot/customer_parking_lot_detail.html'
 
+
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(customer__in=[self.request.user])
@@ -101,7 +106,7 @@ class CustomerParkingLotDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # get parking lot object
-        parking_lot = self.get_object().id()
-        # Complete this
+        parking_lot = self.get_object()
+        context['parking_lot'] = parking_lot
 
         return context
