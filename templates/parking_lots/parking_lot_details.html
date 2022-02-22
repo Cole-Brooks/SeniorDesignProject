@@ -10,9 +10,12 @@
             {{ object.parking_name }}
         </h1>
         <div class="py-5">
-            <h2 class="py-5">Parking Lot Overview</h2>
+            <h2>Parking Lot Overview</h2>
             <p class="py-5">
-               <a href="{% url 'parking_lots_list' parking.slug %}"> {{ parking.parking_name }}</a>
+               <a href="{% url 'parking_lots_list' %}"> {{ object.parking_name }}</a>
+                <br>{{ object.overview }}
+                <br>{{ object.parking_full_address }}
+                <br>{{ object.capacities }} spots
             </p>
             {% if request.user.is_authenticated %}
             <form action="{% url 'membership' %}" method="POST">
@@ -23,8 +26,8 @@
             {% else %}
             <p class="py-5">
                <a href="{% url 'user_registration' %}">Register to join</a> or
-                <a href="{% url 'user_login' %}">
-                Login to join become a member of this parking lot
+                <a href="{% url 'login' %}">
+                Login to join to become a member of this parking lot
             </a>
             </p>
             {% endif %}

@@ -10,7 +10,7 @@
                <div class="py-3">
                 {% for parking in parking_lots %}
                 <h3>
-                    <a href="#"> {{ parking.parking_name }}</a>
+                    <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name }}</a>
                 </h3>
                 {% endfor %}
             </div>
