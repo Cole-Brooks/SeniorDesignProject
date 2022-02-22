@@ -12,11 +12,14 @@ admin.site.index_title = "Welcome to the Portal"
 
 
 urlpatterns = [
-    #path('', TemplateView.as_view(template_name='index.html')),
+
     path('home/', views.home, name='home'),
     path('', views.home, name='home'),
-    # path('home/', views.home, name='home'),
-    # path('', views.administrator_registration, name='administrator_registration'),
-    #path('', include('django.contrib.auth.urls')),
+    path('parking/list/', views.ParkingLotListView.as_view(), name='parking_lots_list'),
+    path('parking/<slug:slug>/', views.ParkingLotDetailView.as_view(), name='parking_lot_detail'),
+    path('parking/list/manage', views.ManageParkingLotListView.as_view(), name='manage_parking_lots_list'),
+    path('create/', views.CreateParkingLotView.as_view(), name='parking_create'),
+    path('<pk>/edit/', views.UpdateParkingLotView.as_view(), name='parking_edit'),
+    path('<pk>/delete/', views.DeleteParkingLotView.as_view(), name='parking_delete'),
 
 ]

@@ -1,0 +1,41 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Cars list{% endblock %}</title>
+
+{% block content %}
+<div class="container">
+    <h1 class="py-5">Cars List</h1>
+    <div>
+        <p>
+            <a href="{% url 'car_create' %}">Add new car</a>
+        </p>
+        <table>
+            <caption>Available cars registered in the system</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="name">Make</th>
+                    <th id="name">Model</th>
+                    <th id="license">License Plate Number</th>
+                    <th id="license">State</th>
+                    <th id="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in object_list %}
+                <tr>
+                    <td>{{ car.make }}</td>
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.license_plate_number}}</td>
+                    <td>{{ car.state }}</td>
+                    <td><a href="{% url 'car_edit' car.id %}" class="btn btn-primary mx-4">Update</a>
+                        <a href="{% url 'car_delete' car.id %}" class="btn btn-primary mx-4">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <p class="py-5">You don't have any added cars</p>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

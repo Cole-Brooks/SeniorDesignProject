@@ -16,6 +16,9 @@ from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.contrib import messages
+from django.contrib.messages import constants as message_constants
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -35,6 +38,7 @@ INSTALLED_APPS = [
     'users',
     'customers',
     'corsheaders',
+    'crispy_forms',
     'rest_framework',
     'django_filters',
     'django.contrib.sites',
@@ -213,6 +217,15 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
+MESSAGE_LEVEL = message_constants.DEBUG
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

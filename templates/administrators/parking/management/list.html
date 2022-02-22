@@ -1,0 +1,35 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Parking lots list{% endblock %}</title>
+
+{% block content %}
+<div class="container">
+    <h1 class="py-5">Parking Lots List</h1>
+    <div>
+        <p>
+            <a href="{% url 'parking_create' %}">Add new parking lot</a>
+        </p>
+        <table>
+            <caption>Available parking lots registered in the system</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="name">Name</th>
+                    <th id="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parking in object_list %}
+                <tr>
+                    <td>{{ parking.parking_name }}</td>
+                    <td><a href="{% url 'parking_edit' parking.id %}" class="btn btn-primary mx-4">Update</a>
+                        <a href="{% url 'parking_delete' parking.id %}" class="btn btn-primary mx-4">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <p class="py-5">You don't have any added parking lots</p>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

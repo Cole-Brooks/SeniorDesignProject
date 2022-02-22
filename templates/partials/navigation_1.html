@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-dark">
+<nav class="navbar navbar-expand-lg bg-dark ">
     <div class="container-fluid">
-        <a class="navbar-brand text-primary " style="text-shadow: 4px 4px 5px gray;" href="/">Cash Parking</a>
+        <a class="navbar-brand text-primary " style="text-shadow: 4px 4px 5px gray;" href="/">Smart Park</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,12 +10,53 @@
                 <li class="nav-item active">
                     <a class="nav-link text-light mx-3" href="/home">Home<span class="sr-only">(current)</span></a>
                 </li>
-
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_list' %}">Find Parking</a>
+                </li>
             </ul>
             <div class="form-inline my-2 my-lg-0 text-light">
                 {% if request.user.is_authenticated %}
-                <a class="text-light py-3 mx-3">
+                {% if user.Please_check_this_if_you_are_a_parking_administrator %}
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administrator Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'manage_parking_lots_list' %}">Manage Parking
+                                Lots</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Manage Customers</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">will add more options later</a>
+                        </div>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Customer Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'manage_cars_list' %}">Manage Cars</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Manage Billing</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">will add more options later</a>
+                        </div>
+                    </li>
+                </ul>
+                {% endif %}
+                <a class="text-light mx-3">
                     Hello, {{ request.user.first_name }}!
+                </a>
+                <a class="text-light mx-3" href="{% url 'edit_profile'%}">
+                    Edit Profile
+                    <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-3" alt="image avatar"
+                        style="width: 40px; height: 40px;">
                 </a>
                 <a class="btn btn-outline-primary mx-3 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
                 {% else %}
