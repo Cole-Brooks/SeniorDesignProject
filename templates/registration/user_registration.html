@@ -1,34 +1,35 @@
 {% extends "secondbase.html" %}
 
-  <title>{% block title %} Sign Up {% endblock %}</title>
+<title>{% block title %} Sign Up {% endblock %}</title>
 
-  {% block content%}
-  <h1 class="text-center pb-5 pt-5">Sign Up</h1>
-  <div class="container my-3 pb-5 pt-5">
+{% block content%}
+<h1 class="text-center pb-5 pt-5">Sign Up</h1>
+<div class="container my-3 pb-5 pt-5">
 
-    <h3 class="text-center">Create New Account</h3>
+  <h3 class="text-center">Create New Account</h3>
+  <div class="row mx-5">
     <div class="row mx-5">
       <div class="row mx-5">
-        <div class="row mx-5">
-          <div class="col-sm my-5 pb-5 pt-5 text-light" style="background-color:seashell; margin-left:207px">
-            <p class="text-center text-primary">Please fill out the registration form to get started.
-            </p>
+        <div class="col-sm my-5 pb-5 pt-5 text-light" style="background-color:seashell; margin-left:207px">
+          <p class="text-center text-primary">Please fill out the registration form to get started.
+          </p>
 
-            <form method="post" class="py-3">
-              <div>
-                <div class="py-3 text-secondary">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                </div>
+          <form method="post" class="py-3">
+            <div>
+              <div class="py-3 text-secondary">
+                {% include 'partials/errors.html' %}
+                {% csrf_token %}
+                {{ form.as_p }}
               </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary text-center">Create my account</button>
-              </div>
-            </form>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary text-center">Create my account</button>
+            </div>
+          </form>
 
-          </div>
         </div>
       </div>
     </div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}

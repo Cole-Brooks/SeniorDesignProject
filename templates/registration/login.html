@@ -1,6 +1,6 @@
 {% extends "secondbase.html" %}
 
-    <title>{% block title %}Login{% endblock %}</title>
+<title>{% block title %}Login{% endblock %}</title>
 
 <body>
     {% block content %}
@@ -8,31 +8,32 @@
         <div class="py-5">
             <h2 class="text-center"> Log in</h2>
         </div>
-    <div class="text-center ">
-        {% if form.errors %}
-        <p class="text-warning">Password or username didn't match. Please enter correct password or username.</p>
-        {% else %}
-        <p class="text-primary">Enter your credentials to sign in to get started:</p>
-        {% endif %}
-        <div class="row">
+        <div class="text-center ">
+            {% if form.errors %}
+            <p class="text-warning">Password or username didn't match. Please enter correct password or username.</p>
+            {% else %}
+            <p class="text-primary">Enter your credentials to sign in to get started:</p>
+            {% endif %}
+            <div class="row">
 
-        <div class="col-sm my-3 pb-5 mx-5 pt-5 bg-light " style="width:50%">
-          <h3 class="text-primary py-2"></h3>
-          <form method="post" class="form-group pt-5 pb-3" action="{% url 'login' %}" >
-                {{ form.as_p }}
-                {% csrf_token %}
-                <p>
-                     <input class="btn btn-primary" id="id_login" type="submit" name="next" value="Log in" />
-                </p>
-            </form>
+                <div class="col-sm my-3 pb-5 mx-5 pt-5 bg-light " style="width:50%">
+                    <h3 class="text-primary py-2"></h3>
+                    <form method="post" class="form-group pt-5 pb-3" action="{% url 'login' %}">
+                        {% include 'partials/errors.html' %}
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <p>
+                            <input class="btn btn-primary" id="id_login" type="submit" name="next" value="Log in" />
+                        </p>
+                    </form>
 
-              <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-             <p>Don't have an account?</p>
-            <div>
-            <a class="btn btn-primary" href="{% url 'user_registration' %}">Register</a>
+                    <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+                    <p>Don't have an account?</p>
+                    <div>
+                        <a class="btn btn-primary" href="{% url 'user_registration' %}">Register</a>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-    </div>
     </div>
     {% endblock %}
