@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 {% load static %}
+
 <head>
     <!-- Required meta templatetags -->
     <meta charset="utf-8">
@@ -11,9 +12,9 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!--Incorporated CSS-->
-    <link rel="stylesheet" href="{% static "customcss/styles.css" %}" type="text/css">
-     <style>
-        footer{
+    <link rel="stylesheet" href="{% static " customcss/styles.css" %}" type="text/css">
+    <style>
+        footer {
             position: fixed;
             left: 0;
             bottom: 0;
@@ -24,9 +25,10 @@
     </style>
     <title>{% block title %}Base{% endblock %}</title>
 </head>
+
 <body>
-{% include 'partials/navigation.html' %}
-{% include 'partials/messages.html' %}
+    {% include 'partials/navigation.html' %}
+    {% include 'partials/messages.html' %}
     <div id="content">
         {% if messages %}
         <ul class="messages">
@@ -77,4 +79,5 @@
         }
     </script>
 </body>
+
 </html>
