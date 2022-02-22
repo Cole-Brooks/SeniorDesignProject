@@ -1,6 +1,6 @@
 from django import forms
 from django.conf import settings
-#from django.contrib.auth.models import User
+from django.utils.translation import gettext, gettext_lazy as _
 from django.db import models
 from users.models import User, Profile
 from phonenumber_field.formfields import PhoneNumberField
@@ -29,7 +29,7 @@ class RegistrationForm(forms.ModelForm):
         required=False, widget=forms.CheckboxInput())
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email',]
+    REQUIRED_FIELDS = ['email', ]
 
     username = forms.CharField(label='Username', min_length=5, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Enter password', 'class': 'form-control'}))
@@ -44,20 +44,34 @@ class RegistrationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', min_length=8, required=True, widget=forms.PasswordInput(
         attrs={'placeholder': 'Password', 'class': 'form-control'}))
     password2 = forms.CharField(label='Confirm Password', min_length=8, required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}))
+        attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}),
+                                help_text="Enter the same password as above.")
+
+    error_messages = {
+        'password_mismatch': _("Sorry! The passwords you entered don't match."),
+        'password_less_than_eight': _("Password length should not be less than 8 characters"),
+    }
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',
                   'Please_check_this_if_you_are_a_parking_administrator',)
 
-    def clean_password(self):
-        credentials = self.cleaned_data
-        if credentials['password'] != credentials['password2']:
-            raise forms.ValidationError('Passwords don\'t match.')
-        if len(credentials['password']) < 8:
-            self._errors['password'] = self.error_class(['Password length should not be less than 8 characters'])
-        return credentials['password2']
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        if len(password1) < 8:
+            raise forms.ValidationError(
+                self.error_messages['password_less_than_eight'],
+                code='password_less_than_eight',
+            )
+
+        return password2
 
 
 class UserForm(forms.ModelForm):
