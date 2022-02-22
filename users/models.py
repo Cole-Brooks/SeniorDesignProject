@@ -13,10 +13,7 @@ from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 class User(AbstractUser):
     """This is the administrator user model"""
-    # parking_administrator = models.BooleanField(default=False)
-    USER_TYPES = (
-        [('Parking Administrator', 'Parking Administrator'),
-         ('Customer', 'Customer'), ])
+
     Please_check_this_if_you_are_a_parking_administrator = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'

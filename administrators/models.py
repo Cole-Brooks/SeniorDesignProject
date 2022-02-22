@@ -19,6 +19,7 @@ class ParkingLot(models.Model):
 
     administrator = models.ForeignKey(User, related_name='parking_added', on_delete=models.CASCADE)
     parking_name = models.CharField(blank=False, null=False, max_length=255)
+    overview = RichTextField(blank=True, null=True)
     street_address = models.CharField(blank=False, null=False, max_length=255)
     city = models.CharField(blank=False, null=False, max_length=255)
     state = models.CharField(blank=False, null=False, max_length=255)
@@ -27,8 +28,7 @@ class ParkingLot(models.Model):
     added_on = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=200, unique=True)
     customer = models.ManyToManyField(User, related_name='parking_joined', blank=True)
-    capacities = models.IntegerField(blank=True, null=True)
-
+    capacities = models.PositiveIntegerField(blank=False, null=False)
 
     class Meta:
         verbose_name = 'Parking Lot'
