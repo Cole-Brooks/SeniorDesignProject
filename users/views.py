@@ -13,9 +13,13 @@ from .forms import RegistrationForm, Profile, UserForm, LoginForm, UserProfileFo
 
 
 def user_registration(request):
-    if request.method == 'POST':
 
-        form = RegistrationForm(request.POST)
+    form = RegistrationForm(request.POST or None)
+
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse_lazy('home'))
+
+    if request.method == 'POST':
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -34,6 +38,7 @@ def user_registration(request):
             Profile.objects.create(user=user)
 
             login(request, user)
+            messages.success(request, 'Welcome! Your account has been successfully created')
             return redirect('home')
     else:
         form = RegistrationForm()
@@ -42,6 +47,8 @@ def user_registration(request):
 
 def user_login(request):
     """ Login View for Instructors"""
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse_lazy('home'))
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -53,13 +60,17 @@ def user_login(request):
                 if user.is_active:
                     # if user.Please_check_this_if_you_are_a_parking_administrator:
                     login(request, user)
+                    messages.success(request, "Welcome back!")
                     return redirect('home')
                 # if not user.Please_check_this_if_you_are_a_parking_administrator:
                 # return redirect('manage_cars_list')
                 else:
+                    messages.info(request, 'You account has been disabled')
                     return HttpResponse('Disabled account')
             else:
+                messages.info(request, 'Your credentials are invalid')
                 return HttpResponse('Invalid login')
+
     else:
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
@@ -69,6 +80,7 @@ def custom_logout(request):
     """Custom Log out request"""
 
     logout(request)
+    messages.success(request, 'You have successfully logged out from Smart Park')
     return render(request, 'account/logout.html')
 
 
