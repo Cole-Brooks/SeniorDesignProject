@@ -16,10 +16,13 @@ from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+<<<<<<< HEAD
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.messages import constants as message_constants
 
+=======
+>>>>>>> a20e455e (home pages rough draft complete)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -43,7 +46,10 @@ INSTALLED_APPS = [
     'customers',
     'corsheaders',
     'rest_framework',
+<<<<<<< HEAD
     'crispy_forms',
+=======
+>>>>>>> a20e455e (home pages rough draft complete)
     'rest_framework.authtoken',
     'django_filters',
     'django.contrib.sites',
@@ -56,7 +62,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
 
+=======
+>>>>>>> a20e455e (home pages rough draft complete)
 ]
 
 SITE_ID = 1
@@ -252,6 +261,7 @@ STATICFILES_DIRS = [
    # os.path.join(BASE_DIR, 'media')
 ]
 
+<<<<<<< HEAD
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -266,6 +276,10 @@ MESSAGE_TAGS = {
 
 MESSAGE_LEVEL = message_constants.DEBUG
 
+=======
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+>>>>>>> a20e455e (home pages rough draft complete)
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
