@@ -8,6 +8,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.views.generic.base import TemplateResponseMixin, View
 from administrators.models import ParkingLot
 from customers.forms import ParkingLotMembership
+from users.models import User
 
 
 def home(request):
@@ -91,4 +92,16 @@ class DeleteParkingLotView(CreatorParkingLotMixin, DeleteView):
     permission_required = 'administrators.delete_parkinglot'
     success_message = "The parking was deleted successfully"
 
+
+class ParkingLotCustomers(ListView):
+    """List View of parking lot customers"""
+    template_name = 'administrators/parking/customers/list.html'
+    model = ParkingLot
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        parking_lots = ParkingLot.objects.filter(administrator=self.request.user).all()
+        context["parking_lots"] = parking_lots
+
+        return context
 
