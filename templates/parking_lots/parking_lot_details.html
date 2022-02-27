@@ -13,8 +13,8 @@
             <h2>Parking Lot Overview</h2>
             <p class="py-5">
                <a href="{% url 'parking_lots_list' %}"> {{ object.parking_name }}</a>
-                <br>{{ object.overview }}
-                <br>{{ object.parking_full_address }}
+                <br>{{ object.overview|safe }}
+                <br>{{ object.parking_full_address }}</br>
                 <br>{{ object.capacities }} spots
             </p>
             {% if request.user.is_authenticated %}
