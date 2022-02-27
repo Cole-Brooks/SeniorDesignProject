@@ -22,7 +22,7 @@
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <p class="text-center">
-                        <input class="btn btn-primary" id="id_login" type="submit" name="next" value="Log in" />
+                        <input class="btn btn-primary" id="login" type="submit" name="next" value="Log in" />
                     </p>
                 </form>
                 <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
