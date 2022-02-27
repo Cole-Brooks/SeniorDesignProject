@@ -1,4 +1,5 @@
 {% extends 'secondbase.html' %}
+{% load django_bootstrap5 %}
 
     <title>{% block title %}Edit profile{% endblock %}</title>
 
@@ -8,8 +9,8 @@
         <p>Use the following form to edit your account:</p>
         <div class="text-left">
             <form enctype="multipart/form-data" method="post">
-                {{ form.as_p }}
-                {{ profile_form.as_p }}
+                {% bootstrap_form form %}
+                {{ profile_form }}
                 {% csrf_token %}
                 <p class="text-center"><input type="submit" class="btn btn-primary" value="Save"></p>
             </form>

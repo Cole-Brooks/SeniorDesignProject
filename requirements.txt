@@ -2,6 +2,7 @@ asgiref==3.5.0
 async-generator==1.10
 attrs==21.4.0
 Babel==2.9.1
+beautifulsoup4==4.10.0
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.11
@@ -12,11 +13,13 @@ defusedxml==0.7.1
 dj-database-url==0.5.0
 Django==4.0.1
 django-allauth==0.47.0
+django-bootstrap5==21.3
 django-ckeditor==6.2.0
 django-cors-headers==3.11.0
 django-crispy-forms==1.14.0
 django-filter==21.1
 django-js-asset==1.2.2
+django-localflavor==3.1
 django-on-heroku==1.1.2
 django-phonenumber-field==6.0.0
 django-phonenumbers==1.0.1
@@ -41,6 +44,7 @@ PyJWT==2.3.0
 pyOpenSSL==22.0.0
 pytesseract==0.3.8
 python-dateutil==2.8.2
+python-stdnum==1.17
 python3-openid==3.2.0
 pytz==2021.3
 requests==2.27.1
@@ -49,6 +53,7 @@ selenium==4.1.0
 six==1.16.0
 sniffio==1.2.0
 sortedcontainers==2.4.0
+soupsieve==2.3.1
 sqlparse==0.4.2
 trio==0.19.0
 trio-websocket==0.9.2

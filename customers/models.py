@@ -26,3 +26,5 @@ class Car(models.Model):
 
     def __str__(self):
         return self.owner.first_name + self.owner.last_name
+    
+    
