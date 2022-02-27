@@ -4,10 +4,13 @@ from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from .models import ParkingLot
 
 
-class RegisterParkingForm(forms.Form):
+class RegisterParkingForm(forms.ModelForm):
     """Login form to for adding a parking"""
 
     class Meta:
         model = ParkingLot
         fields = ('administrator', 'parking_name', 'street_address', 'city', 'state', 'zip_code', 'phone', 'customer',
                   'capacities', 'overview')
+
+
+
