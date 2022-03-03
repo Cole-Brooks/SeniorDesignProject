@@ -10,6 +10,8 @@
 
 #Libraries
 from picamera import PiCamera
+from plateReader import readPlate
+from parkIn import park_car
 import RPi.GPIO as GPIO
 import time
 
@@ -89,10 +91,15 @@ if __name__ == '__main__':
                     print(f"Obj stopped at a close range")
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
+                        plateNum = readPlate("/home/pi/Desktop/obj.jpg")
+                        #print("cv finished")
+                        if len(plateNum) != 0:
+                            rows_affected = park_car(plateNum)
+                            print(f"{rows_affected} rows changed")
                     except:
                         print("camera down")
                     else:
-                        print("picture taken")
+                        print("Success")
             prevDist = dist
             time.sleep(5)
  
