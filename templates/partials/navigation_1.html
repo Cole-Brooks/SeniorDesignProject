@@ -1,10 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container-fluid">
-<<<<<<< HEAD
         <a class="navbar-brand text-primary " style="text-shadow: 4px 4px 5px gray;" href="/">Smart Park</a>
-=======
-        <a class="navbar-brand text-warning " href="/">Smart Park</a>
->>>>>>> a20e455e (home pages rough draft complete)
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -57,22 +53,18 @@
                 <a class="text-light mx-3">
                     Hello, {{ request.user.first_name }}!
                 </a>
-<<<<<<< HEAD
                 <a class="text-light mx-3" href="{% url 'edit_profile'%}">
                     Edit Profile
                     <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-3" alt="image avatar"
                         style="width: 40px; height: 40px;">
                 </a>
                 <a class="btn btn-outline-primary mx-3 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
-=======
-                <a class="btn btn-outline-warning mx-3 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
->>>>>>> a20e455e (home pages rough draft complete)
                 {% else %}
-                <a class="btn btn-outline-warning mx-3 my-2 my-sm-0" href="{% url 'user_registration' %}">Register</a>
+                <a class="btn btn-outline-primary mx-3 my-2 my-sm-0" href="{% url 'user_registration' %}">Register</a>
                 <a class="tex-light nav-item mx-3">
                     Already have an account?
                 </a>
-                <a class="btn btn-outline-warning mx-3 my-2 my-sm-0" href="{% url 'login' %}">Log in</a>
+                <a class="btn btn-outline-primary mx-3 my-2 my-sm-0" href="{% url 'login' %}">Log in</a>
                 {% endif %}
             </div>
         </div>
