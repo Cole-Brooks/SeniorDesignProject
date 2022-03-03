@@ -7,7 +7,7 @@ import time
 import re
 
 tik = time.perf_counter()
-img = cv2.imread('1.jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('/home/pi/Downloads/CarImages/car6.jpg',cv2.IMREAD_COLOR)
 
 img = cv2.resize(img, (620,480) )
 
