@@ -6,9 +6,11 @@ from PIL import Image
 import time
 import re
 
+
 def readPlate(filePath):
     tik = time.perf_counter()
     img = cv2.imread(filePath,cv2.IMREAD_COLOR)
+
 
     img = cv2.resize(img, (620,480) )
 

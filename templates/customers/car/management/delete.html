@@ -1,0 +1,17 @@
+{% extends 'secondbase.html' %}
+
+    <title>{% block title %}Delete car{% endblock %}</title>
+
+    {% block content %}
+    <div class="container">
+        <h1>Delete car "{{ object.mark }}"</h1>
+        <div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+                <button type="submit">Confirm</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+

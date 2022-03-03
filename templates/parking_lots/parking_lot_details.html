@@ -1,0 +1,43 @@
+{% extends 'secondbase.html' %}
+
+    <title>{% block title %} {{ object.parking_name }}{% endblock %}</title>
+
+{% block content %}
+    <div class="container py-5">
+
+        {% with parking=object.parking_lots %}
+        <h1 class="title text-center py-3">
+            {{ object.parking_name }}
+        </h1>
+        <div class="py-5">
+            <h2>Parking Lot Overview</h2>
+            <p class="py-5">
+               <a href="{% url 'parking_lots_list' %}"> {{ object.parking_name }}</a>
+                <br>{{ object.overview|safe }}
+                <br>{{ object.parking_full_address }}</br>
+                <br>{{ object.capacities }} spots
+            </p>
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'membership' %}" method="POST">
+                {{ membership_form }}
+                {% csrf_token %}
+                <input type="submit" value="Join Now">
+            </form>
+            {% else %}
+            <p class="py-5">
+               <a href="{% url 'user_registration' %}">Register to join</a> or
+                <a href="{% url 'login' %}">
+                Login to join to become a member of this parking lot
+            </a>
+            </p>
+            {% endif %}
+        <div class="py-5">
+            <div class="py-5">
+
+            </div>
+        </div>
+        </div>
+       {% endwith %}
+
+    </div>
+   {% endblock %}

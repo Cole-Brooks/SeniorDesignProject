@@ -1,0 +1,27 @@
+{% extends 'secondbase.html' %}
+{% load django_bootstrap5 %}
+
+<title>{% block title %}Form of registration{% endblock %}</title>
+
+{% block content %}
+<div class="container">
+    <div>
+        {% if object %}
+        <h1>Update Parking lot "{{ object.parking_name}}"
+            {% else %}
+            <h1>Add a new parking lot</h1>
+            {% endif %}
+        </h1>
+    </div>
+    <div>
+        <h2>Parking lot info</h2>
+        <div class="py-5">
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <p><input type="submit" class="btn btn-primary" value="Save"></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

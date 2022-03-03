@@ -1,0 +1,33 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Parking lots list{% endblock %}</title>
+
+{% block content %}
+<div class="container">
+    <h1 class="py-5">Customers List</h1>
+    <div>
+        <table>
+            <caption>Parking lot customers registered in the system</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="name">Name</th>
+                    <th id="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in parking_lots %}
+                <tr>
+                    <td>{{ parking.customer }}</td>
+                    <td><a href="" class="btn btn-primary mx-4">Will add more actions</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <div>
+                    <p class="py-5">You don't have any customers who have joined any of the parking lots you manage</p>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

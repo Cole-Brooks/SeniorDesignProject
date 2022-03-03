@@ -1,0 +1,20 @@
+{% extends 'secondbase.html' %}
+{% load static %}
+
+    <title>{% block title %}All parking lots]{% endblock %}</title>
+
+    {% block content %}
+    <div class="container py-3">
+        <div class="py-5">
+            <h1>All parking lots</h1>
+               <div class="py-3">
+                {% for parking in parking_lots %}
+                <h3>
+                    <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name }}</a>
+                </h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
