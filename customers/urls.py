@@ -3,11 +3,6 @@ from django.urls import path, include
 from customers import views
 
 
-# Customization of django admin
-admin.site.site_header = "Team Cash's Parking"
-admin.site.site_title = "Welcome to Team Cash's Dashboard"
-admin.site.index_title = "Welcome to the Portal"
-
 urlpatterns = [
     path('cars/list/', views.CarListView.as_view(), name='cars_list'),
     path('cars/list/manage/', views.ManageCarListView.as_view(), name='manage_cars_list'),

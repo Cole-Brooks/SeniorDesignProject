@@ -6,14 +6,6 @@ from django.views.generic import TemplateView
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
-# from users.views import UserViewSet
-# Customization of django admin
-
-
-admin.site.site_header = "Team Cash's Parking"
-admin.site.site_title = "Welcome to Team Cash's Dashboard"
-admin.site.index_title = "Welcome to the Portal"
-
 # app_name = 'users'
 # # Build url dynamically using router
 # router = routers.DefaultRouter()

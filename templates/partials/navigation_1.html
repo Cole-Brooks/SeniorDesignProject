@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-dark ">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container-fluid">
 <<<<<<< HEAD
         <a class="navbar-brand text-primary " style="text-shadow: 4px 4px 5px gray;" href="/">Smart Park</a>
@@ -23,7 +23,7 @@
                 {% if user.Please_check_this_if_you_are_a_parking_administrator %}
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle mx-3 text-primary" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administrator Menu
                         </a>
@@ -31,7 +31,7 @@
                             <a class="dropdown-item" href="{% url 'manage_parking_lots_list' %}">Manage Parking
                                 Lots</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Manage Customers</a>
+                            <a class="dropdown-item" href="{% url 'parking_lots_customers_list' %}">Manage Customers</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">will add more options later</a>
                         </div>
@@ -40,7 +40,7 @@
                 {% else %}
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle mx-3 text-primary" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Customer Menu
                         </a>
