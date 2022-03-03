@@ -5,6 +5,7 @@
 
 <body>
     {% block content %}
+<<<<<<< HEAD
     <div class="container py-5">
         <div class="py-5">
             <h2 class="text-center"> Log in</h2>
@@ -32,5 +33,38 @@
                 </div>
             </div>
         </div>
+=======
+    <div class="container my-3 pb-5 pt-5">
+        <h2 class="text-center"> Log in</h2>
+        <div class="text-center ">
+        {% if form.errors %}
+        <p class="text-warning">Password or username didn't match. Please enter correct password or username.</p>
+        {% else %}
+        <p class="text-center" style = color:#d05a36>Enter your credentials to sign in to get started:</p>
+        {% endif %}
+        <div class="row mx-5">
+            <div class="row mx-5">
+                <div class="row mx-5">
+                    <div class="col-sm my-5 pb-5 pt-5 text-light" style="background-color:seashell; width:500px; margin-left:165px">
+                        <form method="post" class="form-group pt-5 pb-3" action="{% url 'login' %}" >
+                              {{ form.as_p }}
+                              {% csrf_token %}
+                              <p>
+                                   <input class="btn btn-warning" type="submit" name="next" value="Log in" />
+                              </p>
+                          </form>
+              
+                            <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+                           <p>Don't have an account?</p>
+                          <div>
+                          <a class="btn btn-warning" href="{% url 'user_registration' %}">Register</a>
+                          </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+>>>>>>> a20e455e (home pages rough draft complete)
     </div>
     {% endblock %}

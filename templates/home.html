@@ -1,17 +1,27 @@
 {% extends "secondbase.html" %}
 {% load static %}
 
-<title>{% block title %}Home{% endblock %}</title>
+
+<title>{% block title %}Home{% endblock %}</title> 
+
+
 
 {% block content %}
-<div class="container py-5 text-center">
-    <div class="py-5">
-        <div class="py-5">
-            <h1 class="class py-5 text-primary">Big Welcome Team Cash!</h1>
-            <h2 class="py-5">The backend server(Django) is up and running.</h2>
-            <h3>Frontend is being served using template rendering</h3>
-            <h4>Please feel free to change the frontend design of everything. This is just temporary</h4>
+<body>
+    <div class = "headerImage">
+        <div class = "py-5">
+
         </div>
     </div>
-</div>
+
+    <div class="homeText">
+        <div class="py-5">
+            <div style = text-align:center>
+                <h1 class = "header" style = color:#d05a36>SMART PARK</h1>
+                <h3 style = color:#d05a36 >Insert infromation about our parking system. This space will include information about our website and parking system.</h3>            
+            </div>
+        </div>
+    </div>
+</body>
 {% endblock %}
+
