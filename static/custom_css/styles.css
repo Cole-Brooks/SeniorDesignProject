@@ -4,24 +4,24 @@
 }
 
 /*HOME PAGE*/
-.headerImage{
+/* .headerImage{
     width: 100%;
     height: 100vh;
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
     /* background-attachment: fixed; */
-    background-image: url(small_town.jpg);
+    /* background-image: url(small_town.jpg);
 
-}
-.homeText{
+} */ 
+/* .homeText{
     /* padding: 0px; */
     /* margin: 0; */
-    box-sizing: none;
+    /* box-sizing: none;
     width: 100%;
     height: 50vh;
     background-size: cover;
     background-color: rgba(212,202,192,0.5); /*'a' val needs to be between 0-1 for transluscent effect*/
     
-}
+/* } */
 
