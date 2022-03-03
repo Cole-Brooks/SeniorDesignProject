@@ -14,7 +14,7 @@
     background-image: url(small_town.jpg);
 
 } 
-/* .homeText{
+ .homeText{
     /* padding: 0px; */
     /* margin: 0; */
     /* box-sizing: none;
@@ -23,5 +23,5 @@
     background-size: cover;
     background-color: rgba(212,202,192,0.5); /*'a' val needs to be between 0-1 for transluscent effect*/
     
-/* } */
+}
 
