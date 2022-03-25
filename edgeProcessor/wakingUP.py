@@ -14,6 +14,8 @@ from plateReader import readPlate
 from parkIn import park_car
 import RPi.GPIO as GPIO
 import time
+import picamera
+import cv2
 
 try: 
     #Cam settings
@@ -71,7 +73,9 @@ def distance():
  
     return distance
  
-if __name__ == '__main__':
+def parkingLogic(statVar):
+    while statVar == None:
+        pass
     try:
         prevDist = 1200
         while True:
@@ -79,27 +83,33 @@ if __name__ == '__main__':
             print(f"distance is: {dist}")
             if dist < 0:
                 print("Motion sensor broken")
+                statVar.set("Status: Maintainace")
             elif dist > 1200:
                 print("Nothing within range")
+                statVar.set("Status: Available")
             else:
                 if prevDist > dist + 10:
                     if prevDist >= 1200:
-                        print("Something showed up")
+                        print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
+                    statVar.set("Status: Please Wait")
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum = readPlate("/home/pi/Desktop/obj.jpg")
                         #print("cv finished")
                         if len(plateNum) != 0:
-                            rows_affected = park_car(plateNum)
-                            print(f"{rows_affected} rows changed")
-                    except:
-                        print("camera down")
-                    else:
-                        print("Success")
+                            statVar.set("Status: Parking" + plateNum)
+                            res = park_car(plateNum)
+                            print(res)
+                            statVar.set("Status: " + res)
+                    except picamera.PiCameraError:
+                        print("Camera down")
+                        statVar.set("Status: Maintainace")
+                    except cv2.error:
+                        print("Cannot recognize")
             prevDist = dist
             time.sleep(5)
  
