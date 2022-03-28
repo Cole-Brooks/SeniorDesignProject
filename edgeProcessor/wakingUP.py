@@ -10,12 +10,11 @@
 
 #Libraries
 from picamera import PiCamera
-from plateReader import readPlate
-from parkIn import park_car
+from readPlate import readPlate
+from parkIn import park_car, get_free_spots
 import RPi.GPIO as GPIO
 import time
 import picamera
-import cv2
 
 try: 
     #Cam settings
@@ -35,6 +34,10 @@ else:
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
     timeout = 5
+    
+needFix = False
+gateOpening = False
+gateClosing = False
 # if timeout, return -1000
 def distance():
     ts = time.time()
@@ -78,42 +81,66 @@ def parkingLogic(statVar):
         pass
     try:
         prevDist = 1200
+        statVar.set("Status: Available")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
             if dist < 0:
                 print("Motion sensor broken")
-                statVar.set("Status: Maintainace")
+                needFix = True
+                statVar.set(f"Status: {getStat()}")
             elif dist > 1200:
                 print("Nothing within range")
-                statVar.set("Status: Available")
+                statVar.set(f"Status: {getStat()}")
             else:
                 if prevDist > dist + 10:
                     if prevDist >= 1200:
                         print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
+                    statVar.set(f"Status: {getStat()}")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
                     statVar.set("Status: Please Wait")
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
-                        plateNum = readPlate("/home/pi/Desktop/obj.jpg")
+                        plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         #print("cv finished")
-                        if len(plateNum) != 0:
-                            statVar.set("Status: Parking" + plateNum)
+                        if confi > 0.9:
+                            statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum)
                             print(res)
+                            time.sleep(2)
                             statVar.set("Status: " + res)
+                            time.sleep(2)
+                            statVar.set("Status: Drive Through")
+                            gateOpening = True
+                            time.sleep(8)
+                            gateOpening = False
+                            gateClosing = True
+                            statVar.set("Status: Please Wait for Your Turn")
+                            gateClosing = False
+                            statVar.set(f"Status: {getStat()}")
+                        else:
+                            statVar.set("Status: " + plateNum)
                     except picamera.PiCameraError:
                         print("Camera down")
-                        statVar.set("Status: Maintainace")
-                    except cv2.error:
-                        print("Cannot recognize")
+                        needFix = True
+                        statVar.set(f"Status: {getStat()}")
+                else:
+                    statVar.set(f"Status: {getStat()}")
             prevDist = dist
-            time.sleep(5)
+            time.sleep(2)
  
         # Reset by pressing CTRL + C
     except KeyboardInterrupt:
         print("Measurement stopped by User")
         GPIO.cleanup()
+
+
+def getStat():
+    if needFix:
+        return "Maintainance"
+    if get_free_spots == 0:
+        return "Full"
+    return "Available"
