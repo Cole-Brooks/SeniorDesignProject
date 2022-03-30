@@ -11,17 +11,22 @@
 #Libraries
 from picamera import PiCamera
 from readPlate import readPlate
-from parkIn import park_car, get_free_spots
+from parkIn import park_car, get_free_spots, get_admin_contactInfo
 import RPi.GPIO as GPIO
 import time
 import picamera
+from sendAlert import send_alert
 
+
+needFix = False
+# initialize camera
 try: 
     #Cam settings
     camera = PiCamera()
     camera.resolution = (2592, 1944)
 except:
     print("camera down")
+    needFix = True
 else:
     #GPIO Mode (BOARD / BCM)
     GPIO.setmode(GPIO.BCM)
@@ -35,7 +40,6 @@ else:
     GPIO.setup(GPIO_ECHO, GPIO.IN)
     timeout = 5
     
-needFix = False
 gateOpening = False
 gateClosing = False
 # if timeout, return -1000
@@ -81,7 +85,7 @@ def parkingLogic(statVar):
         pass
     try:
         prevDist = 1200
-        statVar.set("Status: Available")
+        statVar.set(f"Status: {getStat()}")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
@@ -140,7 +144,9 @@ def parkingLogic(statVar):
 
 def getStat():
     if needFix:
+        phoneNum = get_admin_contactInfo('UCC')[2:];
+        send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
         return "Maintainance"
-    if get_free_spots == 0:
+    if get_free_spots('UCC') == 0:
         return "Full"
     return "Available"
