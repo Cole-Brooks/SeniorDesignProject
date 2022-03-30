@@ -105,4 +105,4 @@ def get_admin_contactInfo(parkingLotName):
     finally:
         if conn is not None:
             conn.close()
-print(get_admin_contactInfo('UCC'))
+#print(get_admin_contactInfo('UCC'))

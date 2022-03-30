@@ -81,6 +81,7 @@ def distance():
     return distance
  
 def parkingLogic(statVar):
+    global needFix, gateOpening, gateClosing
     while statVar == None:
         pass
     try:
@@ -144,6 +145,7 @@ def parkingLogic(statVar):
 
 def getStat():
     if needFix:
+        print("needFix")
         phoneNum = get_admin_contactInfo('UCC')[2:];
         send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
         return "Maintainance"
