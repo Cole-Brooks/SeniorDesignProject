@@ -43,7 +43,7 @@ class ParkingHistory(models.Model):
     parking_fee = models.DecimalField(max_digits=8, decimal_places=2, default=0.0,
                                       validators=[MinValueValidator(Decimal('0.00'))])
     paid = models.BooleanField(default=False)
-    payment_date = models.DateField(default=datetime.datetime.now)
+    payment_date = models.DateField(null=True)
 
     class Meta:
         verbose_name = 'parking-history'
