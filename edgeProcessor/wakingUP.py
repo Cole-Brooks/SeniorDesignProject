@@ -10,17 +10,23 @@
 
 #Libraries
 from picamera import PiCamera
-from plateReader import readPlate
-from parkIn import park_car
+from readPlate import readPlate
+from parkIn import park_car, get_free_spots, get_admin_contactInfo
 import RPi.GPIO as GPIO
 import time
+import picamera
+from sendAlert import send_alert
 
+
+needFix = False
+# initialize camera
 try: 
     #Cam settings
     camera = PiCamera()
     camera.resolution = (2592, 1944)
 except:
     print("camera down")
+    needFix = True
 else:
     #GPIO Mode (BOARD / BCM)
     GPIO.setmode(GPIO.BCM)
@@ -33,6 +39,9 @@ else:
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
     timeout = 5
+    
+gateOpening = False
+gateClosing = False
 # if timeout, return -1000
 def distance():
     ts = time.time()
@@ -71,39 +80,77 @@ def distance():
  
     return distance
  
-if __name__ == '__main__':
+def parkingLogic(statVar):
+    global needFix, gateOpening, gateClosing
+    while statVar == None:
+        pass
     try:
         prevDist = 1200
+        statVar.set(f"Status: {getStat()}")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
             if dist < 0:
                 print("Motion sensor broken")
+                needFix = True
+                statVar.set(f"Status: {getStat()}")
             elif dist > 1200:
+                needFix = False
                 print("Nothing within range")
+                statVar.set(f"Status: {getStat()}")
             else:
+                needFix = False
                 if prevDist > dist + 10:
                     if prevDist >= 1200:
-                        print("Something showed up")
+                        print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
+                    statVar.set(f"Status: {getStat()}")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
+                    statVar.set("Status: Please Wait")
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
-                        plateNum = readPlate("/home/pi/Desktop/obj.jpg")
+                        plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         #print("cv finished")
-                        if len(plateNum) != 0:
-                            rows_affected = park_car(plateNum)
-                            print(f"{rows_affected} rows changed")
-                    except:
-                        print("camera down")
-                    else:
-                        print("Success")
+                        if confi > 0.9:
+                            statVar.set("Status: Parking " + plateNum)
+                            res = park_car(plateNum)
+                            print(res)
+                            time.sleep(2)
+                            statVar.set("Status: " + res)
+                            time.sleep(2)
+                            statVar.set("Status: Drive Through")
+                            gateOpening = True
+                            time.sleep(8)
+                            gateOpening = False
+                            gateClosing = True
+                            statVar.set("Status: Please Wait for Your Turn")
+                            gateClosing = False
+                            statVar.set(f"Status: {getStat()}")
+                        else:
+                            statVar.set("Status: " + plateNum)
+                    except picamera.PiCameraError:
+                        print("Camera down")
+                        needFix = True
+                        statVar.set(f"Status: {getStat()}")
+                else:
+                    statVar.set(f"Status: {getStat()}")
             prevDist = dist
-            time.sleep(5)
+            time.sleep(2)
  
         # Reset by pressing CTRL + C
     except KeyboardInterrupt:
         print("Measurement stopped by User")
         GPIO.cleanup()
+
+
+def getStat():
+    if needFix:
+        print("needFix")
+        phoneNum = get_admin_contactInfo('UCC')[2:];
+        send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
+        return "Maintainance"
+    if get_free_spots('UCC') == 0:
+        return "Full"
+    return "Available"
