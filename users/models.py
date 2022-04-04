@@ -15,6 +15,7 @@ class User(AbstractUser):
     """This is the administrator user model"""
 
     Please_check_this_if_you_are_a_parking_administrator = models.BooleanField(default=False)
+    balance_due = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', ]
@@ -43,3 +44,4 @@ class Profile(models.Model):
             return self.photo.url
         else:
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub.png"
+
