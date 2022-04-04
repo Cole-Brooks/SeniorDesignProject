@@ -3,10 +3,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
 from django.views.generic.base import TemplateResponseMixin, View
-from customers.forms import ParkingLotMembership
-from customers.models import Car
+from customers.forms import ParkingLotMembership, RegisterCarForm
+from customers.models import Car, ParkingHistory
 from administrators.models import ParkingLot
 
 
@@ -38,7 +39,7 @@ class EditableCreatorMixin(object):
 
 class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = Car
-    fields = ['make', 'model', 'license_plate_number', 'state']
+    form_class = RegisterCarForm
     success_url = reverse_lazy('manage_cars_list')
     success_message = "Your car with %(license_plate_number)s was added successfully"
 
@@ -110,3 +111,6 @@ class CustomerParkingLotDetailView(DetailView):
         context['parking_lot'] = parking_lot
 
         return context
+
+
+
