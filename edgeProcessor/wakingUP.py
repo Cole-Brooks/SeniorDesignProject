@@ -95,9 +95,11 @@ def parkingLogic(statVar):
                 needFix = True
                 statVar.set(f"Status: {getStat()}")
             elif dist > 1200:
+                needFix = False
                 print("Nothing within range")
                 statVar.set(f"Status: {getStat()}")
             else:
+                needFix = False
                 if prevDist > dist + 10:
                     if prevDist >= 1200:
                         print("Something showed up")  
