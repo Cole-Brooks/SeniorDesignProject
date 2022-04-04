@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
 # Paypal settings
 PAYPAL_TEST = False
 
