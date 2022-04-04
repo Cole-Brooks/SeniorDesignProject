@@ -1,0 +1,49 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Current bills{% endblock %}</title>
+
+{% block content %}
+<div class="container text-center">
+<div class="container">
+    <h1 class="py-5 text-center">Bill management</h1>
+    <h2 class="py-3 text-center">Due bills</h2>
+    <div>
+        <p class="text-center py-3">
+            <a class="mx-4 btn btn-warning" href="{% url 'due_bills' %}">Due Bills</a>
+            <a class="mx-5 btn btn-warning" href="{% url 'paid_bills' %}">Paid Bills</a>
+            <a class="mx-5 "><strong class="mx-2">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
+            <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ {{ bills.first.parking_fee }}</a>
+            <a href="{% url 'make_payment' %}" class="btn btn-warning mx-1">Pay Now</a>
+        </p>
+        <table>
+            <caption>All due bills</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="name">Car</th>
+                    <th id="name">Parking</th>
+                    <th id="license">Entry time</th>
+                    <th id="license">Exit time</th>
+                    <th id="license">Charge</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paid_bill in bills %}
+                    <tr>
+                       <td>{{ paid_bill.car }}</td>
+                       <td>{{ paid_bill.parking }}</td>
+                       <td>{{ paid_bill.in_time}}</td>
+                       <td>{{ paid_bill.out_time }}</td>
+                       <td>$ {{ paid_bill.parking_fee}}</td>
+                       </td>
+                    </tr>
+                {% empty %}
+                <div>
+                    <p class="py-5">You don't have any due bills</p>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+{% endblock %}

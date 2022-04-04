@@ -32,7 +32,7 @@ class RegistrationForm(forms.ModelForm):
     REQUIRED_FIELDS = ['email', ]
 
     username = forms.CharField(label='Username', min_length=5, required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'Enter password', 'class': 'form-control'}))
+        attrs={'placeholder': 'Enter username', 'class': 'form-control'}))
     first_name = forms.CharField(label='First Name', min_length=3, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Enter first name', 'class': 'form-control'}))
     last_name = forms.CharField(label='Last Name', min_length=3, required=True, widget=forms.TextInput(
@@ -88,3 +88,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('photo',)
+
+
+

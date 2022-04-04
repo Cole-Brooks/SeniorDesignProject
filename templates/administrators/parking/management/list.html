@@ -6,8 +6,10 @@
 <div class="container">
     <h1 class="py-5">Parking Lots List</h1>
     <div>
-        <p>
-            <a href="{% url 'parking_create' %}">Add new parking lot</a>
+        <p class="text-center">
+            <a class="btn btn-warning mx-5" href="{% url 'parking_create' %}">Add new parking lot</a>
+            <a class="btn btn-warning mx-5" href="https://www.paypal.com/bizsignup/#/singlePageSignup">
+                Set up PayPal business account for payments</a>
         </p>
         <table>
             <caption>Available parking lots registered in the system</caption>
@@ -21,8 +23,8 @@
                 {% for parking in object_list %}
                 <tr>
                     <td>{{ parking.parking_name }}</td>
-                    <td><a href="{% url 'parking_edit' parking.id %}" class="btn btn-primary mx-4">Update</a>
-                        <a href="{% url 'parking_delete' parking.id %}" class="btn btn-primary mx-4">Delete</a>
+                    <td><a href="{% url 'parking_edit' parking.id %}" class="btn btn-warning mx-4">Update</a>
+                        <a href="{% url 'parking_delete' parking.id %}" class="btn btn-warning mx-4">Delete</a>
                     </td>
                 </tr>
                 {% empty %}

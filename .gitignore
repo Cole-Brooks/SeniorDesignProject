@@ -57,3 +57,4 @@ yarn-error.log*
 
 # database
 /edgeProcessor/*.ini
+/staticfiles/

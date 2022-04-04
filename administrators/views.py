@@ -64,7 +64,8 @@ class EditableCreatorMixin(object):
 
 class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = ParkingLot
-    fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'capacities']
+    fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'business_email',
+              'capacities', 'fee_per_hour', 'max_overdue']
     success_url = reverse_lazy('manage_parking_lots_list')
     success_message = "%(parking_name)s was added successfully"
 

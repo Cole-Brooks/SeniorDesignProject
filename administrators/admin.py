@@ -2,10 +2,10 @@ from django.contrib import admin
 from .models import ParkingLot
 
 
-# Register your models here.
+# Register ParkingLot model.
 @admin.register(ParkingLot)
 class ParkingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'administrator', 'parking_name', 'phone')
+    list_display = ('id', 'administrator', 'parking_name', 'phone', 'fee_per_hour', 'max_overdue',)
 
     actions = None
 
@@ -13,3 +13,7 @@ class ParkingAdmin(admin.ModelAdmin):
         if not obj.administrator:
             obj.administrator = request.user
         obj.save()
+
+
+
+
