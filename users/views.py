@@ -55,7 +55,7 @@ def make_payment(request):
     paypal = {
         'business': receiver,
         'amount': amount,
-        'item_name': 'Parking payment {}'.format(uuid.uuid4()),
+        'item_name': 'Parking payment',
         'invoice': str(uuid.uuid4()),
         'currency_code': 'USD',
         'notify_url': f'http://{request.get_host()}{reverse("paypal-ipn")}',
