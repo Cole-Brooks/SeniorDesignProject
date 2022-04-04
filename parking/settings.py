@@ -36,9 +36,13 @@ INSTALLED_APPS = [
     'administrators',
     'ckeditor',
     'users',
+    'localflavor',
     'customers',
     'corsheaders',
     'crispy_forms',
+    'paypal.standard.ipn',
+    'paypal.standard',
+    'paypal.pro',
     'rest_framework',
     'django_filters',
     'django.contrib.sites',
@@ -52,6 +56,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# Paypal settings
+PAYPAL_TEST = True
+PAYPAL_RECEIVER = ''
+
 
 SITE_ID = 1
 
