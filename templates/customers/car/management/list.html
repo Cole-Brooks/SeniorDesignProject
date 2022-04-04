@@ -4,10 +4,14 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5">Cars List</h1>
+    <h1 class="py-5 text-center">Cars List</h1>
     <div>
-        <p>
-            <a href="{% url 'car_create' %}">Add new car</a>
+        <p class="text-center py-3">
+            <a class="mx-3 btn btn-warning" href="{% url 'car_create' %}">Add new car</a>
+            <a class="mx-3 btn btn-warning" href="">Update your car location</a>
+            <a class="mx-3 "><strong class="mx-3">Your car is parked at:</strong></a>
+            <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
+            <a class="btn btn-warning mx-3 " href="{%  url 'due_bills' %}">Manage it</a>
         </p>
         <table>
             <caption>Available cars registered in the system</caption>
@@ -27,8 +31,8 @@
                     <td>{{ car.model }}</td>
                     <td>{{ car.license_plate_number}}</td>
                     <td>{{ car.state }}</td>
-                    <td><a href="{% url 'car_edit' car.id %}" class="btn btn-primary mx-4">Update</a>
-                        <a href="{% url 'car_delete' car.id %}" class="btn btn-primary mx-4">Delete</a>
+                    <td><a href="{% url 'car_edit' car.id %}" class="btn btn-warning mx-4">Update</a>
+                        <a href="{% url 'car_delete' car.id %}" class="btn btn-warning mx-4">Delete</a>
                     </td>
                 </tr>
                 {% empty %}
