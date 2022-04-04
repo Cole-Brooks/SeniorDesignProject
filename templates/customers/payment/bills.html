@@ -12,8 +12,12 @@
             <a class="mx-4 btn btn-warning" href="{% url 'due_bills' %}">Due Bills</a>
             <a class="mx-5 btn btn-warning" href="{% url 'paid_bills' %}">Paid Bills</a>
             <a class="mx-5 "><strong class="mx-2">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
+            {% if bills.first.parking_fee is None %}
+            <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ 0.00</a>
+            {% else %}
             <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ {{ bills.first.parking_fee }}</a>
             <a href="{% url 'make_payment' %}" class="btn btn-warning mx-1">Pay Now</a>
+            {% endif %}
         </p>
         <table>
             <caption>All due bills</caption>
