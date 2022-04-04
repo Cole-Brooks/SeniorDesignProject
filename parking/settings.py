@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'crispy_forms',
     'paypal.standard.ipn',
-    'paypal.standard',
-    'paypal.pro',
     'rest_framework',
     'django_filters',
     'django.contrib.sites',
@@ -58,9 +56,7 @@ INSTALLED_APPS = [
 ]
 
 # Paypal settings
-PAYPAL_TEST = True
-PAYPAL_RECEIVER = ''
-
+PAYPAL_TEST = False
 
 SITE_ID = 1
 
