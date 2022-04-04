@@ -14,11 +14,11 @@ class LoginFormTest(LiveServerTestCase):
         # Set up the url to visit
         selenium.get('http://127.0.0.1:8000/users/accounts/login/')
         # find the elements you need to using ids
-        username = selenium.find_element_by_id('username')
-        password = selenium.find_element_by_id('password')
+        username = selenium.find_element_by('username')
+        password = selenium.find_element_by('password')
 
         # get Login button by using id_login
-        submit = selenium.find_element_by_id('login')
+        submit = selenium.find_element_by('login')
 
         # Add/populate data to the form
         username.send_keys('test4')

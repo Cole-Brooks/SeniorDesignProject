@@ -22,5 +22,11 @@ urlpatterns = [
          name='logout'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('accounts/login/', views.user_login, name='login'),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('due_bills/', views.ManageBillsView.as_view(), name='due_bills'),
+    path('paid_bills/', views.PaidBillsView.as_view(), name='paid_bills'),
+    path('make_payment/', views.make_payment, name='make_payment'),
+    path('successful_payement/', views.successful_payment, name='successful_payment'),
+    path('cancel_payment/', views.cancel_payment, name='cancel_payment'),
 
 ]

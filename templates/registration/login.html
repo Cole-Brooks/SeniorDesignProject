@@ -15,20 +15,22 @@
             {% else %}
             <p class="text-primary">Enter your credentials to sign in</p>
             {% endif %}
-            <div class="col pb-5 mx-5 pt-5" style="background-color: seashell;margin: 0 auto; width:30%">
-                <h3 class="text-primary py-2"></h3>
-                <form method="post" class="form-group pt-5 pb-3 text-left" style="max-width: 40em; margin: auto;
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-4 py-5" style="background-color: seashell;margin: 0 auto; width:30%">
+                    <h3 class="text-primary py-2"></h3>
+                    <form method="post" class="form-group pt-5 pb-3 text-left" style="max-width: 40em; margin: auto;
                     text-align: center" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <p class="text-center">
-                        <input class="btn btn-primary" id="login" type="submit" name="next" value="Log in" />
-                    </p>
-                </form>
-                <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-                <p>Don't have an account?</p>
-                <div>
-                    <a class="btn btn-primary" href="{% url 'user_registration' %}">Register</a>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <p class="text-center">
+                            <input class="btn btn-warning" id="login" type="submit" name="next" value="Log in" />
+                        </p>
+                    </form>
+                    <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+                    <p>Don't have an account?</p>
+                    <div>
+                        <a class="btn btn-warning" href="{% url 'user_registration' %}">Register</a>
+                    </div>
                 </div>
             </div>
         </div>
