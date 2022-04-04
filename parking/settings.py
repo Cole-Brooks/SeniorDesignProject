@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'crispy_forms',
     'paypal.standard.ipn',
+    'paypal.pro',
     'rest_framework',
     'django_filters',
     'django.contrib.sites',
