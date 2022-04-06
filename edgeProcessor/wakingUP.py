@@ -11,7 +11,7 @@
 #Libraries
 from picamera import PiCamera
 from readPlate import readPlate
-from parkIn import park_car, get_free_spots, get_admin_contactInfo
+from parkIn import park_car, get_free_spots, get_admin_contactInfo, get_fee_info
 import RPi.GPIO as GPIO
 import time
 import picamera
@@ -34,10 +34,13 @@ else:
     #set GPIO Pins
     GPIO_TRIGGER = 18
     GPIO_ECHO = 24
-     
+    GPIO_GATE = 25
+    
     #set GPIO direction (IN / OUT)
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
+    GPIO.setup(GPIO_GATE, GPIO.OUT)
+    
     timeout = 5
     
 gateOpening = False
@@ -80,24 +83,25 @@ def distance():
  
     return distance
  
-def parkingLogic(statVar):
+def parkingLogic(statVar, plfVar, plName):
     global needFix, gateOpening, gateClosing
     while statVar == None:
         pass
     try:
         prevDist = 1200
-        statVar.set(f"Status: {getStat()}")
+        statVar.set(f"Status: {getStat(plName)}")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
+            plfVar.set(f"Fee per Hour: {get_fee_info(plName)}$")
             if dist < 0:
                 print("Motion sensor broken")
                 needFix = True
-                statVar.set(f"Status: {getStat()}")
+                statVar.set(f"Status: {getStat(plName)}")
             elif dist > 1200:
                 needFix = False
                 print("Nothing within range")
-                statVar.set(f"Status: {getStat()}")
+                statVar.set(f"Status: {getStat(plName)}")
             else:
                 needFix = False
                 if prevDist > dist + 10:
@@ -105,7 +109,7 @@ def parkingLogic(statVar):
                         print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
-                    statVar.set(f"Status: {getStat()}")
+                    statVar.set(f"Status: {getStat(plName)}")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
                     statVar.set("Status: Please Wait")
@@ -121,21 +125,23 @@ def parkingLogic(statVar):
                             statVar.set("Status: " + res)
                             time.sleep(2)
                             statVar.set("Status: Drive Through")
-                            gateOpening = True
-                            time.sleep(8)
-                            gateOpening = False
-                            gateClosing = True
+                            #gateOpening = True
+                            GPIO.output(GPIO_GATE, 1);
+                            time.sleep(15)
+                            #gateOpening = False
+                            GPIO.output(GPIO_GATE, 0);
+                            #gateClosing = True
                             statVar.set("Status: Please Wait for Your Turn")
-                            gateClosing = False
-                            statVar.set(f"Status: {getStat()}")
+                            #gateClosing = False
+                            statVar.set(f"Status: {getStat(plName)}")
                         else:
                             statVar.set("Status: " + plateNum)
                     except picamera.PiCameraError:
                         print("Camera down")
                         needFix = True
-                        statVar.set(f"Status: {getStat()}")
+                        statVar.set(f"Status: {getStat(plName)}")
                 else:
-                    statVar.set(f"Status: {getStat()}")
+                    statVar.set(f"Status: {getStat(plName)}")
             prevDist = dist
             time.sleep(2)
  
@@ -145,12 +151,12 @@ def parkingLogic(statVar):
         GPIO.cleanup()
 
 
-def getStat():
+def getStat(plName):
     if needFix:
         print("needFix")
-        phoneNum = get_admin_contactInfo('UCC')[2:];
+        phoneNum = get_admin_contactInfo(plName)[2:];
         send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
         return "Maintainance"
-    if get_free_spots('UCC') == 0:
+    if get_free_spots(plName) == 0:
         return "Full"
     return "Available"

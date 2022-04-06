@@ -9,7 +9,6 @@ import threading
 import time
 from wakingUP import parkingLogic
 plName = 'UCC'
-plFee = 4.52
 plnVar = None
 plfVar = None
 statVar = None
@@ -26,7 +25,7 @@ plfVar = StringVar()
 statVar = StringVar()
 
 plnVar.set(f'Parking Lot Name: {plName}')
-plfVar.set(f'Fee per Hour: {plFee}$')
+plfVar.set(f'Fee per Hour: $')
 statVar.set('STATUS: Booting')
 
 # set the position of the window to the center of the screen
@@ -37,23 +36,23 @@ root.resizable(0, 0)
 # Name label
 name_label = Label(root, text='CASH PARKING SYSTEM',
                    font=('Helvetica', screen_height//20, 'bold'), bg='cyan')
-name_label.pack(ipadx=screen_width/20)
+name_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both')
 
 # Parking Lot Info
 parkinglot_name_label = Label(root, textvariable=plnVar, font=(
-    'Helvetica', screen_height//30, 'bold'), bg='#92B5F5')
+    'Helvetica', screen_height//20, 'bold'), bg='#92B5F5')
 parkinglot_fee_label = Label(root, textvariable=plfVar, font=(
-    'Helvetica', screen_height//30, 'bold'), bg='#EBB254')
+    'Helvetica', screen_height//20, 'bold'), bg='#EBB254')
 
-parkinglot_name_label.pack()
-parkinglot_fee_label.pack()
+parkinglot_name_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both')
+parkinglot_fee_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both')
 
 # Status Frame
 status_label = Label(root, textvariable=statVar, font=(
-    'Helvetica', screen_height//20, 'bold'), bg='#F18583')
-status_label.pack()
+    'Helvetica', screen_height//15, 'bold'), bg='#F18583')
+status_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both', expand='true')
 
 
-onsiteThread = threading.Thread(target=parkingLogic, args=(statVar, ))
+onsiteThread = threading.Thread(target=parkingLogic, args=(statVar, plfVar, plName))
 onsiteThread.start()
 root.mainloop()
