@@ -17,12 +17,12 @@ from django.contrib import messages
 from customers.models import ParkingHistory
 from .models import Profile
 from .forms import RegistrationForm, Profile, UserForm, LoginForm, UserProfileForm
-from paypal.standard.forms import PayPalPaymentsForm
+from customers.forms import CustomPayPalPaymentsForm
 from users.models import User
 
 
 class ManageBillsView(generic.TemplateView, LoginRequiredMixin):
-    """View for the first page of the resume"""
+    """View for the bills that are due"""
     template_name = "customers/payment/bills.html"
 
     def get_context_data(self, **kwargs):
@@ -34,7 +34,7 @@ class ManageBillsView(generic.TemplateView, LoginRequiredMixin):
 
 
 class PaidBillsView(generic.TemplateView, LoginRequiredMixin):
-    """View for the first page of the resume"""
+    """View for the paid bills"""
     template_name = "customers/payment/paid_bills.html"
 
     def get_context_data(self, **kwargs):
@@ -58,11 +58,11 @@ def make_payment(request):
         'item_name': 'Parking payment',
         'invoice': str(uuid.uuid4()),
         'currency_code': 'USD',
-        'notify_url': f'http://{request.get_host()}{reverse("paypal-ipn")}',
-        'return_url': f'http://{request.get_host()}{reverse("successful_payment")}',
-        'cancel_return': f'http://{request.get_host()}{reverse("cancel_payment")}',
+        'notify_url': request.build_absolute_uri(reverse('paypal-ipn')),
+        'return_url': request.build_absolute_uri(reverse('successful_payment')),
+        'cancel_return': request.build_absolute_uri(reverse('cancel_payment')),
     }
-    form = PayPalPaymentsForm(initial=paypal)
+    form = CustomPayPalPaymentsForm(initial=paypal)
 
     return render(request, 'customers/payment/payment.html', {'form': form})
 

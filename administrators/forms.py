@@ -10,7 +10,7 @@ class RegisterParkingForm(forms.ModelForm):
     class Meta:
         model = ParkingLot
         fields = ('administrator', 'parking_name', 'street_address', 'city', 'state', 'zip_code', 'phone',
-                  'business_email', 'customer', 'capacities', 'overview', 'fee_per_hour', 'max_overdue')
+                  'business_email', 'customer', 'capacities', 'free_spots', 'overview', 'fee_per_hour', 'max_overdue')
 
 
 

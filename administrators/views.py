@@ -9,6 +9,8 @@ from django.views.generic.base import TemplateResponseMixin, View
 from administrators.models import ParkingLot
 from customers.forms import ParkingLotMembership
 from users.models import User
+from django.views import generic
+from customers.models import ParkingHistory
 
 
 def home(request):
@@ -65,7 +67,7 @@ class EditableCreatorMixin(object):
 class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = ParkingLot
     fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'business_email',
-              'capacities', 'fee_per_hour', 'max_overdue']
+              'capacities', 'fee_per_hour', 'free_spots', 'max_overdue']
     success_url = reverse_lazy('manage_parking_lots_list')
     success_message = "%(parking_name)s was added successfully"
 
@@ -106,3 +108,15 @@ class ParkingLotCustomers(ListView):
 
         return context
 
+
+class ParkingLotCustomersView(generic.TemplateView, LoginRequiredMixin):
+    """View for the parking lot customers"""
+    template_name = "administrators/parking/customers/list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customers = ParkingHistory.objects.filter(paid=False).select_related('car', 'parking')\
+            .filter(parking__administrator=self.request.user)
+        context["customers"] = customers
+
+        return context

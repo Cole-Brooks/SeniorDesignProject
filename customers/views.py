@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
 from django.views.generic.base import TemplateResponseMixin, View
-from customers.forms import ParkingLotMembership, RegisterCarForm
+from customers.forms import ParkingLotMembership, RegisterCarForm, UpdateParkingCarForm
 from customers.models import Car, ParkingHistory
 from administrators.models import ParkingLot
 
@@ -99,7 +99,6 @@ class CustomerParkingLotDetailView(DetailView):
     model = ParkingLot
     template_name = 'customers/parking_lot/customer_parking_lot_detail.html'
 
-
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(customer__in=[self.request.user])
@@ -113,4 +112,16 @@ class CustomerParkingLotDetailView(DetailView):
         return context
 
 
+def update_car_parking(request):
+    form = UpdateParkingCarForm()
 
+    if request.method == 'POST':
+
+        if form.is_valid():
+            parking = form.save(commit=False)
+            parking.save()
+            messages.success(request, 'Your have successfully updated where to park your car.')
+            return redirect('home')
+    else:
+        form = UpdateParkingCarForm()
+    return render(request, 'customers/car/management/update_form.html', {'form': form})
