@@ -4,18 +4,23 @@
 
 {% block content %}
     <div class="container py-5">
-
         {% with parking=object.parking_lots %}
         <h1 class="title text-center py-3">
             {{ object.parking_name }}
         </h1>
         <div class="py-5">
-            <h2>Parking Lot Overview</h2>
+            <h3>Parking Lot Overview</h3>
             <p class="py-5">
-               <a href="{% url 'parking_lots_list' %}"> {{ object.parking_name }}</a>
+               <a class="py-3"href="{% url 'parking_lots_list' %}"> Navigate back to the list</a>
                 <br>{{ object.overview|safe }}
-                <br>{{ object.parking_full_address }}</br>
-                <br>{{ object.capacities }} spots
+                <br><strong class="text-secondary">Address :</strong> {{ object.parking_full_address }}</br>
+                <br><strong class="text-secondary">Capacities:</strong> {{ object.capacities }}</br>
+                {% if object.capacities == object.free_spots %}
+                <br><strong class="text-secondary">Status: </strong>Full</br
+                {% else %}
+                <br><strong class="text-secondary">Status: </strong> {{ object.free_spots }} spots available</br>
+                {% endif %}
+
             </p>
             {% if request.user.is_authenticated %}
             <form action="{% url 'membership' %}" method="POST">
