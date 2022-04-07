@@ -15,7 +15,7 @@ urlpatterns = [
 
     path('home/', views.home, name='home'),
     path('', views.home, name='home'),
-    path('parking/customers/list/', views.ParkingLotCustomers.as_view(), name='parking_lots_customers_list'),
+    path('parking/customers/list/', views.ParkingLotCustomersView.as_view(), name='parking_lots_customers_list'),
     path('parking/list/', views.ParkingLotListView.as_view(), name='parking_lots_list'),
     path('parking/<slug:slug>/', views.ParkingLotDetailView.as_view(), name='parking_lot_detail'),
     path('parking/list/manage', views.ManageParkingLotListView.as_view(), name='manage_parking_lots_list'),
