@@ -8,20 +8,22 @@
     <h1 class="py-5 text-center">Bill management</h1>
     <h2 class="py-3 text-center">Paid bills</h2>
     <div>
+        <h4 class=" bg-warning text-center py-3">
+            <a class="mx-4 text-primary" href="{% url 'due_bills' %}">Due Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
+        </h4>
         <p class="text-center py-3">
-            <a class="mx-5 btn btn-warning" href="{% url 'due_bills' %}">Due Bills</a>
-            <a class="mx-5 btn btn-warning" href="{% url 'paid_bills' %}">Paid Bills</a>
             <a class="mx-5 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
         </p>
         <table>
             <caption>All paid bills</caption>
             <thead>
                 <tr class="text-secondary">
-                    <th id="name">Car</th>
-                    <th id="name">Parking</th>
-                    <th id="license">Entry time</th>
-                    <th id="license">Exit time</th>
-                    <th id="license">Paid on</th>
+                    <th id="car">Car</th>
+                    <th id="parking">Parking</th>
+                    <th id="in_time">Entry time</th>
+                    <th id="out_time">Exit time</th>
+                    <th id="payment_date">Paid on</th>
                 </tr>
             </thead>
             <tbody>

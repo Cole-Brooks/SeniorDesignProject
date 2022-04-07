@@ -4,18 +4,20 @@
 
 {% block content %}
 <div class="container text-center">
-<div class="container">
     <h1 class="py-5 text-center">Bill management</h1>
     <h2 class="py-3 text-center">Due bills</h2>
     <div>
+        <h4 class=" bg-warning text-center py-3">
+            <a class="mx-4 text-primary" href="{% url 'due_bills' %}">Due Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
+        </h4>
         <p class="text-center py-3">
-            <a class="mx-4 btn btn-warning" href="{% url 'due_bills' %}">Due Bills</a>
-            <a class="mx-5 btn btn-warning" href="{% url 'paid_bills' %}">Paid Bills</a>
             <a class="mx-5 "><strong class="mx-2">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
             {% if bills.first.parking_fee is None %}
             <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ 0.00</a>
             {% else %}
             <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ {{ bills.first.parking_fee }}</a>
+
             <a href="{% url 'make_payment' %}" class="btn btn-warning mx-1">Pay Now</a>
             {% endif %}
         </p>
@@ -23,11 +25,11 @@
             <caption>All due bills</caption>
             <thead>
                 <tr class="text-secondary">
-                    <th id="name">Car</th>
-                    <th id="name">Parking</th>
-                    <th id="license">Entry time</th>
-                    <th id="license">Exit time</th>
-                    <th id="license">Charge</th>
+                    <th id="car">Car</th>
+                    <th id="parking">Parking</th>
+                    <th id="in_time">Entry time</th>
+                    <th id="out_time">Exit time</th>
+                    <th id="parking_fee">Charge</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +49,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
     </div>
 </div>
 {% endblock %}
