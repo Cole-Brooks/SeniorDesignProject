@@ -11,7 +11,7 @@
 #Libraries
 from picamera import PiCamera
 from readPlate import readPlate
-from parkIn import park_car, get_free_spots, get_admin_contactInfo, get_fee_info
+from parkIn import *
 import RPi.GPIO as GPIO
 import time
 import picamera
@@ -83,25 +83,26 @@ def distance():
  
     return distance
  
-def parkingLogic(statVar, plfVar, plName):
+def parkingLogic(statVar, plfVar, plodVar, plAddr):
     global needFix, gateOpening, gateClosing
     while statVar == None:
         pass
     try:
         prevDist = 1200
-        statVar.set(f"Status: {getStat(plName)}")
+        statVar.set(f"Status: {getStat(plAddr)}")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
-            plfVar.set(f"Fee per Hour: {get_fee_info(plName)}$")
+            plfVar.set(f"Fee per Hour: {get_fee_info(plAddr)}$")
+            plodVar.set(f"Max Overdue: {get_overdue_info(plAddr)}")
             if dist < 0:
                 print("Motion sensor broken")
                 needFix = True
-                statVar.set(f"Status: {getStat(plName)}")
+                statVar.set(f"Status: {getStat(plAddr)}")
             elif dist > 1200:
                 needFix = False
                 print("Nothing within range")
-                statVar.set(f"Status: {getStat(plName)}")
+                statVar.set(f"Status: {getStat(plAddr)}")
             else:
                 needFix = False
                 if prevDist > dist + 10:
@@ -109,7 +110,7 @@ def parkingLogic(statVar, plfVar, plName):
                         print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
-                    statVar.set(f"Status: {getStat(plName)}")
+                    statVar.set(f"Status: {getStat(plAddr)}")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
                     statVar.set("Status: Please Wait")
@@ -119,7 +120,7 @@ def parkingLogic(statVar, plfVar, plName):
                         #print("cv finished")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
-                            res = park_car(plateNum)
+                            res = park_car(plateNum, plAddr)
                             print(res)
                             time.sleep(2)
                             statVar.set("Status: " + res)
@@ -133,15 +134,15 @@ def parkingLogic(statVar, plfVar, plName):
                             #gateClosing = True
                             statVar.set("Status: Please Wait for Your Turn")
                             #gateClosing = False
-                            statVar.set(f"Status: {getStat(plName)}")
+                            statVar.set(f"Status: {getStat(plAddr)}")
                         else:
                             statVar.set("Status: " + plateNum)
                     except picamera.PiCameraError:
                         print("Camera down")
                         needFix = True
-                        statVar.set(f"Status: {getStat(plName)}")
+                        statVar.set(f"Status: {getStat(plAddr)}")
                 else:
-                    statVar.set(f"Status: {getStat(plName)}")
+                    statVar.set(f"Status: {getStat(plAddr)}")
             prevDist = dist
             time.sleep(2)
  
@@ -151,12 +152,12 @@ def parkingLogic(statVar, plfVar, plName):
         GPIO.cleanup()
 
 
-def getStat(plName):
+def getStat(plAddr):
     if needFix:
         print("needFix")
-        phoneNum = get_admin_contactInfo(plName)[2:];
+        phoneNum = get_admin_contactInfo(plAddr)[2:];
         send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
         return "Maintainance"
-    if get_free_spots(plName) == 0:
+    if get_free_spots(plAddr) == 0:
         return "Full"
     return "Available"

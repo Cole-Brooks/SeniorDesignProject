@@ -8,11 +8,10 @@ from tkinter import *
 import threading
 import time
 from wakingUP import parkingLogic
-plName = 'UCC'
-plnVar = None
+plodVar = None
 plfVar = None
 statVar = None
-
+plAddr = 'OLC 100 R'
 
 root = tk.Tk()
 # constants
@@ -20,11 +19,11 @@ root = tk.Tk()
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-plnVar = StringVar()
+plodVar = StringVar()
 plfVar = StringVar()
 statVar = StringVar()
 
-plnVar.set(f'Parking Lot Name: {plName}')
+plodVar.set(f'MaxOverDue: ')
 plfVar.set(f'Fee per Hour: $')
 statVar.set('STATUS: Booting')
 
@@ -39,7 +38,7 @@ name_label = Label(root, text='CASH PARKING SYSTEM',
 name_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both')
 
 # Parking Lot Info
-parkinglot_name_label = Label(root, textvariable=plnVar, font=(
+parkinglot_name_label = Label(root, textvariable=plodVar, font=(
     'Helvetica', screen_height//20, 'bold'), bg='#92B5F5')
 parkinglot_fee_label = Label(root, textvariable=plfVar, font=(
     'Helvetica', screen_height//20, 'bold'), bg='#EBB254')
@@ -53,6 +52,6 @@ status_label = Label(root, textvariable=statVar, font=(
 status_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both', expand='true')
 
 
-onsiteThread = threading.Thread(target=parkingLogic, args=(statVar, plfVar, plName))
+onsiteThread = threading.Thread(target=parkingLogic, args=(statVar, plfVar, plodVar, plAddr))
 onsiteThread.start()
 root.mainloop()
