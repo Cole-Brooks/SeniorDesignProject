@@ -39,7 +39,7 @@ class EditableCreatorMixin(object):
 
 class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = Car
-    form_class = RegisterCarForm
+    fields = ['make', 'model', 'license_plate_number', 'state']
     success_url = reverse_lazy('manage_cars_list')
     success_message = "Your car with %(license_plate_number)s was added successfully"
 

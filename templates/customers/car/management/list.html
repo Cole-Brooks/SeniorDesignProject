@@ -11,6 +11,13 @@
             <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
             <a class="btn btn-warning mx-3 " href="{%  url 'due_bills' %}">Manage it</a>
         </p>
+        <p class="text-center py-3">
+            {% for car in object_list%}
+            {% if car.parking is not None %}
+            <strong>Car location :</strong> {{ car.parking }}
+            {% endif %}
+            {% endfor %}
+        </p>
         <table>
             <caption>Available cars registered in the system</caption>
             <thead>
@@ -19,7 +26,6 @@
                     <th id="model">Model</th>
                     <th id="license">License Plate Number</th>
                     <th id="state">State</th>
-                    <th id="parking">Parking Lot</th>
                     <th id="actions">Actions</th>
                 </tr>
             </thead>
@@ -30,10 +36,8 @@
                     <td>{{ car.model }}</td>
                     <td>{{ car.license_plate_number}}</td>
                     <td>{{ car.state }}</td>
-                    <td>{{ car.parking }}</td>
                     <td><a href="{% url 'car_edit' car.id %}" class="btn btn-warning mx-4">Update</a>
                         <a href="{% url 'car_delete' car.id %}" class="btn btn-warning mx-4">Delete</a>
-                        <a class="mx-3 btn btn-warning" href="">Update where to park your car</a>
                     </td>
                 </tr>
                 {% empty %}

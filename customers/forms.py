@@ -13,7 +13,7 @@ class RegisterCarForm(forms.ModelForm):
 
     class Meta:
         model = Car
-        fields = ('make', 'model', 'license_plate_number', 'state', 'parking')
+        fields = ('make', 'model', 'license_plate_number', 'state',)
         
         
 class UpdateParkingCarForm(forms.ModelForm):
