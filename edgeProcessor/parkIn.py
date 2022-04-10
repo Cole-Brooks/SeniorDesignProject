@@ -171,4 +171,4 @@ if __name__ == '__main__':
     print(get_fee_info('OLC 100 R'))
     print(get_free_spots('OLC 100 R'))
     print(get_overdue_info('OLC 100 R'))
-    print(park_car('HR26DK8337', 'OLC 100 R'))
+    print(park_car('HR26DK', 'OLC 100 R'))

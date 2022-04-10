@@ -12,7 +12,7 @@ plodVar = None
 plfVar = None
 statVar = None
 plAddr = 'OLC 100 R'
-
+print("dummy")
 root = tk.Tk()
 # constants
 # get the screen dimension
@@ -48,8 +48,8 @@ parkinglot_fee_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill=
 
 # Status Frame
 status_label = Label(root, textvariable=statVar, font=(
-    'Helvetica', screen_height//15, 'bold'), bg='#F18583')
-status_label.pack(ipadx=screen_width//20, ipady=screen_height//20, fill='both', expand='true')
+    'Helvetica', screen_height//20, 'bold'), bg='#F18583')
+status_label.pack(ipadx=screen_width//15, ipady=screen_height//15, fill='both', expand='true')
 
 
 onsiteThread = threading.Thread(target=parkingLogic, args=(statVar, plfVar, plodVar, plAddr))

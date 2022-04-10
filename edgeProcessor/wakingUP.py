@@ -117,32 +117,39 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
+                        print(plateNum, confi)
                         #print("cv finished")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum, plAddr)
                             print(res)
-                            time.sleep(2)
                             statVar.set("Status: " + res)
-                            time.sleep(2)
-                            statVar.set("Status: Drive Through")
-                            #gateOpening = True
-                            GPIO.output(GPIO_GATE, 1);
-                            time.sleep(15)
-                            #gateOpening = False
-                            GPIO.output(GPIO_GATE, 0);
-                            #gateClosing = True
-                            statVar.set("Status: Please Wait for Your Turn")
-                            #gateClosing = False
-                            statVar.set(f"Status: {getStat(plAddr)}")
-                        else:
+                            time.sleep(1)
+                            if res[0] == 'S':  
+                                statVar.set("Status: Drive Through")
+                                GPIO.output(GPIO_GATE, 1);
+                                time.sleep(1)
+                                GPIO.output(GPIO_GATE, 0);
+                                time.sleep(23)
+                                GPIO.output(GPIO_GATE, 1);
+                                time.sleep(1)
+                                GPIO.output(GPIO_GATE, 0);
+                            
+                                #gateClosing = True
+                                statVar.set("Status: Please Wait for Your Turn")
+                                time.sleep(13);
+                                #gateClosing = False
+                                statVar.set(f"Status: {getStat(plAddr)}")
+                        elif confi == -1:
                             statVar.set("Status: " + plateNum)
+                        else:
+                            statVar.set("Status: Wait for Rescan")
                     except picamera.PiCameraError:
                         print("Camera down")
                         needFix = True
                         statVar.set(f"Status: {getStat(plAddr)}")
                 else:
-                    statVar.set(f"Status: {getStat(plAddr)}")
+                    statVar.set(f"Status: Please Come Closer")
             prevDist = dist
             time.sleep(2)
  
