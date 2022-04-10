@@ -22,9 +22,9 @@ class Car(models.Model):
     model = models.CharField(blank=False, null=False, max_length=255)
     license_plate_number = models.CharField(blank=False, null=False, max_length=255)
     state = models.CharField(blank=False, null=False, max_length=255)
-    parking = models.ForeignKey(administrators.models.ParkingLot(), on_delete=models.CASCADE)
-    in_time = models.TimeField(auto_now_add=False, null=True)
-    out_time = models.TimeField(auto_now_add=False, null=True)
+    parking = models.ForeignKey(administrators.models.ParkingLot(), blank=True, null=True, on_delete=models.SET_NULL)
+    in_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
+    out_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Car'
@@ -38,8 +38,8 @@ class ParkingHistory(models.Model):
     """This a model for customers parking history"""
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     parking = models.ForeignKey(administrators.models.ParkingLot, on_delete=models.CASCADE)
-    in_time = models.TimeField(auto_now_add=False, null=True)
-    out_time = models.TimeField(auto_now_add=False, null=True)
+    in_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
+    out_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     parking_fee = models.DecimalField(max_digits=8, decimal_places=2, default=0.0,
                                       validators=[MinValueValidator(Decimal('0.00'))])
     paid = models.BooleanField(default=False)
