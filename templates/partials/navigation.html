@@ -2,22 +2,24 @@
     <div class="container-fluid">
         <ul class="navbar-nav mr-auto">
             <div class="sidenav" id="customSidenav">
-
-                <a class="navbar-brand text-primary text-center" style="text-shadow: 4px 4px 5px gray;" href="/">Cash
-                    Parking</a>
+                <a class="navbar-brand text-primary text-center" style="text-shadow: 4px 4px 5px gray;" href="/">Smart 2 Park</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <li>
                     <a href="javascript:void(0)" class="closeout" onclick="navClosed()">&times;</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link text-light mx-3 py-5" href="/home">Home<span class="sr-only">(current)</span></a>
                 </li>
-
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_list' %}">Find Parking</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_maps' %}">Find on a map</a>
+                </li>
                 <div class="form-inline my-2 my-lg-0 pt-5 text-light">
                     {% if request.user.is_authenticated %}
                     <div class="py-5">
@@ -34,7 +36,6 @@
                                 href="{% url 'logout' %}">Log
                                 out</a>
                         </div>
-
                     </div>
                     {% else %}
                     <div class="text-light py-5">
