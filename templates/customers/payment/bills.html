@@ -8,18 +8,12 @@
     <h2 class="py-3 text-center">Due bills</h2>
     <div>
         <h4 class=" bg-warning text-center py-3">
-            <a class="mx-4 text-primary" href="{% url 'due_bills' %}">Due Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'due_bills' %}">Due Bills</a>
             <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking lot</a>
         </h4>
         <p class="text-center py-3">
-            <a class="mx-5 "><strong class="mx-2">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
-            {% if bills.first.parking_fee is None %}
-            <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ 0.00</a>
-            {% else %}
-            <a class="mx-5"><strong class="mx-2">Early charge:</strong> $ {{ bills.first.parking_fee }}</a>
-
-            <a href="{% url 'make_payment' %}" class="btn btn-warning mx-1">Pay Now</a>
-            {% endif %}
+            <a class="mx-5"><strong class="mx-2 text-primary">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
         </p>
         <table>
             <caption>All due bills</caption>
@@ -29,17 +23,21 @@
                     <th id="parking">Parking</th>
                     <th id="in_time">Entry time</th>
                     <th id="out_time">Exit time</th>
-                    <th id="parking_fee">Charge</th>
+                    <th id="time_spent">Time spent</th>
+                    <th id="parking_fee">Charges</th>
+                    <th id="actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for paid_bill in bills %}
+                {% for bill in bills %}
                     <tr>
-                       <td>{{ paid_bill.car }}</td>
-                       <td>{{ paid_bill.parking }}</td>
-                       <td>{{ paid_bill.in_time}}</td>
-                       <td>{{ paid_bill.out_time }}</td>
-                       <td>$ {{ paid_bill.parking_fee}}</td>
+                       <td>{{ bill.car }}</td>
+                       <td>{{ bill.parking }}</td>
+                       <td>{{ bill.in_time}}</td>
+                       <td>{{ bill.out_time }}</td>
+                       <td>{{ bill.get_time_spent }}</td>
+                       <td>$ {{ bill.parking_fee}}</td>
+                       <td><a href="{% url 'make_payment' bill.id %}" class="btn btn-warning mx-1">Pay Now</a></td>
                        </td>
                     </tr>
                 {% empty %}
