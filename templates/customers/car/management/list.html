@@ -9,12 +9,14 @@
         <p class="text-center py-3">
             <a class="mx-3 btn btn-warning" href="{% url 'car_create' %}">Add new car</a>
             <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
-            <a class="btn btn-warning mx-3 " href="{%  url 'due_bills' %}">Manage it</a>
+            <a class="btn btn-warning mx-3 " href="{%  url 'due_bills' %}">Manage</a>
         </p>
         <p class="text-center py-3">
             {% for car in object_list%}
             {% if car.parking is not None %}
-            <strong>Car location :</strong> {{ car.parking }}
+            <strong class="ml-5 mr-3 text-primary">Car in use:</strong> {{ car.make }} {{car.model}}
+            <strong class="ml-5 mr-3 text-primary">Car location :</strong> {{ car.parking }}
+            <strong class="ml-5 mr-3 text-primary">Time spent :</strong> {{ car.get_time_spent }}
             {% endif %}
             {% endfor %}
         </p>
