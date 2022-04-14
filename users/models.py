@@ -45,3 +45,18 @@ class Profile(models.Model):
         else:
             return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub.png"
 
+
+class Contact(models.Model):
+    """Model for user contact"""
+    name = models.CharField(verbose_name="Name", max_length=250)
+    email = models.CharField(verbose_name="Email", max_length=250)
+    message = models.TextField(verbose_name="Message")
+    phone = models.CharField(verbose_name="Phone number", max_length=10)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Contact'
+        verbose_name_plural = 'Contacts'
+
+    def __str__(self):
+        return self.name + " " + self.email

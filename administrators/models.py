@@ -1,5 +1,4 @@
 from decimal import Decimal
-
 from django.core.validators import MinValueValidator
 from django.db import models
 # from users.models import User
@@ -56,11 +55,15 @@ class ParkingLot(models.Model):
 
     @property
     def parking_full_address(self):
-        return self.street_address + ", " + self.city + ", " + self.state + ", " + self.zip_code
+        return self.street_address + ", " + self.city + ", " + self.state + " " + self.zip_code
 
     @property
     def get_business_email(self):
         return self.business_email
+
+    @property
+    def get_parking_name(self):
+        return self.parking_name
 
     @property
     def get_image_url(self):
