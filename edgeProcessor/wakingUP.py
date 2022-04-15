@@ -123,6 +123,7 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                             statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum, plAddr)
                             print(res)
+                            time.sleep(1)
                             statVar.set("Status: " + res)
                             time.sleep(1)
                             if res[0] == 'S':  
