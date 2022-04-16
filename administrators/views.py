@@ -105,7 +105,6 @@ class EditableCreatorMixin(object):
 
 class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
     model = ParkingLot
-    form_class = RegisterParkingForm
     fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'business_email',
               'capacities', 'fee_per_hour', 'free_spots', 'max_overdue']
     success_url = reverse_lazy('manage_parking_lots_list')
