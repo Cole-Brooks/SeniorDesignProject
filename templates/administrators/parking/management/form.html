@@ -16,11 +16,13 @@
     <div>
         <h2>Parking lot info</h2>
         <div class="py-5">
-            <form method="post">
+            <div class="py-5">
+            <form method="post" class="pb-5">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <p><input type="submit" class="btn btn-warning" value="Save"></p>
             </form>
+            </div>
         </div>
     </div>
 </div>
