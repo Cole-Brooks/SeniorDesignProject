@@ -5,7 +5,7 @@ from django.db.models import fields
 from .models import Contact
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
-from django.conf import settings
+from django.conf.settings import SERVICE_EMAIL
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from customers.models import DuePaymentReminder

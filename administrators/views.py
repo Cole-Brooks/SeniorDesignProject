@@ -1,5 +1,6 @@
 import geocoder
 import folium
+import haversine as hs
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
@@ -56,12 +57,15 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
         map = folium.Map(location=coordinates, zoom_start=13)
 
         for parking_lot in parking_lots:
-            infos = parking_lot.parking_name + "<br>" + parking_lot.parking_full_address + "<br>" \
-                    + str(parking_lot.free_spots) + " " + "available spots" + "<br>"
-            line = folium.IFrame(infos, width=380, height=70)
-            show_infos = folium.Popup(line, max_width=400)
             data = geocoder.bing(parking_lot.parking_full_address, key=MAPS_KEY).json
-            folium.Marker(location=[data['lat'], data['lng']], tooltip='More infos', popup=show_infos).add_to(map)
+            parking_coordinates = [data['lat'], data['lng']]
+            distance = hs.haversine((coordinates[0], coordinates[1]), (parking_coordinates[0], parking_coordinates[1]), unit=hs.Unit.MILES)
+            infos = parking_lot.parking_name + "<br>" + parking_lot.parking_full_address + "<br>" \
+                    + str(parking_lot.free_spots) + " " + "available spots" + "<br>" + "{:.2f}".format(distance) + " " \
+                    + "miles from the University of Iowa" + "<br> "
+            line = folium.IFrame(infos, width=320, height=90)
+            show_infos = folium.Popup(line, max_width=400)
+            folium.Marker(location=parking_coordinates, tooltip='More infos', popup=show_infos).add_to(map)
 
         folium.raster_layers.TileLayer('Stamen Toner').add_to(map)
         folium.raster_layers.TileLayer('Stamen Terrain').add_to(map)

@@ -5,15 +5,18 @@ from django.conf import settings
 from parking import local_settings
 from celery.schedules import crontab
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.local_settings')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.local_settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.settings')
 
 app = Celery('parking')
 
 app.conf.enable_utc = False
 
-app.conf.update(timezone='US/Central')
+app.conf.update(BROKER_URL=os.environ['REDIS_URL'], timezone='US/Central')
 
-app.config_from_object(local_settings, namespace='CELERY')
+# app.config_from_object(local_settings, namespace='CELERY')
+
+app.config_from_object(settings, namespace='CELERY')
 
 # Set schedule for celery to run
 app.conf.beat_schedule = {
