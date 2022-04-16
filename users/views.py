@@ -259,7 +259,7 @@ def user_login(request):
                 if user.is_active:
                     # if user.Please_check_this_if_you_are_a_parking_administrator:
                     login(request, user)
-                    messages.success(request, "Welcome back. You are signed in as {}.", request.user.username)
+                    messages.success(request, "Welcome back, " + request.user.first_name + "!")
                     return redirect('home')
                 # if not user.Please_check_this_if_you_are_a_parking_administrator:
                 # return redirect('manage_cars_list')
