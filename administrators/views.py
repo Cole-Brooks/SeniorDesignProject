@@ -16,7 +16,7 @@ from django.views import generic
 from customers.models import ParkingHistory
 from .forms import RegisterParkingForm
 # from parking.local_settings import MAPS_KEY
-from django.conf.settings import MAPS_KEY
+from django.conf import settings
 
 
 def home(request):
@@ -58,7 +58,7 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
         map = folium.Map(location=coordinates, zoom_start=13)
 
         for parking_lot in parking_lots:
-            data = geocoder.bing(parking_lot.parking_full_address, key=MAPS_KEY).json
+            data = geocoder.bing(parking_lot.parking_full_address, key=settings.MAPS_KEY).json
             parking_coordinates = [data['lat'], data['lng']]
             distance = hs.haversine((coordinates[0], coordinates[1]), (parking_coordinates[0], parking_coordinates[1]), unit=hs.Unit.MILES)
             infos = parking_lot.parking_name + "<br>" + parking_lot.parking_full_address + "<br>" \

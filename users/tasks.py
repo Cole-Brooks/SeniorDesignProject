@@ -5,7 +5,7 @@ from django.db.models import fields
 from .models import Contact
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
-from django.conf.settings import SERVICE_EMAIL
+from django.conf import settings
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 from customers.models import DuePaymentReminder
@@ -27,8 +27,8 @@ def send_due_payment_reminder():
                               "to have access to the parking lot next time",
                               )
         try:
-            send_mail('Due payment reminder', message, from_email=SERVICE_EMAIL, recipient_list=[due_payment.email_to],
-                      fail_silently=False, )
+            send_mail('Due payment reminder', message, from_email=settings.SERVICE_EMAIL,
+                      recipient_list=[due_payment.email_to], fail_silently=False, )
             due_payment.has_been_sent = True
             due_payment.save()
         except BadHeaderError:
