@@ -25,8 +25,12 @@ urlpatterns = [
     path('paypal/', include('paypal.standard.ipn.urls')),
     path('due_bills/', views.ManageBillsView.as_view(), name='due_bills'),
     path('paid_bills/', views.PaidBillsView.as_view(), name='paid_bills'),
-    path('make_payment/', views.make_payment, name='make_payment'),
-    path('successful_payement/', views.successful_payment, name='successful_payment'),
+    path('bills_by_parking/', views.ManageBillsByParkingView.as_view(), name='bills_by_parking'),
+    path('make_payment/<int:bill_id>', views.make_payment, name='make_payment'),
+    path('make_payment_for_all/<int:bill_id>', views.make_payment_for_all, name='make_payment_for_all'),
+    path('successful_payement_for_all/<int:bill_id>', views.successful_payment_for_all, name='successful_payment_for_all'),
+    path('successful_payement/<int:bill_id>', views.successful_payment, name='successful_payment'),
     path('cancel_payment/', views.cancel_payment, name='cancel_payment'),
+    path('contact/', views.ContactView.as_view(), name='contact'),
 
 ]

@@ -34,15 +34,8 @@ class ParkingLotMembership(forms.Form):
 
 class CustomPayPalPaymentsForm(PayPalPaymentsForm):
 
-    def get_image(self):
-
-        button = ''
-
-        return button
-
     def render(self, *args, **kwargs):
         if not args and not kwargs:
-            # `form.render` usage from template
             return format_html(
                 """<form action="{0}" method="post">{1} <input type="image" src="{2}" 
                 class="btn btn-warning" name="submit" alt="Pay with PayPal or Debit (Credit) Card"/>
@@ -52,7 +45,4 @@ class CustomPayPalPaymentsForm(PayPalPaymentsForm):
                 ''
             )
         else:
-            # Need to delegate to super. This provides
-            # support for `as_p` method and for `BoundField.label_tag`,
-            # and perhaps others.
             return super().render(*args, **kwargs)
