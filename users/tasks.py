@@ -1,4 +1,4 @@
-from parking.local_settings import SERVICE_EMAIL
+# from parking.local_settings import SERVICE_EMAIL
 from celery import shared_task
 from django import forms
 from django.db.models import fields
