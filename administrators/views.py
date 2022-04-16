@@ -16,6 +16,7 @@ from django.views import generic
 from customers.models import ParkingHistory
 from .forms import RegisterParkingForm
 from parking.local_settings import MAPS_KEY
+from django.conf.settings import MAPS_KEY
 
 
 def home(request):
