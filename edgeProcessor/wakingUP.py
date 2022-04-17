@@ -16,7 +16,7 @@ import RPi.GPIO as GPIO
 import time
 import picamera
 from sendAlert import send_alert
-
+import os
 
 needFix = False
 # initialize camera
@@ -118,6 +118,7 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         print(plateNum, confi)
+                        #os.remove(f"/home/pi/Desktop/obj.jpg")
                         #print("cv finished")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
@@ -164,7 +165,7 @@ def getStat(plAddr):
     if needFix:
         print("needFix")
         phoneNum = get_admin_contactInfo(plAddr)[2:];
-        send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
+        send_alert('Alert', f'Parking Lot in {plAddr} need Maintainance', phoneNum)
         return "Maintainance"
     if get_free_spots(plAddr) == 0:
         return "Full"

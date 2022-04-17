@@ -11,7 +11,7 @@ from wakingUP import parkingLogic
 plodVar = None
 plfVar = None
 statVar = None
-plAddr = 'OLC 100 R'
+plAddr = '411 E Market S.t.'
 print("dummy")
 root = tk.Tk()
 # constants

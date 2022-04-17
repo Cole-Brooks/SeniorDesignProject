@@ -6,6 +6,7 @@
 import psycopg2
 from config import config
 import datetime
+import time
 
 def park_car(carPlateNum, plAddr):
     conn = None
@@ -168,7 +169,10 @@ def get_overdue_info(plAddr):
 #print(get_fee_info('UCC'))
             
 if __name__ == '__main__':
-    print(get_fee_info('OLC 100 R'))
-    print(get_free_spots('OLC 100 R'))
-    print(get_overdue_info('OLC 100 R'))
-    print(park_car('HR26DK', 'OLC 100 R'))
+    print(get_fee_info('411 E Market S.t.'))
+    print(get_free_spots('411 E Market S.t.'))
+    print(get_overdue_info('411 E Market S.t.'))
+    print(get_admin_contactInfo('411 E Market S.t.'))
+    #print(park_car('LMW737', '411 E Market S.t.'))
+    #time.sleep(60)
+    #print(park_car('LMW737', '411 E Market S.t.'))
