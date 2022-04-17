@@ -173,6 +173,4 @@ if __name__ == '__main__':
     print(get_free_spots('411 E Market S.t.'))
     print(get_overdue_info('411 E Market S.t.'))
     print(get_admin_contactInfo('411 E Market S.t.'))
-    #print(park_car('LMW737', '411 E Market S.t.'))
-    #time.sleep(60)
-    #print(park_car('LMW737', '411 E Market S.t.'))
+    print(park_car('LMW737', '411 E Market S.t.'))

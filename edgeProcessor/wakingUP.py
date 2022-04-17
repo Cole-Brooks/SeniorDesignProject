@@ -94,7 +94,7 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
             dist = distance()
             print(f"distance is: {dist}")
             plfVar.set(f"Fee per Hour: {get_fee_info(plAddr)}$")
-            plodVar.set(f"Max Overdue: {get_overdue_info(plAddr)}")
+            plodVar.set(f"Max Overdue: {get_overdue_info(plAddr)}$")
             if dist < 0:
                 print("Motion sensor broken")
                 needFix = True
@@ -119,7 +119,6 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         print(plateNum, confi)
                         #os.remove(f"/home/pi/Desktop/obj.jpg")
-                        #print("cv finished")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum, plAddr)
