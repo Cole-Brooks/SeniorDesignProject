@@ -73,7 +73,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'ipinfo_django.middleware.IPinfo',
 ]
+
+IPINFO_SETTINGS = {
+  'cache_options': {
+      'ttl':30,
+      'maxsize': 128
+  }
+}
+
+IPINFO_FILTER = lambda request: request.scheme == 'http'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
