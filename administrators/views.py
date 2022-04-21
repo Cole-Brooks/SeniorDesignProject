@@ -54,7 +54,7 @@ def get_ip_address():
 def get_coordinates(ip_address):
     response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
 
-    if response:
+    if response is not None:
         coordinates = {
             "latitude": response.get("latitude"),
             "longitude": response.get("longitude"),
@@ -78,16 +78,13 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
     def get(self, request):
         parking_lots = ParkingLot.objects.annotate(total_parking_lots=Count('parking_name'))
         parking_lots = parking_lots.all()
-        # Temporary coordinates
-        # coordinates = [41.66123962402344, -91.5301284790039]
-        # current user coordinates
 
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 
         if x_forwarded_for:
-            address  = x_forwarded_for.split(',')[-1].strip()
+            address = x_forwarded_for.split(',')[-1].strip()
         elif request.META.get('HTTP_X_REAL_IP'):
-            address  = request.META.get('HTTP_X_REAL_IP')
+            address = request.META.get('HTTP_X_REAL_IP')
         else:
             address = request.META.get('REMOTE_ADDR')
 
