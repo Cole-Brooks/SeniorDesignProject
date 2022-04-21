@@ -91,7 +91,7 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
         response = address
         
         coordinates = [get_coordinates(response)["latitude"], get_coordinates(response)["longitude"]]
-        map = folium.Map(location=coordinates, zoom_start=13)
+        map = folium.Map(location=coordinates, zoom_start=14)
 
         for parking_lot in parking_lots:
             data = geocoder.bing(parking_lot.parking_full_address, key=settings.MAPS_KEY).json
