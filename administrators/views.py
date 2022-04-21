@@ -6,7 +6,7 @@ import haversine as hs
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -17,7 +17,8 @@ from users.models import User
 from django.views import generic
 from customers.models import ParkingHistory
 from .forms import RegisterParkingForm
-#from parking.local_settings import MAPS_KEY, IPINFO_TOKEN
+# from parking.local_settings import MAPS_KEY, IPINFO_TOKEN
+from ipware import get_client_ip
 from django.conf import settings
 
 
@@ -46,28 +47,53 @@ class ParkingLotListView(ListView):
         return super().get_queryset().annotate(total_parking_lots=Count('parking_name'))
 
 
+def get_ip_address():
+    return requests.get('https://api64.ipify.org?format=json').json()["ip"]
+
+
+def get_coordinates(ip_address):
+    response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
+
+    if response:
+        coordinates = {
+            "latitude": response.get("latitude"),
+            "longitude": response.get("longitude"),
+            "region": response.get("region"),
+        }
+    else:
+        coordinates = {
+            "latitude": 41.66123962402344,
+            "longitude": -91.5301284790039,
+            "region": "The University of Iowa",
+    }
+
+    return coordinates
+
+
 class ParkingLotsMapsView(TemplateResponseMixin, View):
     """View for the list of parking lots on a map"""
     model = ParkingLot
     template_name = 'parking_lots/maps.html'
 
     def get(self, request):
-
-        handler = ipinfo.getHandler(settings.IPINFO_TOKEN)
-        details = handler.getDetails()
-
-        if details is None:
-            coordinates = [41.66123962402344, -91.5301284790039]
-        else:
-            coordinates = [float(details.latitude), float(details.longitude)]
-            
-        coordinates = coordinates
-        print(coordinates)
-
         parking_lots = ParkingLot.objects.annotate(total_parking_lots=Count('parking_name'))
         parking_lots = parking_lots.all()
+        # Temporary coordinates
+        # coordinates = [41.66123962402344, -91.5301284790039]
+        # current user coordinates
+
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+        if x_forwarded_for:
+            address  = x_forwarded_for.split(',')[-1].strip()
+        elif request.META.get('HTTP_X_REAL_IP'):
+            address  = request.META.get('HTTP_X_REAL_IP')
+        else:
+            address = request.META.get('REMOTE_ADDR')
+
+        response = address
         
-        coordinates = [coordinates[0], coordinates[1]]
+        coordinates = [get_coordinates(response)["latitude"], get_coordinates(response)["longitude"]]
         map = folium.Map(location=coordinates, zoom_start=13)
 
         for parking_lot in parking_lots:
