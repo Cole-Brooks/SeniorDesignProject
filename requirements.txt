@@ -1,3 +1,5 @@
+aiohttp==3.8.1
+aiosignal==1.2.0
 amqp==5.1.0
 asgiref==3.5.0
 async-generator==1.10
@@ -7,6 +9,7 @@ Babel==2.9.1
 beautifulsoup4==4.10.0
 billiard==3.6.4.0
 branca==0.4.2
+cachetools==5.0.0
 celery==5.2.6
 certifi==2021.10.8
 cffi==1.15.0
@@ -49,6 +52,7 @@ feedparser==6.0.8
 Flask==2.0.3
 flower==1.0.0
 folium==0.12.1.post1
+frozenlist==1.3.0
 future==0.18.2
 geocoder==1.38.1
 greenlet==1.1.2
@@ -58,11 +62,14 @@ haversine==2.5.1
 humanize==4.0.0
 idna==3.3
 imutils==0.5.4
+ipinfo==4.2.0
+ipinfo-django==1.2.0
 itsdangerous==2.1.1
 Jinja2==3.0.3
 kombu==5.2.4
 localflavor==1.9
 MarkupSafe==2.1.1
+multidict==6.0.2
 numpy==1.22.2
 oauthlib==3.2.0
 opencv-python==4.5.5.62
@@ -107,3 +114,4 @@ whitenoise==5.3.0
 wrapt==1.14.0
 wsproto==1.0.0
 WTForms==3.0.1
+yarl==1.7.2
