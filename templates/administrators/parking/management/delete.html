@@ -3,13 +3,13 @@
     <title>{% block title %}Delete parking lot{% endblock %}</title>
 
     {% block content %}
-    <div class="container">
-        <h1>Delete parking lot "{{ object.parking_name }}"</h1>
+    <div class="container py-5 text-center">
+        <h1 class="py-5">Delete parking lot "{{ object.parking_name }}"</h1>
         <div>
-            <form action="" method="post">
+            <form action="" method="post" class="text-center">
                 {% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
-                <button type="submit">Confirm</button>
+                <p class="text-info">Are you sure you want to delete "{{ object }}"?</p>
+                <button class="btn btn-warning rounded-pill" type="submit">Confirm</button>
             </form>
         </div>
     </div>
