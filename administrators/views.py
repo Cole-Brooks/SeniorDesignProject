@@ -1,5 +1,6 @@
 import geocoder
 import folium
+import requests
 import haversine as hs
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -33,16 +34,38 @@ def home(request):
 
 
 # Create your views here.
-class ParkingLotListView(TemplateResponseMixin, View):
+class ParkingLotListView(ListView):
     """View for the list of parking lots"""
     model = ParkingLot
     template_name = 'parking_lots/parking_lots.html'
+    paginate_by = 3
+    context_object_name = 'parking_lots'
 
-    def get(self, request):
-        parking_lots = ParkingLot.objects.annotate(total_parking_lots=Count('parking_name'))
-        parking_lots = parking_lots.all()
+    def get_queryset(self):
+        return super().get_queryset().annotate(total_parking_lots=Count('parking_name'))
 
-        return self.render_to_response({'parking_lots': parking_lots})
+
+def get_ip_address():
+    return requests.get('https://api64.ipify.org?format=json').json()["ip"]
+
+
+def get_coordinates():
+    response = requests.get(f'https://ipapi.co/{get_ip_address()}/json/').json()
+
+    if response:
+        coordinates = {
+            "latitude": response.get("latitude"),
+            "longitude": response.get("longitude"),
+            "region": response.get("region"),
+        }
+    else:
+        coordinates = {
+            "latitude": 41.66123962402344,
+            "longitude": -91.5301284790039,
+            "region": "The University of Iowa",
+        }
+
+    return coordinates
 
 
 class ParkingLotsMapsView(TemplateResponseMixin, View):
@@ -54,16 +77,19 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
         parking_lots = ParkingLot.objects.annotate(total_parking_lots=Count('parking_name'))
         parking_lots = parking_lots.all()
         # Temporary coordinates
-        coordinates = [41.66123962402344, -91.5301284790039]
+        # coordinates = [41.66123962402344, -91.5301284790039]
+        # current user coordinates
+        coordinates = [get_coordinates()["latitude"], get_coordinates()["longitude"]]
         map = folium.Map(location=coordinates, zoom_start=13)
 
         for parking_lot in parking_lots:
             data = geocoder.bing(parking_lot.parking_full_address, key=settings.MAPS_KEY).json
             parking_coordinates = [data['lat'], data['lng']]
-            distance = hs.haversine((coordinates[0], coordinates[1]), (parking_coordinates[0], parking_coordinates[1]), unit=hs.Unit.MILES)
+            distance = hs.haversine((coordinates[0], coordinates[1]), (parking_coordinates[0], parking_coordinates[1]),
+                                    unit=hs.Unit.MILES)
             infos = parking_lot.parking_name + "<br>" + parking_lot.parking_full_address + "<br>" \
                     + str(parking_lot.free_spots) + " " + "available spots" + "<br>" + "{:.2f}".format(distance) + " " \
-                    + "miles from the University of Iowa" + "<br> "
+                    + "miles" + "<br> "
             line = folium.IFrame(infos, width=320, height=90)
             show_infos = folium.Popup(line, max_width=400)
             folium.Marker(location=parking_coordinates, tooltip='More infos', popup=show_infos).add_to(map)

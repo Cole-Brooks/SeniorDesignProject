@@ -4,12 +4,18 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5">Parking Lots List</h1>
+    <h1 class="py-5 text-center">Parking Lots List</h1>
     <div>
-        <p class="text-center">
-            <a class="btn btn-warning mx-5" href="{% url 'parking_create' %}">Add new parking lot</a>
-            <a class="btn btn-warning mx-5" href="https://www.paypal.com/bizsignup/#/singlePageSignup">
-                Set up PayPal business account for payments</a>
+        <form class="form-inline .form-control-sm my-lg-0 ml-auto">
+            <input class="form-control col-lg-11 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
+        </form>
+        <p class="text-center py-3">
+            <a class="text-primary" href="https://www.paypal.com/bizsignup/#/singlePageSignup">
+                Sign up for a Paypal business account to receive payments</a>
+        </p>
+        <p class="text-center py-3">
+            <a class="btn btn-warning rounded-pill mx-5" href="{% url 'parking_create' %}">Add new parking lot</a>
         </p>
         <table>
             <caption>Available parking lots registered in the system</caption>
@@ -23,13 +29,15 @@
                 {% for parking in object_list %}
                 <tr>
                     <td>{{ parking.parking_name }}</td>
-                    <td><a href="{% url 'parking_edit' parking.id %}" class="btn btn-warning mx-4">Update</a>
-                        <a href="{% url 'parking_delete' parking.id %}" class="btn btn-warning mx-4">Delete</a>
+                    <td><a href="{% url 'parking_edit' parking.id %}"
+                            class="btn btn-warning rounded-pill mx-4">Update</a>
+                        <a href="{% url 'parking_delete' parking.id %}"
+                            class="btn btn-warning rounded-pill mx-4">Delete</a>
                     </td>
                 </tr>
                 {% empty %}
                 <div>
-                       <p class="py-5">You don't have any added parking lots</p>
+                    <p class="py-5">You don't have any added parking lots</p>
                 </div>
                 {% endfor %}
             </tbody>

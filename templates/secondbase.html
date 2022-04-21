@@ -13,21 +13,11 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!--Incorporated CSS-->
-    <link rel="stylesheet" href="{% static "custom_css/styles.css" %}" type="text/css">
-    <style>
-        footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: black;
-            text-align: center;
-        }
-    </style>
+    <link href="{% static 'custom_css/styles.css' %}" rel="stylesheet" type="text/css">
     <title>{% block title %}Second Base{% endblock %}</title>
 </head>
 
-<body>
+<body style="background-color:aliceblue">
 {% include 'partials/navigation_1.html' %}
 {% include 'partials/messages.html' %}
     <div id="content">

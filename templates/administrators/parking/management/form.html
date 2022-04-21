@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container">
-    <div>
+    <div class="py-5 text-center">
         {% if object %}
         <h1>Update Parking lot "{{ object.parking_name}}"
             {% else %}
@@ -14,16 +14,25 @@
         </h1>
     </div>
     <div>
-        <h2>Parking lot info</h2>
+        <h2 class="text-center">Parking lot information</h2>
         <div class="py-5">
             <div class="py-5">
-            <form method="post" class="pb-5">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <p><input type="submit" class="btn btn-warning" value="Save"></p>
-            </form>
+                <div class="bg-light">
+                    <div class="mx-3 py-3">
+                        <form method="post" class="pb-5 text-info">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="text-center">
+                                <p><input type="submit" class="btn btn-warning rounded-pill" value="Save"></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="py-5">
+        <div class="py-5"></div>
     </div>
 </div>
 {% endblock %}

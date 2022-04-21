@@ -1,5 +1,4 @@
 {% extends "secondbase.html" %}
-{% load static %}
 
   <title>{% block title %}Contact{% endblock %}</title>
   {% block content%}
@@ -29,7 +28,7 @@
               <label>Your message</label>
               {{ form.message }}
             </div>
-            <button type="submit" class="btn btn-warning ">Submit</button>
+            <button type="submit" class="btn btn-warning rounded-pill ">Submit</button>
           </form>
         </div>
         </div>

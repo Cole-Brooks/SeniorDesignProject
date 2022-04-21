@@ -37,7 +37,7 @@
                        <td>{{ bill.out_time }}</td>
                        <td>{{ bill.get_time_spent }}</td>
                        <td>$ {{ bill.parking_fee}}</td>
-                       <td><a href="{% url 'make_payment' bill.id %}" class="btn btn-warning mx-1">Pay Now</a></td>
+                       <td><a href="{% url 'make_payment' bill.id %}" class="btn btn-warning rounded-pill mx-1">Pay Now</a></td>
                        </td>
                     </tr>
                 {% empty %}
