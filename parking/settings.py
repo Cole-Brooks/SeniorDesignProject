@@ -83,6 +83,8 @@ IPINFO_SETTINGS = {
   }
 }
 
+IPINFO_TOKEN = os.environ.get("IPINFO_TOKEN")
+
 IPINFO_FILTER = lambda request: request.scheme == 'http'
 
 CORS_ORIGIN_ALLOW_ALL = True
