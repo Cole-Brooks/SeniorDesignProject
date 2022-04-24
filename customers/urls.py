@@ -6,6 +6,7 @@ from customers import views
 urlpatterns = [
     path('cars/list/', views.CarListView.as_view(), name='cars_list'),
     path('cars/list/manage/', views.ManageCarListView.as_view(), name='manage_cars_list'),
+    path('cars/list/manage/<pk>/', views.ManageCarDetailView.as_view(), name='manage_car_detail'),
     path('create/', views.CreateCarView.as_view(), name='car_create'),
     path('<pk>/edit/', views.UpdateCarView.as_view(), name='car_edit'),
     path('<pk>/delete/', views.DeleteCarView.as_view(), name='car_delete'),
