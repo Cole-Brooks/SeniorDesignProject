@@ -1,0 +1,55 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Parking lots list{% endblock %}</title>
+
+{% block content %}
+<div class="container">
+    <h1 class="py-5 text-center">Search Results</h1>
+    <div>
+        <form class="form-inline .form-control-sm my-lg-0 ml-auto" action="{% url 'manage_search_parking_lots' %}"
+            method="get">
+            <input class="form-control col-lg-11 mr-sm-2 rounded-pill" name="q" type="search"
+                placeholder="Search parking lots by name, city or zip code" aria-label="Search">
+            <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
+        </form>
+        <div>
+            <a class="nav-link text-primary text-center mx-3 py-5" href="{% url 'manage_parking_lots_list' %}">All
+                parking lots</a>
+        </div>
+        {% if data %}
+        <h4 class="text-center text-success">
+            {% with object_list.count as total %}
+            Found {{ total }} result{{ total|pluralize }}
+            {% endwith %}
+        </h4>
+        <table>
+            <caption>Available parking lots registered in the system</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="name">Name</th>
+                    <th id="address">Address</th>
+                    <th id="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parking in object_list %}
+                <tr>
+                    <td>{{ parking.parking_name }}</td>
+                    <td>{{ parking.parking_full_address }}</td>
+                    <td><a href="{% url 'parking_edit' parking.id %}"
+                            class="btn btn-warning rounded-pill mx-4">Update</a>
+                        <a href="{% url 'parking_delete' parking.id %}"
+                            class="btn btn-warning rounded-pill mx-4">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <div>
+                    <p class="py-5">You don't have any added parking lots</p>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
