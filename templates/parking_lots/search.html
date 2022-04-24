@@ -5,49 +5,52 @@
 {% block content %}
 <div class="container py-3">
   <div class="py-5">
-    <h1 class="py-5 text-center">All parking lots</h1>
+    <h1 class="py-5 text-center">Search Results</h1>
     <form class="form-inline .form-control-sm my-lg-0 ml-auto" action="{% url 'search_parking_lots' %}" method="get">
       <input class="form-control col-lg-11 mr-sm-2 rounded-pill" name="q" type="search"
-             placeholder="Search parking lots by name, city or zip code" aria-label="Search">
+        placeholder="Search parking lots by name, city or zip code" aria-label="Search">
       <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
     </form>
-</form>
     <div>
+      <div>
+        <a class="nav-link text-primary text-center mx-3 py-5" href="{% url 'parking_lots_list' %}">All parking lots</a>
+      </div>
+      {% if data %}
+      <h4 class="text-center text-success">
+        {% with parking_lots.count as total %}
+        Found {{ total }} result{{ total|pluralize }}
+        {% endwith %}
+      </h4>
       <div class="row my-3 pb-5 pt-5">
         {% for parking in parking_lots %}
         <div class="col text-center py-3">
           <div class="card" style="width: 23rem;">
             <div class="card-body text-left bg-dark">
-              <h5 class="card-title text-center py-2">
-                <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name|safe|truncatechars:30 }}</a>
+              <h5 class="card-title text-center">
+                <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name }}</a>
               </h5>
               <p class="text-center bg-warning">
                 <br><strong class="text-secondary">Address :</strong> {{ parking.parking_full_address }}</br>
-                <br><strong class="text-secondary">Fee per hour :</strong> $ {{ parking.fee_per_hour }}</br>
                 {% if parking.capacities == parking.free_spots %}
                 <br><strong class="text-secondary">Status: </strong>Full</br {% else %} <br><strong
                   class="text-secondary">Status: </strong> {{ parking.free_spots }} available spots</br>
                 {% endif %}
                 </br>
-                <div class="pt-2 text-center">
-              <a class="btn btn-secondary" href="{% url 'parking_lot_detail' parking.slug %}"> More details</a>
-            </div>
-                </br>
               </p>
             </div>
           </div>
         </div>
-        {% if forloop.counter|divisibleby:3 %}
+        <!--{% if forloop.counter|divisibleby:3 %}-->
       </div>
-      <div class="row my-3 pb-5">
-        {% endif %}
-        {% endfor %}
-      </div>
-      {% include "partials/pagination.html" %}
+      <!--<div class="row my-3 pb-5">
+        {% endif %}-->
+      {% endfor %}
     </div>
-    <div class="py-5">
-      <div class="py-5"></div>
-    </div>
+    {% endif %}
   </div>
+  <div class="py-5">
+    <div class="py-5"></div>
+  </div>
+</div>
 </div>
 {% endblock %}

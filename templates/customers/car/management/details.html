@@ -1,0 +1,32 @@
+{% extends 'secondbase.html' %}
+
+<title>{% block title %} {{ object.parking_name }}{% endblock %}</title>
+
+{% block content %}
+<div class="container py-5">
+    {% with car=object.cars %}
+    <h1 class="title text-center py-3">
+        {{ object.make }} {{ object.model}}
+    </h1>
+    <div class="py-5">
+        <h3 class="bg-warning text-center text-primary">Car details</h3>
+        <p class="py-3">
+        <div class="">
+            <br><strong class="text-primary">Owner :</strong> {{ object.owner }}</br>
+            <br><strong class="text-primary">Make:</strong> {{ object.make }}</br>
+            <br><strong class="text-primary">Model:</strong> {{ object.model }}</br>
+            <br><strong class="text-primary">License plate number:</strong> {{ object.license_plate_number }}</br>
+            <br><strong class="text-primary">State:</strong> {{ object.state }}</br>
+        </div>
+        </p>
+        <div class="py-5 text-center">
+            <a class="btn btn-secondary rounded-pill text-center" href="{% url 'manage_cars_list' %}"> Back</a>
+        </div>
+        <div class="py-5">
+            <div class="py-5">
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+</div>
+{% endblock %}

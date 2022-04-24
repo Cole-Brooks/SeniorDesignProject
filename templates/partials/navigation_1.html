@@ -28,8 +28,8 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{% url 'manage_parking_lots_list' %}">Manage Parking
                                 Lots</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'parking_lots_customers_list' %}">Manage Customers</a>
+                            <!--<div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'parking_lots_customers_list' %}">Manage Customers</a>-->
                         </div>
                     </li>
                 </ul>
@@ -58,7 +58,8 @@
                 </a>
                 <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
                 {% else %}
-                <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0" href="{% url 'user_registration' %}">Register</a>
+                <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0"
+                    href="{% url 'user_registration' %}">Register</a>
                 <a class="tex-light nav-item mx-3">
                     Already have an account?
                 </a>

@@ -16,10 +16,12 @@ from customers.forms import ParkingLotMembership
 from users.models import User
 from django.views import generic
 from customers.models import ParkingHistory
-from .forms import RegisterParkingForm
+from .forms import RegisterParkingForm, SearchParking
 # from parking.local_settings import MAPS_KEY, IPINFO_TOKEN
 from ipware import get_client_ip
 from django.conf import settings
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def home(request):
@@ -42,9 +44,52 @@ class ParkingLotListView(ListView):
     template_name = 'parking_lots/parking_lots.html'
     paginate_by = 3
     context_object_name = 'parking_lots'
+    form_class = SearchParking
 
     def get_queryset(self):
         return super().get_queryset().annotate(total_parking_lots=Count('parking_name'))
+
+
+def search_parking_lots(request):
+    parking_lots = []
+
+    if request.method == 'GET':
+        data = request.GET.get('q')
+        if data == '':
+            return HttpResponseRedirect(reverse_lazy('parking_lots_list'))
+        else:
+            parking_lots = ParkingLot.objects.filter(Q(parking_name__icontains=data) | Q(city__icontains=data) |
+                                                     Q(zip_code__icontains=data))
+        parking_lots = parking_lots
+
+        # paginator = Paginator(parking_lots, 3)
+        # page= request.GET.get('page')
+
+        # try:
+        #   parking_lots = paginator.page(page)
+        # except PageNotAnInteger:
+        # Deliver the first page
+        # parking_lots = paginator.page(1)
+        # except EmptyPage:
+        # Deliver last page
+        # parking_lots = paginator.page(paginator.num_pages)
+
+    return render(request, 'parking_lots/search.html', {'data': data, 'parking_lots': parking_lots})
+
+
+def manage_search_parking_lots(request):
+    object_list = []
+
+    if request.method == 'GET':
+        data = request.GET.get('q')
+        if data == '':
+            return HttpResponseRedirect(reverse_lazy('manage_parking_lots_list'))
+        else:
+            object_list = ParkingLot.objects.filter(Q(parking_name__icontains=data) | Q(city__icontains=data) |
+                                                     Q(zip_code__icontains=data))
+        object_list = object_list
+
+    return render(request, 'administrators/parking/management/search.html', {'data': data, 'object_list': object_list})
 
 
 def get_ip_address():
@@ -65,7 +110,7 @@ def get_coordinates(ip_address):
             "latitude": 41.66123962402344,
             "longitude": -91.5301284790039,
             "region": "The University of Iowa",
-    }
+        }
 
     return coordinates
 
@@ -89,7 +134,7 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
             address = request.META.get('REMOTE_ADDR')
 
         response = address
-        
+
         coordinates = [get_coordinates(response)["latitude"], get_coordinates(response)["longitude"]]
         map = folium.Map(location=coordinates, zoom_start=14)
 
@@ -100,8 +145,8 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
                                     unit=hs.Unit.MILES)
             infos = parking_lot.parking_name + "<br>" + parking_lot.parking_full_address + "<br>" \
                     + str(parking_lot.free_spots) + " " + "available spots" + "<br>" + "{:.2f}".format(distance) + " " \
-                    + "miles" + "<br> "
-            line = folium.IFrame(infos, width=320, height=90)
+                    + "miles" + "<br> " + "$ " + str(parking_lot.fee_per_hour) + " per hour" + "<br>"
+            line = folium.IFrame(infos, width=320, height=100)
             show_infos = folium.Popup(line, max_width=400)
             folium.Marker(location=parking_coordinates, tooltip='More infos', popup=show_infos).add_to(map)
 
@@ -127,7 +172,24 @@ class ParkingLotDetailView(DetailView):
         return context
 
 
+class ManageParkingLotDetailView(DetailView, LoginRequiredMixin):
+    """ View for managing parking lot details"""
+
+    model = ParkingLot
+    template_name = 'administrators/parking/management/details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        parking_lots = ParkingLot.objects.filter(administrator=self.request.user)
+        context["parking_lots"] = parking_lots
+
+        return context
+
+
 class CreatorMixin(object):
+    model = ParkingLot
+    form_class = RegisterParkingForm
+
     def get_queryset(self):
         """Allows to only display or update the parking lots created"""
         queryset = super().get_queryset()
@@ -141,9 +203,9 @@ class EditableCreatorMixin(object):
 
 
 class CreatorParkingLotMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
-    model = ParkingLot
-    fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'business_email',
-              'capacities', 'fee_per_hour', 'free_spots', 'max_overdue']
+    # model = ParkingLot
+    # fields = ['parking_name', 'overview', 'street_address', 'city', 'state', 'zip_code', 'phone', 'business_email',
+    # 'capacities', 'fee_per_hour', 'free_spots', 'max_overdue']
     success_url = reverse_lazy('manage_parking_lots_list')
     success_message = "%(parking_name)s was added successfully"
 

@@ -35,7 +35,7 @@ class ParkingLot(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     customer = models.ManyToManyField(User, related_name='customers_who_joined', blank=True)
     capacities = models.PositiveIntegerField(blank=False, null=False)
-    image = models.ImageField(blank=True, null=True, upload_to="parking_lots")
+    image = models.ImageField(blank=True, null=True, upload_to="parking-lots")
     fee_per_hour = models.DecimalField(max_digits=8, decimal_places=2, default=1.0,
                                        validators=[MinValueValidator(Decimal('0.00'))])
     free_spots = models.PositiveIntegerField(blank=False, null=False, validators=[MinValueValidator(0)])
@@ -70,5 +70,5 @@ class ParkingLot(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:
-            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216377/media/avatars/defaultprofile_vad1ub.png"
+            return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
 

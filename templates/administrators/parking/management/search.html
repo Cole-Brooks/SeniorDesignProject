@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5 text-center">Parking Lots List</h1>
+    <h1 class="py-5 text-center">Search Results</h1>
     <div>
         <form class="form-inline .form-control-sm my-lg-0 ml-auto" action="{% url 'manage_search_parking_lots' %}"
             method="get">
@@ -12,13 +12,16 @@
                 placeholder="Search parking lots by name, city or zip code" aria-label="Search">
             <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
         </form>
-        <p class="text-center py-3">
-            <a class="text-primary" href="https://www.paypal.com/bizsignup/#/singlePageSignup">
-                Sign up for a Paypal business account to receive payments</a>
-        </p>
-        <p class="text-center py-3">
-            <a class="btn btn-warning rounded-pill mx-5" href="{% url 'parking_create' %}">Add new parking lot</a>
-        </p>
+        <div>
+            <a class="nav-link text-primary text-center mx-3 py-5" href="{% url 'manage_parking_lots_list' %}">All
+                parking lots</a>
+        </div>
+        {% if data %}
+        <h4 class="text-center text-success">
+            {% with object_list.count as total %}
+            Found {{ total }} result{{ total|pluralize }}
+            {% endwith %}
+        </h4>
         <table>
             <caption>Available parking lots registered in the system</caption>
             <thead>
@@ -31,15 +34,12 @@
             <tbody>
                 {% for parking in object_list %}
                 <tr>
-                    <td><a href="{% url 'manage_parking_lot_detail' parking.slug %}">{{ parking.parking_name }}</a>
-                    </td>
+                    <td>{{ parking.parking_name }}</td>
                     <td>{{ parking.parking_full_address }}</td>
                     <td><a href="{% url 'parking_edit' parking.id %}"
                             class="btn btn-warning rounded-pill mx-4">Update</a>
                         <a href="{% url 'parking_delete' parking.id %}"
                             class="btn btn-warning rounded-pill mx-4">Delete</a>
-                        <a href="{% url 'manage_parking_lot_detail' parking.slug %}"
-                            class="btn btn-warning rounded-pill mx-4">More Details</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -49,7 +49,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="py-5"><div class="py-5"></div></div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

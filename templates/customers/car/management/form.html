@@ -7,14 +7,14 @@
 <div class="container">
     <div class="py-5 text-center">
         {% if object %}
-        <h1>Update Car "{{ object.mark }}"
+        <h1>Update Car "{{ object.make }} {{ object.model }}"
             {% else %}
             <h1>Add a new car</h1>
             {% endif %}
         </h1>
     </div>
     <div>
-        <h2 class="text-center">Car information</h2>
+        <h2 class="bg-warning text-center text-primary">Car information</h2>
         <div class="py-5">
             <div class="py-5">
                 <div class="bg-light">

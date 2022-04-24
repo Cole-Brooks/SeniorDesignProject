@@ -3,25 +3,29 @@ from django import forms
 from administrators.models import ParkingLot
 from django.utils.html import format_html
 from paypal.standard.forms import PayPalPaymentsForm
+from localflavor.us.forms import USStateSelect, USStateField
+from localflavor.us.us_states import STATE_CHOICES
 
 
 class RegisterCarForm(forms.ModelForm):
-    """Login form to for adding a car"""
+    """Register form to for adding a car"""
 
-    parking = forms.ModelChoiceField(queryset=ParkingLot.objects.all(), widget=forms.Select(
-        attrs={'class': 'form-control'}))
+    # parking = forms.ModelChoiceField(queryset=ParkingLot.objects.all(), widget=forms.Select(
+    # attrs={'class': 'form-control'}))
+
+    state = forms.ChoiceField(choices=STATE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Car
         fields = ('make', 'model', 'license_plate_number', 'state',)
-        
-        
+
+
 class UpdateParkingCarForm(forms.ModelForm):
-    """Login form to for adding a car"""
+    """Form to for updating car parking"""
 
     parking = forms.ModelChoiceField(queryset=ParkingLot.objects.all(), widget=forms.Select(
         attrs={'class': 'form-control'}))
-    
+
     class Meta:
         model = Car
         fields = ('parking',)

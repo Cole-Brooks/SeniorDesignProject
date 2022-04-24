@@ -6,10 +6,6 @@
 <div class="container">
     <h1 class="py-5 text-center">Cars List</h1>
     <div>
-        <form class="form-inline .form-control-sm my-lg-0 ml-auto">
-            <input class="form-control col-lg-11 mr-sm-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
-        </form>
         <p class="text-center py-3">
             <a class="mx-3 btn btn-warning rounded-pill" href="{% url 'car_create' %}">Add new car</a>
             <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
@@ -38,12 +34,14 @@
             <tbody>
                 {% for car in object_list %}
                 <tr>
-                    <td>{{ car.make }}</td>
-                    <td>{{ car.model }}</td>
+                    <td><a href="{% url 'manage_car_detail' car.id %}">{{ car.make }}</a></td>
+                    <td><a href="{% url 'manage_car_detail' car.id %}">{{ car.model }}</a></td>
                     <td>{{ car.license_plate_number}}</td>
                     <td>{{ car.state }}</td>
                     <td><a href="{% url 'car_edit' car.id %}" class="btn btn-warning rounded-pill mx-4">Update</a>
                         <a href="{% url 'car_delete' car.id %}" class="btn btn-warning rounded-pill mx-4">Delete</a>
+                        <a href="{% url 'manage_car_detail' car.id %}" class="btn btn-warning rounded-pill mx-4">More
+                            details</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -53,6 +51,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="py-5"><div class="py-5"></div></div>
     </div>
 </div>
 {% endblock %}

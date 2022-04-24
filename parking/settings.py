@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'customers',
     'corsheaders',
     'crispy_forms',
+    'captcha',
     'paypal.standard.ipn',
     'paypal.standard',
     'paypal.pro',

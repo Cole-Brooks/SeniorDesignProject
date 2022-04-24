@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from users.models import User
 from django.utils import timezone
 from localflavor.us.models import USStateField, USZipCodeField
+from localflavor.us.us_states import STATE_CHOICES
 
 
 # Create your models here.
@@ -25,7 +26,8 @@ class Car(models.Model):
     make = models.CharField(blank=False, null=False, max_length=255)
     model = models.CharField(blank=False, null=False, max_length=255)
     license_plate_number = models.CharField(blank=False, null=False, max_length=255)
-    state = USStateField(null=False, blank=False)
+    state = USStateField(choices=STATE_CHOICES, null=False, blank=False)
+    image = models.ImageField(blank=True, null=True, upload_to="cars")
     parking = models.ForeignKey(administrators.models.ParkingLot(), blank=True, null=True, on_delete=models.SET_NULL)
     in_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     out_time = models.DateTimeField(auto_now_add=False, blank=True, null=True)
@@ -36,6 +38,13 @@ class Car(models.Model):
 
     def __str__(self):
         return self.make + ' ' + self.model
+
+    @property
+    def get_image_url(self):
+        #if self.image and hasattr(self.image, 'url'):
+        return self.image.url
+        #else:
+            #return "https://res.cloudinary.com/dh13i9dce/image/upload/v1642216413/media/logos/default-thumb_dn1xzg.png"
 
     @property
     def get_time_spent(self):

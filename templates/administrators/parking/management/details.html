@@ -1,0 +1,39 @@
+{% extends 'secondbase.html' %}
+
+<title>{% block title %} {{ object.parking_name }}{% endblock %}</title>
+
+{% block content %}
+<div class="container py-5">
+    {% with parking=object.parking_lots %}
+    <h1 class="title text-center py-3">
+        {{ object.parking_name }}
+    </h1>
+    <div class="py-5">
+        <h3 class="bg-warning text-center text-primary">Parking lot details</h3>
+        <p class="py-3">
+            <br class="text-center">{{ object.overview|safe }}
+        <div class="">
+            <br><strong class="text-primary">Administrator :</strong> {{ object.administrator }}</br>
+            <br><strong class="text-primary">Street address:</strong> {{ object.street_address }}</br>
+            <br><strong class="text-primary">City:</strong> {{ object.city }}</br>
+            <br><strong class="text-primary">State:</strong> {{ object.state }}</br>
+            <br><strong class="text-primary">Zip code:</strong> {{ object.zip_code }}</br>
+            <br><strong class="text-primary">Phone number:</strong> {{ object.phone }}</br>
+            <br><strong class="text-primary">Paypal business email:</strong> {{ object.business_email}}</br>
+            <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }} spots</br>
+            <br><strong class="text-primary">Fee per hour:</strong> $ {{ object.fee_per_hour }}</br>
+            <br><strong class="text-primary">Free spots:</strong> {{ object.free_spots }} spots</br>
+            <br><strong class="text-primary">Maximum overdue:</strong> $ {{ object.max_overdue }}</br>
+        </div>
+        </p>
+        <div class="py-5 text-center">
+            <a class="btn btn-secondary rounded-pill text-center" href="{% url 'manage_parking_lots_list' %}"> Back</a>
+        </div>
+        <div class="py-5">
+            <div class="py-5">
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+</div>
+{% endblock %}

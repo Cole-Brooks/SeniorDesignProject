@@ -1,17 +1,16 @@
 {% extends 'secondbase.html' %}
 
-    <title>{% block title %}Delete parking lot{% endblock %}</title>
+<title>{% block title %}Delete parking lot{% endblock %}</title>
 
-    {% block content %}
-    <div class="container py-5 text-center">
-        <h1 class="py-5">Delete parking lot "{{ object.parking_name }}"</h1>
-        <div>
-            <form action="" method="post" class="text-center">
-                {% csrf_token %}
-                <p class="text-info">Are you sure you want to delete "{{ object }}"?</p>
-                <button class="btn btn-warning rounded-pill" type="submit">Confirm</button>
-            </form>
-        </div>
+{% block content %}
+<div class="container py-5 text-center">
+    <h1 class="py-5">Delete parking lot "{{ object.parking_name }}"</h1>
+    <div>
+        <form action="" method="post" class="text-center">
+            {% csrf_token %}
+            <p class="text-info">Are you sure you want to delete "{{ object }}"?</p>
+            <button class="btn btn-warning rounded-pill" type="submit">Confirm</button>
+        </form>
     </div>
-    {% endblock %}
-
+</div>
+{% endblock %}
