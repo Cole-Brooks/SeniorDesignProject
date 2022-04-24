@@ -16,14 +16,15 @@
             <p class="text-primary">Enter your credentials to sign in</p>
             {% endif %}
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-4 py-5 bg-light" style="margin: 0 auto; width:30%">
+                <div class="col-md-4 py-5 bg-light" style="margin: 0 auto;">
                     <h3 class="text-primary py-2"></h3>
                     <form method="post" class="form-group pt-5 pb-3 text-left text-info" style="max-width: 40em; margin: auto;
                     text-align: center" action="{% url 'login' %}">
                         {% csrf_token %}
                         {% bootstrap_form form %}
                         <p class="text-center">
-                            <input class="btn btn-warning rounded-pill" id="login" type="submit" name="next" value="Log in" />
+                            <input class="btn btn-warning rounded-pill" id="login" type="submit" name="next"
+                                value="Log in" />
                         </p>
                     </form>
                     <p class="text-left"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
@@ -34,8 +35,8 @@
                 </div>
             </div>
         </div>
-         <div class="py-5">
-      <div class="py-5"></div>
-    </div>
+        <div class="py-5">
+            <div class="py-5"></div>
+        </div>
     </div>
     {% endblock %}

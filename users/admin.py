@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Profile
+from .models import User, Profile, Contact
 
 
 # Register your models here.
@@ -12,3 +12,8 @@ class UserAdmin(admin.ModelAdmin):
 class AdminProfile(admin.ModelAdmin):
     """Register the model with specific fields"""
     list_display = ['user', 'photo']
+    
+    
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'email', 'timestamp')

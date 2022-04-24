@@ -5,6 +5,9 @@ from django.db import models
 from users.models import User, Profile, Contact
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
+# from parking.local_settings import SERVICE_EMAIL
+from django.core.mail import send_mail, BadHeaderError
+from captcha.fields import CaptchaField
 
 
 class LoginForm(forms.Form):
@@ -13,6 +16,7 @@ class LoginForm(forms.Form):
         attrs={'placeholder': 'Username', 'id': 'username', 'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Password', 'id': 'password', 'class': 'form-control'}))
+    captcha = CaptchaField(required=True)
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -46,6 +50,8 @@ class RegistrationForm(forms.ModelForm):
     password2 = forms.CharField(label='Confirm Password', min_length=8, required=True, widget=forms.PasswordInput(
         attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}),
                                 help_text="Enter the same password as above.")
+
+    captcha = CaptchaField(required=True)
 
     error_messages = {
         'password_mismatch': _("Sorry! The passwords you entered don't match."),
@@ -107,6 +113,8 @@ class ContactForm(forms.ModelForm):
     message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
 
+    captcha = CaptchaField(required=True)
+
     def get_message(self):
 
         clean_data = super().clean()
@@ -132,11 +140,11 @@ class ContactForm(forms.ModelForm):
         message, subject = self.get_message()
 
         try:
-            send_mail(subject, message, from_email=str(settings.ADMIN_EMAIL),
-                      recipient_list=[str(settings.ADMIN_EMAIL)], fail_silently=False, )
+            send_mail(subject, message, from_email=str(settings.SERVICE_EMAIL),
+                      recipient_list=[str(SERVICE_EMAIL)], fail_silently=False, )
         except BadHeaderError:
             return HttpResponse('Invalid header found')
 
     class Meta:
         model = Contact
-        fields = ('name', 'email', 'phone', 'subject', 'message',)
+        fields = ('name', 'email', 'phone', 'subject', 'message', 'captcha',)

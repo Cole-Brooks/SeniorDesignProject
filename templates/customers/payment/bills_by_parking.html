@@ -13,7 +13,8 @@
             <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking lot</a>
         </h4>
         <p class="text-center py-3">
-            <a class="mx-5 "><strong class="mx-2 text-primary">Total balance due:</strong> $ {{ request.user.balance_due }}</a>
+            <a class="mx-5 "><strong class="mx-2 text-primary">Total balance due:</strong> $ {{ request.user.balance_due
+                }}</a>
         </p>
         <table>
             <caption>All due bills</caption>
@@ -26,12 +27,13 @@
             </thead>
             <tbody>
                 {% for bill in bills %}
-                    <tr>
-                       <td>{{ bill.parking__parking_name }}</td>
-                       <td>$ {{ bill.total_parking_fee}}</td>
-                       <td><a href="{% url 'make_payment_for_all' bill.parking %}" class="btn btn-warning rounded-pill mx-1">Pay Now</a></td>
-                       </td>
-                    </tr>
+                <tr>
+                    <td>{{ bill.parking__parking_name }}</td>
+                    <td>$ {{ bill.total_parking_fee}}</td>
+                    <td><a href="{% url 'make_payment_for_all' bill.parking %}"
+                            class="btn btn-warning rounded-pill mx-1">Pay Now</a></td>
+                    </td>
+                </tr>
                 {% empty %}
                 <div>
                     <p class="py-5">You don't have any due bills</p>
@@ -39,6 +41,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="py-5"><div class="py-5"></div></div>
     </div>
 </div>
 {% endblock %}

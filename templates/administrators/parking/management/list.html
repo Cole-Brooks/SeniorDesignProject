@@ -6,8 +6,10 @@
 <div class="container">
     <h1 class="py-5 text-center">Parking Lots List</h1>
     <div>
-        <form class="form-inline .form-control-sm my-lg-0 ml-auto">
-            <input class="form-control col-lg-11 mr-sm-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline .form-control-sm my-lg-0 ml-auto" action="{% url 'manage_search_parking_lots' %}"
+            method="get">
+            <input class="form-control col-lg-11 mr-sm-2 rounded-pill" name="q" type="search"
+                placeholder="Search parking lots by name, city or zip code" aria-label="Search">
             <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-2" type="submit">Search</button>
         </form>
         <p class="text-center py-3">
@@ -22,17 +24,22 @@
             <thead>
                 <tr class="text-secondary">
                     <th id="name">Name</th>
+                    <th id="address">Address</th>
                     <th id="actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for parking in object_list %}
                 <tr>
-                    <td>{{ parking.parking_name }}</td>
+                    <td><a href="{% url 'manage_parking_lot_detail' parking.slug %}">{{ parking.parking_name }}</a>
+                    </td>
+                    <td>{{ parking.parking_full_address }}</td>
                     <td><a href="{% url 'parking_edit' parking.id %}"
                             class="btn btn-warning rounded-pill mx-4">Update</a>
                         <a href="{% url 'parking_delete' parking.id %}"
                             class="btn btn-warning rounded-pill mx-4">Delete</a>
+                        <a href="{% url 'manage_parking_lot_detail' parking.slug %}"
+                            class="btn btn-warning rounded-pill mx-4">More Details</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -42,6 +49,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="py-5"><div class="py-5"></div></div>
     </div>
 </div>
 {% endblock %}
