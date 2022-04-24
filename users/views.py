@@ -90,7 +90,7 @@ class ManageBillsByParkingView(generic.TemplateView, LoginRequiredMixin):
 class ContactView(generic.FormView, SuccessMessageMixin):
     template_name = "contact.html"
     form_class = ContactForm
-    success_url = 'contact'
+    success_url = '/users/contact'
 
     def form_valid(self, form):
         form.send_email()
