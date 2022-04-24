@@ -27,8 +27,7 @@
           <div class="card" style="width: 23rem;">
             <div class="card-body text-left bg-dark">
               <h5 class="card-title text-center">
-                <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name|safe|truncatechars:30
-                  }}</a>
+                <a href="{% url 'parking_lot_detail' parking.slug %}"> {{ parking.parking_name|safe|truncatechars:30}}</a>
               </h5>
               <p class="text-center bg-warning">
                 <br><strong class="text-secondary">Address :</strong> {{ parking.parking_full_address }}</br>
