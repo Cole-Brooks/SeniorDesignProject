@@ -228,6 +228,9 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 SERVICE_EMAIL = os.environ.get("SERVICE_EMAIL")
 
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+
 # celery configurations
 BROKER_URL = os.environ['REDIS_URL']
 
