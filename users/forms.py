@@ -7,7 +7,9 @@ from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 # from parking.local_settings import SERVICE_EMAIL
 from django.core.mail import send_mail, BadHeaderError
-from captcha.fields import CaptchaField
+# from captcha.fields import CaptchaField
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class LoginForm(forms.Form):
@@ -16,7 +18,7 @@ class LoginForm(forms.Form):
         attrs={'placeholder': 'Username', 'id': 'username', 'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Password', 'id': 'password', 'class': 'form-control'}))
-    captcha = CaptchaField(required=True)
+    captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -51,7 +53,7 @@ class RegistrationForm(forms.ModelForm):
         attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}),
                                 help_text="Enter the same password as above.")
 
-    captcha = CaptchaField(required=True)
+    captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
 
     error_messages = {
         'password_mismatch': _("Sorry! The passwords you entered don't match."),
@@ -113,7 +115,7 @@ class ContactForm(forms.ModelForm):
     message = forms.CharField(label="Message", max_length=2000, required=True, widget=forms.Textarea(
         attrs={'placeholder': 'Your message', 'rows': 7, 'class': 'form-control'}))
 
-    captcha = CaptchaField(required=True)
+    captcha = ReCaptchaField(required=True, widget=ReCaptchaV2Checkbox)
 
     def get_message(self):
 
@@ -147,4 +149,4 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ('name', 'email', 'phone', 'subject', 'message', 'captcha',)
+        fields = ('name', 'email', 'phone', 'subject', 'message',)

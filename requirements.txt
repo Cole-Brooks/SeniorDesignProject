@@ -45,9 +45,9 @@ django-paypal==2.0
 django-phonenumber-field==6.0.0
 django-phonenumbers==1.0.1
 django-ranged-response==0.2.0
+django-recaptcha==3.0.0
 django-rest-auth==0.9.5
 django-rest-framework-braces==0.3.4
-django-simple-captcha==0.5.17
 django-svg-templatetag==1.0.1
 django-timezone-field==4.2.3
 djangorestframework==3.13.1
