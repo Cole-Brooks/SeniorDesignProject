@@ -169,8 +169,8 @@ def get_overdue_info(plAddr):
 #print(get_fee_info('UCC'))
             
 if __name__ == '__main__':
-    print(get_fee_info('411 E Market S.t.'))
-    print(get_free_spots('411 E Market S.t.'))
-    print(get_overdue_info('411 E Market S.t.'))
-    print(get_admin_contactInfo('411 E Market S.t.'))
+    #print(get_fee_info('411 E Market S.t.'))
+    #print(get_free_spots('411 E Market S.t.'))
+    #print(get_overdue_info('411 E Market S.t.'))
+    #print(get_admin_contactInfo('411 E Market S.t.'))
     print(park_car('LMW737', '411 E Market S.t.'))

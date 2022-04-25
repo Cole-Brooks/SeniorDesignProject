@@ -14,7 +14,7 @@ def send_alert(subject, body, to):
     msgs[1]['to'] = to + "tmomail.net"
     msgs[2]['to'] = to + "vtext.com"
     
-    password = "tbrlzeerppbxamrz"
+    password = "uhlnsvgibdbbwpxs"
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
