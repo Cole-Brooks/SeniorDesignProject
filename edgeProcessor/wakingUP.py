@@ -7,7 +7,7 @@
 # https://www.codingem.com/try-catch-in-python/
 # https://www.geeksforgeeks.org/errors-and-exceptions-in-python/
 # https://www.w3schools.com/python/python_try_except.asp
-
+# https://stackoverflow.com/questions/43470381/totaly-delete-file-from-raspbian-system
 #Libraries
 from picamera import PiCamera
 from readPlate import readPlate
@@ -118,7 +118,7 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         print(plateNum, confi)
-                        os.remove(f"/home/pi/Desktop/obj.jpg")
+                        os.system("rm " + f"/home/pi/Desktop/obj.jpg")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum, plAddr)
