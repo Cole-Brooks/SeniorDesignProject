@@ -118,7 +118,7 @@ def parkingLogic(statVar, plfVar, plodVar, plAddr):
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
                         print(plateNum, confi)
-                        #os.remove(f"/home/pi/Desktop/obj.jpg")
+                        os.remove(f"/home/pi/Desktop/obj.jpg")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
                             res = park_car(plateNum, plAddr)
