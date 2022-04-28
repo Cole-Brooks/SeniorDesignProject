@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container-fluid">
-        <a class="logo text-warning" href="/">Smart 2 Park</a>
+        <a class="logo text-warning mr-2" href="/">Smart 2 Park</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,20 +8,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3" href="/home">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-light mx-1" href="/home">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_list' %}">Parking lots</a>
+                    <a class="nav-link text-light mx-1" href="{% url 'parking_lots_list' %}">Parking lots</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_maps' %}">Find parking lot near me
+                    <a class="nav-link text-light mx-1" href="{% url 'parking_lots_maps' %}">Find parking lot near me
             </ul>
             <div class="form-inline my-2 my-lg-0 text-light">
                 {% if request.user.is_authenticated %}
                 {% if user.Please_check_this_if_you_are_a_parking_administrator %}
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mx-3 text-warning" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle mx-1 text-warning" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administrator Menu
                         </a>
@@ -36,7 +36,7 @@
                 {% else %}
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mx-3 text-warning" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle mx-1 mb-3 text-warning" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Customer Menu
                         </a>
@@ -48,22 +48,22 @@
                     </li>
                 </ul>
                 {% endif %}
-                <a class="text-light mx-3">
+                <a class="text-light mx-1">
                     Hello, {{ request.user.first_name }}!
                 </a>
-                <a class="text-light mx-3" href="{% url 'edit_profile'%}">
+                <a class="text-light mx-1" href="{% url 'edit_profile'%}">
                     Edit Profile
-                    <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-3" alt="image avatar"
+                    <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-1" alt="image avatar"
                         style="width: 50px; height: 50px;">
                 </a>
-                <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
+                <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0" href="{% url 'logout' %}">Log out</a>
                 {% else %}
-                <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0"
+                <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0"
                     href="{% url 'user_registration' %}">Register</a>
-                <a class="tex-light nav-item mx-3">
+                <a class="tex-light nav-item mx-1">
                     Already have an account?
                 </a>
-                <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0" href="{% url 'login' %}">Log in</a>
+                <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0" href="{% url 'login' %}">Log in</a>
                 {% endif %}
             </div>
         </div>
