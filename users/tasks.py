@@ -18,13 +18,14 @@ def send_due_payment_reminder():
     due_payments = DuePaymentReminder.objects.filter(has_been_sent=False).all()
 
     for due_payment in due_payments.iterator():
-        message = format_html("{} {}{}. {} {} {}.",
+        message = format_html("{} {}{}. {} {} {}. {}",
                               "You have reached the maximum due amount.",
                               "You have a total due payment of $",
                               due_payment.amount_due,
-                              "Make sure to pay your bill to",
+                              "\nMake sure to pay your bill to",
                               due_payment.parking,
                               "to have access to the parking lot next time",
+                              "Discard this message if you have already paid your bill for this parking. Thank you!",
                               )
         try:
             send_mail('Due payment reminder', message, from_email=settings.SERVICE_EMAIL,
