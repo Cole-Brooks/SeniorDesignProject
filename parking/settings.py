@@ -234,6 +234,9 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
 # celery configurations
 BROKER_URL = os.environ['REDIS_URL']
 
+BROKER_POOL_LIMIT = None
+BROKER_CONNECTION_MAX_RETRIES = None
+
 ACCEPT_CONTENT = ['application/json']
 RESULT_SERIALIZER = 'json'
 TASK_SERIALIZER = 'json'
