@@ -22,12 +22,12 @@ app.config_from_object(settings, namespace='CELERY')
 app.conf.beat_schedule = {
     'Send_due_payment_reminder_to_customers': {
         'task': 'users.tasks.send_due_payment_reminder',
-        'schedule': 172800.0,
+        'schedule': 60.0,
     },
 
     'Delete_already_sent_email': {
         'task': 'users.tasks.delete_already_sent_reminders',
-        'schedule': 259200.0,
+        'schedule': 120,
     }
 }
 
