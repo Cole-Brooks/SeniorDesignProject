@@ -12,13 +12,13 @@
                     <a href="javascript:void(0)" class="closeout" onclick="navClosed()">&times;</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3 py-5" href="/home">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-light ml-3 mr-1 py-5" href="/home">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_list' %}">Find Parking</a>
+                    <a class="nav-link text-light mx-1" href="{% url 'parking_lots_list' %}">Find Parking</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light mx-3" href="{% url 'parking_lots_maps' %}">Find on a map</a>
+                    <a class="nav-link text-light mx-1" href="{% url 'parking_lots_maps' %}">Find on a map</a>
                 </li>
                 <div class="form-inline my-2 my-lg-0 pt-5 text-light">
                     {% if request.user.is_authenticated %}
@@ -29,27 +29,27 @@
                             </a>
                             <a class="text-light py-3" href="{% url 'edit_profile'%}">
                                 Edit Profile
-                                <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-3"
+                                <img src="{{ user.profile.get_avatar_url }} " class="rounded-circle mx-1"
                                     alt="image avatar" style="width: 50px; height: 50px;">
                             </a>
-                            <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0 text-primary"
+                            <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0 text-primary"
                                 href="{% url 'logout' %}">Log
                                 out</a>
                         </div>
                     </div>
                     {% else %}
                     <div class="text-light py-5">
-                        <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0"
+                        <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0"
                             href="{% url 'user_registration' %}">Register</a>
                         <div class="py-5">
                             <div class="pt-5">
-                                <a class="nav-item text-light mx-3 pb-2">
+                                <a class="nav-item text-light mx-1 pb-2">
                                     Already have an account?
                                 </a>
                             </div>
                         </div>
                         <div>
-                            <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0 text-primary"
+                            <a class="btn btn-outline-warning rounded-pill mx-1 my-2 my-sm-0 text-primary"
                                 href="{% url 'login' %}">Log in</a>
                         </div>
                     </div>
