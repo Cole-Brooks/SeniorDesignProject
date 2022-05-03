@@ -27,7 +27,7 @@ app.conf.beat_schedule = {
 
     'Delete_already_sent_email': {
         'task': 'users.tasks.delete_already_sent_reminders',
-        'schedule': 194400.0,
+        'schedule': 190800.0,
     }
 }
 

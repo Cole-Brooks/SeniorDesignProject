@@ -29,18 +29,18 @@ class ParkingLot(models.Model):
     city = models.CharField(blank=False, null=False, max_length=255)
     state = USStateField(null=False, blank=False)
     zip_code = models.CharField(_("zip code"), max_length=5, default="52246")
-    phone = PhoneNumberField(null=False, blank=False, unique=False)
+    phone_number = PhoneNumberField(null=False, blank=False, unique=False)
     business_email = models.EmailField(blank=False, null=False, max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=200, unique=True)
     customer = models.ManyToManyField(User, related_name='customers_who_joined', blank=True)
     capacities = models.PositiveIntegerField(blank=False, null=False)
     image = models.ImageField(blank=True, null=True, upload_to="parking-lots")
-    fee_per_hour = models.DecimalField(max_digits=8, decimal_places=2, default=1.0,
-                                       validators=[MinValueValidator(Decimal('0.00'))])
+    fee_per_hour = models.DecimalField(max_digits=8, decimal_places=2, default=1.0, 
+                                       validators=[MinValueValidator(Decimal(0.0))])
     free_spots = models.PositiveIntegerField(blank=False, null=False, validators=[MinValueValidator(0)])
     max_overdue = models.DecimalField(max_digits=8, decimal_places=2, default=0.0,
-                                      validators=[MinValueValidator(Decimal('0.00'))])
+                                      validators=[MinValueValidator(Decimal(0.0))])
 
     class Meta:
         verbose_name = 'Parking Lot'
