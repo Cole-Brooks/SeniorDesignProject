@@ -58,3 +58,5 @@ yarn-error.log*
 # database
 /edgeProcessor/*.ini
 /staticfiles/
+
+/db.sqlite3/

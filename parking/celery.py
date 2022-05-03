@@ -2,19 +2,19 @@ from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from django.conf import settings
-# from parking import local_settings
+from parking import local_settings # Comment out
 from celery.schedules import crontab
 
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.local_settings')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.local_settings')  # Comment out
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'parking.settings') # Uncomment out
 
 app = Celery('parking')
 
 app.conf.enable_utc = False
 
-app.conf.update(BROKER_URL=os.environ['REDIS_URL'], timezone='US/Central')
+# app.conf.update(BROKER_URL=os.environ['REDIS_URL'], timezone='US/Central') # Uncomment out
 
-# app.config_from_object(local_settings, namespace='CELERY')
+app.config_from_object(local_settings, namespace='CELERY') # Comment out
 
 app.config_from_object(settings, namespace='CELERY')
 
