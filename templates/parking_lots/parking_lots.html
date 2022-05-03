@@ -28,7 +28,8 @@
                 <br><strong class="text-secondary">Status: </strong>Full</br {% else %} <br><strong
                   class="text-secondary">Status: </strong> {{ parking.free_spots }} available spots</br>
                 {% endif %}
-                </br>
+              </p>
+              </br>
               <div class="pt-2 text-center">
                 <a class="btn btn-secondary" href="{% url 'parking_lot_detail' parking.slug %}"> More details</a>
               </div>
