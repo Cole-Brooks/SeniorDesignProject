@@ -11,7 +11,7 @@
     background-attachment: fixed;
     background-size: cover;
     /* background-attachment: fixed; */
-    background-image: url(small_town.jpg);
+    background-image: url(iowa_city.jpg);
 
 } 
  .homeText{
@@ -24,6 +24,10 @@
     background-color: rgba(212,202,192,0.5); /*'a' val needs to be between 0-1 for transluscent effect */
     
 }
+
+ .homeText .py-5 .homeHeader{
+    font-family: "Lucida Console", "Courier New", monospace;
+ }
 
   table {
           font-family: arial, sans-serif;
