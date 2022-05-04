@@ -13,7 +13,7 @@
             <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking lot</a>
         </h4>
         <p class="text-center py-3">
-            <a class="mx-5"><strong class="mx-2 text-primary">Total balance due:</strong> $ {{ request.user.balance_due }}
+            <a class="mx-5"><strong class="mx-2 text-primary">Total amount due:</strong> $ {{ request.user.balance_due }}
             </a>
         </p>
         <table>
