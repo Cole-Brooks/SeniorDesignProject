@@ -11,7 +11,7 @@
             <h4 class=" bg-warning text-center py-3">
                 <a class="mx-5 text-primary" href="{% url 'due_bills' %}">Remaining Bills</a>
                 <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
-                <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking lot</a>
+                <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking Lot</a>
             </h4>
             <p class="text-center py-3">
                 <a class="mx-5 "><strong class="mx-3 text-primary">Total balance due:</strong>$ {{ request.user.balance_due }}
