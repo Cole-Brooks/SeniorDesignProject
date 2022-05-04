@@ -5,26 +5,28 @@
 {% block content %}
 
 <body>
-{#    <div class="headerImage">#}
-{#        <div class="py-5">#}
-{#        </div>#}
-{#    </div>#}
-    <img class=headerImage" src ="static/custom_css/iowa_city.jpg">
-    <div class="homeText">
-        <div class="py-5" style=height:auto>
+    <div class="headerImage"></div>
+    <div class="headerImage">
+        <div class="homeText" style = top:70px>
+        <div class="py-5" style="height:auto; top:70px">
             <div style=text-align:center>
-                <h1 class="homeHeader" style="font-size: 50px; color:#d05a36">SMART 2 PARK</h1>
-                <h3 style=color:#d05a36>Welcome to SMART 2 PARK, our new and improved parking system!
+                <h1 class="homeHeader" style="font-size: 50px; color:#ffc107; text-shadow: 2px 2px black;">
+                    SMART 2 PARK
+                </h1>
+                <h3 style="color:white; text-shadow: 1.5px 1.5px black;">Welcome to SMART 2 PARK, our new and improved parking system.
                 With our parking system, you never have to worry about losing your parking ticket
                 or swiping your card again. SMART PARK will send parking fees directly to you so
                 you can pay for parking and keep track of your fees from the comfort of your home.
                 Just create an account to begin!</h3>
+                 <a class="btn btn-warning rounded-pill mx-3 my-2 my-sm-0" style="font-weight: bold"
+                            href="{% url 'user_registration' %}">Create a Free Account</a>
             </div>
         </div>
+        </div>
     </div>
-{#    <div class="headerImage">#}
-{#        <div class="py-5">#}
-{#        </div>#}
-{#    </div>#}
+{#    <img class=headerImage" src ="static/custom_css/iowa_city.jpg">#}
+
+    <div class="headerImage">
+    </div>
 </body>
 {% endblock %}

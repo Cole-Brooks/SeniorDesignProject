@@ -11,7 +11,7 @@
     background-attachment: fixed;
     background-size: cover;
     /* background-attachment: fixed; */
-    /*background-image: url(iowa_city.jpg);*/
+    background-image: url(iowa_city.jpg);
 
 }
  .homeText{
@@ -20,16 +20,10 @@
     box-sizing:border-box;
     width: 100%;
     height: auto;
-    /*background-size: cover;*/
-    /*background: rgb(0, 0, 0);!* Fallback color *!*/
+    top: 70px;
     background: rgba(0, 0, 0, 0.5);/* Black background with opacity */
-    /*background-color: rgba(212,202,192,0.5); !*'a' val needs to be between 0-1 for transluscent effect *!*/
-    
-}
 
- /*.homeText .py-5 .homeHeader{*/
- /*   font-family: "Lucida Console", "Courier New", monospace;*/
- /*}*/
+}
 
   table {
           font-family: arial, sans-serif;
