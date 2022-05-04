@@ -17,7 +17,7 @@ class RegisterParkingForm(forms.ModelForm):
     state = forms.ChoiceField(choices=STATE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     business_email = forms.EmailField(label='Business email', min_length=5, required=True, widget=forms.EmailInput(
         attrs={'placeholder': 'Enter your business PayPal account email', 'class': 'form-control'}),
-                                      help_text="We don't share your email, we use it for payments purposes.")
+                                      help_text="We don't share your email.")
     fee_per_hour = forms.DecimalField(required=True, max_digits=8, min_value=0.0, initial=1.0)
     max_overdue = forms.DecimalField(required=True, max_digits=8, min_value=0.0, initial=0.0)
 
