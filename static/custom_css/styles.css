@@ -20,10 +20,29 @@
     box-sizing:border-box;
     width: 100%;
     height: auto;
-    top: 70px;
     background: rgba(0, 0, 0, 0.5);/* Black background with opacity */
 
 }
+
+ .floatBox {
+    float: left;
+    width: 32.5%;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: auto;
+    background: rgba(0, 0, 0, 0.5);/* Black background with opacity */
+ }
+
+  .floatBox1 {
+    float: left;
+    width: 99%;
+    padding: 5px;
+    margin: 5px;
+    height: auto;
+    background: rgba(0, 0, 0, 0.5);/* Black background with opacity */
+ }
+
 
   table {
           font-family: arial, sans-serif;
