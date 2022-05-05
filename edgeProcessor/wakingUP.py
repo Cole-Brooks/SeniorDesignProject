@@ -7,16 +7,16 @@
 # https://www.codingem.com/try-catch-in-python/
 # https://www.geeksforgeeks.org/errors-and-exceptions-in-python/
 # https://www.w3schools.com/python/python_try_except.asp
-
+# https://stackoverflow.com/questions/43470381/totaly-delete-file-from-raspbian-system
 #Libraries
 from picamera import PiCamera
 from readPlate import readPlate
-from parkIn import park_car, get_free_spots, get_admin_contactInfo
+from parkIn import *
 import RPi.GPIO as GPIO
 import time
 import picamera
 from sendAlert import send_alert
-
+import os
 
 needFix = False
 # initialize camera
@@ -34,10 +34,13 @@ else:
     #set GPIO Pins
     GPIO_TRIGGER = 18
     GPIO_ECHO = 24
-     
+    GPIO_GATE = 25
+    
     #set GPIO direction (IN / OUT)
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
+    GPIO.setup(GPIO_GATE, GPIO.OUT)
+    
     timeout = 5
     
 gateOpening = False
@@ -80,24 +83,26 @@ def distance():
  
     return distance
  
-def parkingLogic(statVar):
+def parkingLogic(statVar, plfVar, plodVar, plAddr):
     global needFix, gateOpening, gateClosing
     while statVar == None:
         pass
     try:
         prevDist = 1200
-        statVar.set(f"Status: {getStat()}")
+        statVar.set(f"Status: {getStat(plAddr)}")
         while True:
             dist = distance()
             print(f"distance is: {dist}")
+            plfVar.set(f"Fee per Hour: {get_fee_info(plAddr)}$")
+            plodVar.set(f"Max Overdue: {get_overdue_info(plAddr)}$")
             if dist < 0:
                 print("Motion sensor broken")
                 needFix = True
-                statVar.set(f"Status: {getStat()}")
+                statVar.set(f"Status: {getStat(plAddr)}")
             elif dist > 1200:
                 needFix = False
                 print("Nothing within range")
-                statVar.set(f"Status: {getStat()}")
+                statVar.set(f"Status: {getStat(plAddr)}")
             else:
                 needFix = False
                 if prevDist > dist + 10:
@@ -105,37 +110,47 @@ def parkingLogic(statVar):
                         print("Something showed up")  
                     else:
                         print(f"Something is approaching from {prevDist} cm to {dist} cm")
-                    statVar.set(f"Status: {getStat()}")
+                    statVar.set(f"Status: {getStat(plAddr)}")
                 elif abs(prevDist - dist) <= 5 and dist < 100:
                     print(f"Obj stopped at a close range")
                     statVar.set("Status: Please Wait")
                     try:
                         camera.capture(f"/home/pi/Desktop/obj.jpg")
                         plateNum, confi = readPlate("/home/pi/Desktop/obj.jpg")
-                        #print("cv finished")
+                        print(plateNum, confi)
+                        os.system("rm " + f"/home/pi/Desktop/obj.jpg")
                         if confi > 0.9:
                             statVar.set("Status: Parking " + plateNum)
-                            res = park_car(plateNum)
+                            res = park_car(plateNum, plAddr)
                             print(res)
-                            time.sleep(2)
+                            time.sleep(1)
                             statVar.set("Status: " + res)
-                            time.sleep(2)
-                            statVar.set("Status: Drive Through")
-                            gateOpening = True
-                            time.sleep(8)
-                            gateOpening = False
-                            gateClosing = True
-                            statVar.set("Status: Please Wait for Your Turn")
-                            gateClosing = False
-                            statVar.set(f"Status: {getStat()}")
-                        else:
+                            time.sleep(1)
+                            if res[0] == 'S':  
+                                statVar.set("Status: Drive Through")
+                                GPIO.output(GPIO_GATE, 1);
+                                time.sleep(1)
+                                GPIO.output(GPIO_GATE, 0);
+                                time.sleep(23)
+                                GPIO.output(GPIO_GATE, 1);
+                                time.sleep(1)
+                                GPIO.output(GPIO_GATE, 0);
+                            
+                                #gateClosing = True
+                                statVar.set("Status: Please Wait for Your Turn")
+                                time.sleep(13);
+                                #gateClosing = False
+                                statVar.set(f"Status: {getStat(plAddr)}")
+                        elif confi == -1:
                             statVar.set("Status: " + plateNum)
+                        else:
+                            statVar.set("Status: Wait for Rescan")
                     except picamera.PiCameraError:
                         print("Camera down")
                         needFix = True
-                        statVar.set(f"Status: {getStat()}")
+                        statVar.set(f"Status: {getStat(plAddr)}")
                 else:
-                    statVar.set(f"Status: {getStat()}")
+                    statVar.set(f"Status: Please Come Closer")
             prevDist = dist
             time.sleep(2)
  
@@ -145,12 +160,12 @@ def parkingLogic(statVar):
         GPIO.cleanup()
 
 
-def getStat():
+def getStat(plAddr):
     if needFix:
         print("needFix")
-        phoneNum = get_admin_contactInfo('UCC')[2:];
-        send_alert('Alert', 'UCC ParkingLot need Maintainance', phoneNum)
+        phoneNum = get_admin_contactInfo(plAddr)[2:];
+        send_alert('Alert', f'Parking Lot in {plAddr} need Maintainance', phoneNum)
         return "Maintainance"
-    if get_free_spots('UCC') == 0:
+    if get_free_spots(plAddr) == 0:
         return "Full"
     return "Available"
