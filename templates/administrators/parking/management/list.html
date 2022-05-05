@@ -1,10 +1,10 @@
 {% extends "secondbase.html" %}
 
-<title>{% block title %}Parking lots list{% endblock %}</title>
+<title>{% block title %}Your Parkingn Lots{% endblock %}</title>
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5 text-center">Parking Lots List</h1>
+    <h1 class="py-5 text-center">Your Parking Lots</h1>
     <div>
         <form class="form-inline .form-control-sm my-lg-0 ml-auto" action="{% url 'manage_search_parking_lots' %}"
             method="get">
@@ -20,7 +20,7 @@
             <a class="btn btn-warning rounded-pill mx-5" href="{% url 'parking_create' %}">Add new parking lot</a>
         </p>
         <table>
-            <caption>Available parking lots registered in the system</caption>
+            <caption>Your registered parking lots.</caption>
             <thead>
                 <tr class="text-secondary">
                     <th id="name">Name</th>
@@ -44,7 +44,7 @@
                 </tr>
                 {% empty %}
                 <div>
-                    <p class="py-5">You don't have any added parking lots</p>
+                    <p class="py-5">You have not added any parking lots yet.</p>
                 </div>
                 {% endfor %}
             </tbody>

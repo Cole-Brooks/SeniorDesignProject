@@ -5,16 +5,16 @@
 {% block content %}
 <div class="container text-center">
     <div class="container">
-        <h1 class="py-5 text-center">Bill management</h1>
-        <h2 class="py-3 text-center">Paid bills</h2>
+        <h1 class="py-5 text-center">Manage Your Bills</h1>
+        <h2 class="py-3 text-center">Paid Bills</h2>
         <div>
             <h4 class=" bg-warning text-center py-3">
-                <a class="mx-5 text-primary" href="{% url 'due_bills' %}">Due Bills</a>
+                <a class="mx-5 text-primary" href="{% url 'due_bills' %}">Remaining Bills</a>
                 <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
-                <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking lot</a>
+                <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking Lot</a>
             </h4>
             <p class="text-center py-3">
-                <a class="mx-5 "><strong class="mx-3 text-primary">Total balance due:</strong>$ {{ request.user.balance_due }}
+                <a class="mx-5 "><strong class="mx-3 text-primary">Total amount due:</strong>$ {{ request.user.balance_due }}
                 </a>
             </p>
             <table>
@@ -40,7 +40,7 @@
                     </tr>
                     {% empty %}
                     <div>
-                        <p class="py-3">You don't have any paid bills</p>
+                        <p class="py-3">You do not have any bills to pay right now.</p>
                     </div>
                     {% endfor %}
                 </tbody>

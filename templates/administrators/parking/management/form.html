@@ -1,20 +1,20 @@
 {% extends 'secondbase.html' %}
 {% load django_bootstrap5 %}
 
-<title>{% block title %}Form of registration{% endblock %}</title>
+<title>{% block title %}Form of Registration{% endblock %}</title>
 
 {% block content %}
 <div class="container">
     <div class="py-5 text-center">
         {% if object %}
-        <h1>Update Parking lot "{{ object.parking_name}}"
+        <h1>Update Parking Lot "{{ object.parking_name}}"
             {% else %}
-            <h1>Add a new parking lot</h1>
+            <h1>Add a New Parking Lot</h1>
             {% endif %}
         </h1>
     </div>
     <div>
-        <h2 class="bg-warning text-center text-primary">Parking lot information</h2>
+        <h2 class="bg-warning text-center text-primary">Parking Lot Information</h2>
         <div class="py-5">
             <div class="py-5">
                 <div class="bg-light">

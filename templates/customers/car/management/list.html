@@ -1,14 +1,14 @@
 {% extends "secondbase.html" %}
 
-<title>{% block title %}Cars list{% endblock %}</title>
+<title>{% block title %}Your Cars{% endblock %}</title>
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5 text-center">Cars List</h1>
+    <h1 class="py-5 text-center">Your Cars</h1>
     <div>
         <p class="text-center py-3">
             <a class="mx-3 btn btn-warning rounded-pill" href="{% url 'car_create' %}">Add new car</a>
-            <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
+            <a class="mx-3 "><strong class="mx-3">Total amount due:</strong>$ {{ request.user.balance_due }}</a>
             <a class="btn btn-warning mx-3 rounded-pill" href="{%  url 'due_bills' %}">Manage</a>
         </p>
         <p class="text-center py-3">
@@ -21,7 +21,7 @@
             {% endfor %}
         </p>
         <table>
-            <caption>Available cars registered in the system</caption>
+            <caption>Your registered cars.</caption>
             <thead>
                 <tr class="text-secondary">
                     <th id="make">Make</th>
@@ -46,7 +46,7 @@
                 </tr>
                 {% empty %}
                 <div>
-                    <p class="py-5">You don't have any added cars</p>
+                    <p class="py-5">You have not added any cars yet.</p>
                 </div>
                 {% endfor %}
             </tbody>

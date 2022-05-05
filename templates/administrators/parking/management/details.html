@@ -9,7 +9,7 @@
         {{ object.parking_name }}
     </h1>
     <div class="py-5">
-        <h3 class="bg-warning text-center text-primary">Parking lot details</h3>
+        <h3 class="bg-warning text-center text-primary">Your Parking Lots</h3>
         <p class="py-3">
             <br class="text-center">{{ object.overview|safe }}
         <div class="">
@@ -20,9 +20,9 @@
             <br><strong class="text-primary">Zip code:</strong> {{ object.zip_code }}</br>
             <br><strong class="text-primary">Phone number:</strong> {{ object.phone }}</br>
             <br><strong class="text-primary">Paypal business email:</strong> {{ object.business_email}}</br>
-            <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }} spots</br>
+            <br><strong class="text-primary">Capacity:</strong> {{ object.capacities }} spots</br>
             <br><strong class="text-primary">Fee per hour:</strong> $ {{ object.fee_per_hour }}</br>
-            <br><strong class="text-primary">Free spots:</strong> {{ object.free_spots }} spots</br>
+            <br><strong class="text-primary">Number of available spots:</strong> {{ object.free_spots }} spots</br>
             <br><strong class="text-primary">Maximum overdue:</strong> $ {{ object.max_overdue }}</br>
         </div>
         </p>

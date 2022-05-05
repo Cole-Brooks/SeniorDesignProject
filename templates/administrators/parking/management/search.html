@@ -1,6 +1,6 @@
 {% extends "secondbase.html" %}
 
-<title>{% block title %}Parking lots list{% endblock %}</title>
+<title>{% block title %}Your Parking Lots{% endblock %}</title>
 
 {% block content %}
 <div class="container">
@@ -23,7 +23,7 @@
             {% endwith %}
         </h4>
         <table>
-            <caption>Available parking lots registered in the system</caption>
+            <caption>Your registered parking lots.</caption>
             <thead>
                 <tr class="text-secondary">
                     <th id="name">Name</th>
@@ -44,7 +44,7 @@
                 </tr>
                 {% empty %}
                 <div>
-                    <p class="py-5">You don't have any added parking lots</p>
+                    <p class="py-5">You have not added any parking lots yet.</p>
                 </div>
                 {% endfor %}
             </tbody>

@@ -12,12 +12,12 @@ class RegisterParkingForm(forms.ModelForm):
     zip_code = USZipCodeField()
     overview = forms.CharField(
         widget=forms.Textarea(attrs={
-            'placeholder': 'Add any details or a quick summary you would like customers to know about your parking lot',
+            'placeholder': 'Add details or a quick summary about your parking lot for customers to see.',
             "rows": 7, "cols": 20}))
     state = forms.ChoiceField(choices=STATE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     business_email = forms.EmailField(label='Business email', min_length=5, required=True, widget=forms.EmailInput(
-        attrs={'placeholder': 'Enter your business paypal account email', 'class': 'form-control'}),
-                                      help_text="We don't share your email, we use it for payments purposes.")
+        attrs={'placeholder': 'Enter your business PayPal account email', 'class': 'form-control'}),
+                                      help_text="We don't share your email.")
     fee_per_hour = forms.DecimalField(required=True, max_digits=8, min_value=0.0, initial=1.0)
     max_overdue = forms.DecimalField(required=True, max_digits=8, min_value=0.0, initial=0.0)
 
