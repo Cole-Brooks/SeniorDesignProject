@@ -1,27 +1,84 @@
 {% extends "secondbase.html" %}
-{% load static %}
 
-
-<title>{% block title %}Home{% endblock %}</title> 
-
-
+<title>{% block title %}Home{% endblock %}</title>
 
 {% block content %}
-<body>
-    <div class = "headerImage">
-        <div class = "py-5">
 
+<body>
+    <div class="headerImage"></div>
+    <div class="headerImage">
+        <div class="homeText" style = top:70px>
+        <div class="py-5" style="height:auto">
+            <div style=text-align:center>
+                <h1 class="homeHeader" style="font-size: 50px; color:#ffc107; text-shadow: 2px 2px black; line-height: 85px;">
+                    SMART 2 PARK
+                </h1>
+                <h3 style="color:white; text-shadow: 1.5px 1.5px black;">Welcome to SMART 2 PARK, our new and improved parking system.
+                </h3>
+                <br></br>
+                 <a class="btn btn-warning rounded-pill mx-3 my-2 my-sm-0" style="font-weight: bold"
+                            href="{% url 'user_registration' %}">Create a Free Account</a>
+            </div>
+        </div>
         </div>
     </div>
-
-    <div class="homeText">
-        <div class="py-5">
-            <div style = text-align:center>
-                <h1 class = "header" style = color:#d05a36>SMART PARK</h1>
-                <h3 style = color:#d05a36 >Insert infromation about our parking system. This space will include information about our website and parking system.</h3>            
+    <div class="headerImage">
+        <div class="floatBox">
+            <div class="py-5" style="height:auto">
+                <div style=text-align:center>
+                    <h3 style="color:#ffc107; text-shadow: 1px 1px black;">
+                        Find parking lots.
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="floatBox">
+            <div class="py-5" style="height:auto">
+                <div style=text-align:center>
+                    <h3 style="color:#ffc107; text-shadow: 1px 1px black;">
+                        Pay from your home.
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="floatBox">
+            <div class="py-5" style="height:auto">
+                <div style=text-align:center>
+                    <h3 style="color:#ffc107; text-shadow: 1px 1px black;">
+                        View parking history.
+                    </h3>
+                </div>
             </div>
         </div>
     </div>
+    <div class="headerImage">
+        <div class="floatBox1">
+            <div class="py-5" style="height:auto">
+                <div style="float:left; margin-left: 5%; margin-bottom: 3%">
+                    <h3 style="color:white; line-height: 35px; font-size: 25px; text-shadow: 1.5px 1.5px black;">
+                        Never worry about swiping your card<br>
+                        or losing your parking ticket again.<br><br>
+                    </h3>
+                    <h3 style="color:#ffc107; line-height: 35px; text-shadow: 2px 2px black;" >
+                        Get started with SMART 2 PARK today!
+                    </h3>
+                </div>
+                <div style="float:right; margin-right: 5%; margin-bottom: 3%">
+                    <div style = "text-align: center;">
+                        <a class="btn btn-warning rounded-pill mx-3 my-2 my-sm-0" style="font-weight: bold"
+                            href="{% url 'user_registration' %}">Create a Free Account</a>
+                        <br>
+                        <br>
+                        <br>
+                        <p style="color: white; font-size: 15px;">Already have an account?</p>
+                        <a class="btn btn-outline-warning rounded-pill mx-3 my-2 my-sm-0 text"
+                           href="{% url 'login' %}">Log in</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 {% endblock %}
-

@@ -1,0 +1,47 @@
+{% extends "secondbase.html" %}
+
+<title>{% block title %}Current bills{% endblock %}</title>
+
+{% block content %}
+<div class="container text-center">
+    <h1 class="py-5 text-center">Manage Your Bills</h1>
+    <h2 class="py-3 text-center">Bills by Parking Lot</h2>
+    <div>
+        <h4 class=" bg-warning text-center py-3">
+            <a class="mx-5 text-primary" href="{% url 'due_bills' %}">Remaining Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'paid_bills' %}">Paid Bills</a>
+            <a class="mx-5 text-primary" href="{% url 'bills_by_parking' %}">Bills by Parking Lot</a>
+        </h4>
+        <p class="text-center py-3">
+            <a class="mx-5 "><strong class="mx-2 text-primary">Total balance due:</strong> $ {{ request.user.balance_due }}
+            </a>
+        </p>
+        <table>
+            <caption>All due bills</caption>
+            <thead>
+                <tr class="text-secondary">
+                    <th id="parking">Parking</th>
+                    <th id="parking_fee">Total charges</th>
+                    <th id="pay">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr>
+                    <td>{{ bill.parking__parking_name }}</td>
+                    <td>$ {{ bill.total_parking_fee}}</td>
+                    <td><a href="{% url 'make_payment_for_all' bill.parking %}"
+                            class="btn btn-warning rounded-pill mx-1">Pay now</a></td>
+                    </td>
+                </tr>
+                {% empty %}
+                <div>
+                    <p class="py-5">You do not have any bills to pay right now.</p>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="py-5"><div class="py-5"></div></div>
+    </div>
+</div>
+{% endblock %}

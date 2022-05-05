@@ -5,7 +5,7 @@ from .models import ParkingLot
 # Register ParkingLot model.
 @admin.register(ParkingLot)
 class ParkingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'administrator', 'parking_name', 'phone', 'fee_per_hour', 'max_overdue',)
+    list_display = ('id', 'administrator', 'parking_name', 'phone_number', 'fee_per_hour', 'max_overdue',)
 
     actions = None
 

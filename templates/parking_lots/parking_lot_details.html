@@ -4,19 +4,28 @@
 
 {% block content %}
     <div class="container py-5">
-
         {% with parking=object.parking_lots %}
         <h1 class="title text-center py-3">
             {{ object.parking_name }}
         </h1>
         <div class="py-5">
-            <h2>Parking Lot Overview</h2>
-            <p class="py-5">
-               <a href="{% url 'parking_lots_list' %}"> {{ object.parking_name }}</a>
+            <h3 class="bg-warning text-center text-primary">Parking Lot Overview</h3>
+            <p class="py-3">
                 <br>{{ object.overview|safe }}
-                <br>{{ object.parking_full_address }}</br>
-                <br>{{ object.capacities }} spots
+                <br><strong class="text-primary">Address :</strong> {{ object.parking_full_address }}</br>
+                <br><strong class="text-primary">Contact:</strong> {{ object.phone }}</br>
+                <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }}</br>
+                <br><strong class="text-primary">Maximum overdue:</strong> $ {{ object.max_overdue }}</br>
+                {% if object.capacities == object.free_spots %}
+                <br><strong class="text-primary">Status: </strong>Full</br
+                {% else %}
+                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} spots available</br>
+                {% endif %}
             </p>
+            <div class="text-center py-3">
+                <a class="btn btn-secondary rounded-pill"href="{% url 'parking_lots_list' %}"> Back</a>
+            </div>
+            <!--
             {% if request.user.is_authenticated %}
             <form action="{% url 'membership' %}" method="POST">
                 {{ membership_form }}
@@ -31,9 +40,9 @@
             </a>
             </p>
             {% endif %}
+            -->
         <div class="py-5">
             <div class="py-5">
-
             </div>
         </div>
         </div>

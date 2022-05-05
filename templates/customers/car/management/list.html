@@ -1,47 +1,57 @@
 {% extends "secondbase.html" %}
 
-<title>{% block title %}Cars list{% endblock %}</title>
+<title>{% block title %}Your Cars{% endblock %}</title>
 
 {% block content %}
 <div class="container">
-    <h1 class="py-5 text-center">Cars List</h1>
+    <h1 class="py-5 text-center">Your Cars</h1>
     <div>
         <p class="text-center py-3">
-            <a class="mx-3 btn btn-warning" href="{% url 'car_create' %}">Add new car</a>
-            <a class="mx-3 btn btn-warning" href="">Update your car location</a>
-            <a class="mx-3 "><strong class="mx-3">Your car is parked at:</strong></a>
-            <a class="mx-3 "><strong class="mx-3">Total balance due:</strong>$ {{ request.user.balance_due }}</a>
-            <a class="btn btn-warning mx-3 " href="{%  url 'due_bills' %}">Manage it</a>
+            <a class="mx-3 btn btn-warning rounded-pill" href="{% url 'car_create' %}">Add new car</a>
+            <a class="mx-3 "><strong class="mx-3">Total amount due:</strong>$ {{ request.user.balance_due }}</a>
+            <a class="btn btn-warning mx-3 rounded-pill" href="{%  url 'due_bills' %}">Manage</a>
+        </p>
+        <p class="text-center py-3">
+            {% for car in object_list%}
+            {% if car.parking is not None %}
+            <strong class="ml-5 mr-3 text-primary">Car in use:</strong> {{ car.make }} {{car.model}}
+            <strong class="ml-5 mr-3 text-primary">Car location :</strong> {{ car.parking }}
+            <strong class="ml-5 mr-3 text-primary">Time spent :</strong> {{ car.get_time_spent }}
+            {% endif %}
+            {% endfor %}
         </p>
         <table>
-            <caption>Available cars registered in the system</caption>
+            <caption>Your registered cars.</caption>
             <thead>
                 <tr class="text-secondary">
-                    <th id="name">Make</th>
-                    <th id="name">Model</th>
+                    <th id="make">Make</th>
+                    <th id="model">Model</th>
                     <th id="license">License Plate Number</th>
-                    <th id="license">State</th>
+                    <th id="state">State</th>
                     <th id="actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for car in object_list %}
                 <tr>
-                    <td>{{ car.make }}</td>
-                    <td>{{ car.model }}</td>
+                    <td><a href="{% url 'manage_car_detail' car.id %}">{{ car.make }}</a></td>
+                    <td><a href="{% url 'manage_car_detail' car.id %}">{{ car.model }}</a></td>
                     <td>{{ car.license_plate_number}}</td>
                     <td>{{ car.state }}</td>
-                    <td><a href="{% url 'car_edit' car.id %}" class="btn btn-warning mx-4">Update</a>
-                        <a href="{% url 'car_delete' car.id %}" class="btn btn-warning mx-4">Delete</a>
+                    <td><a href="{% url 'car_edit' car.id %}" class="btn btn-warning rounded-pill mx-4">Update</a>
+                        <a href="{% url 'car_delete' car.id %}" class="btn btn-warning rounded-pill mx-4">Delete</a>
+                        <a href="{% url 'manage_car_detail' car.id %}" class="btn btn-warning rounded-pill mx-4">More
+                            details</a>
                     </td>
                 </tr>
                 {% empty %}
                 <div>
-                    <p class="py-5">You don't have any added cars</p>
+                    <p class="py-5">You have not added any cars yet.</p>
                 </div>
                 {% endfor %}
             </tbody>
         </table>
+        <div class="py-5"><div class="py-5"></div></div>
     </div>
 </div>
 {% endblock %}

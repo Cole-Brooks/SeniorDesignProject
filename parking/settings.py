@@ -40,11 +40,15 @@ INSTALLED_APPS = [
     'customers',
     'corsheaders',
     'crispy_forms',
+    'captcha',
     'paypal.standard.ipn',
     'paypal.standard',
     'paypal.pro',
     'rest_framework',
     'django_filters',
+    'django_extensions',
+    'django_celery_results',
+    'django_celery_beat',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -70,7 +74,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'ipinfo_django.middleware.IPinfo',
 ]
+
+IPINFO_SETTINGS = {
+  'cache_options': {
+      'ttl':30,
+      'maxsize': 128
+  }
+}
+
+IPINFO_TOKEN = os.environ.get("IPINFO_TOKEN")
+
+IPINFO_FILTER = lambda request: request.scheme == 'http'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -196,12 +212,40 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Central'
 
 USE_I18N = True
 
 USE_TZ = True
+# EMAIL SETTINGS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
+SERVICE_EMAIL = os.environ.get("SERVICE_EMAIL")
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+
+# celery configurations
+BROKER_URL = os.environ['REDIS_URL']
+
+BROKER_POOL_LIMIT = None
+BROKER_CONNECTION_MAX_RETRIES = None
+
+ACCEPT_CONTENT = ['application/json']
+RESULT_SERIALIZER = 'json'
+TASK_SERIALIZER = 'json'
+TIMEZONE = 'US/Central'
+
+MAPS_KEY = os.environ.get("MAPS_KEY")
+
+# celery beat setting 
+CELERY_BEAT_SCHEDULER = os.environ.get("CELERY_BEAT_SCHEDULER")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

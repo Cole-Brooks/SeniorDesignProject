@@ -30,6 +30,7 @@ urlpatterns = [
     path('customers/', include('customers.urls')),
     path('users/', include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    # path('captcha/', include('captcha.urls')),
 ]
 
 if settings.DEBUG:

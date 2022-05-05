@@ -4,20 +4,25 @@
 <title>{% block title %} Sign Up {% endblock %}</title>
 
 {% block content %}
-<h1 class="text-center pb-5 pt-5">Sign Up</h1>
-<div class="container my-3 pb-5 pt-5">
-  <h3 class="text-center">Create New Account</h3>
-  <div class="row align-items-center justify-content-center ">
-    <div class="col-md-5 py-5" style="background-color: seashell;width:50%">
-      <p class="text-center text-primary">Please fill out the registration form to get started.
-      </p>
-      <form method="post" class="py-3 ">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <div class="text-center">
-          <button type="submit" class="btn btn-warning text-center">Create my account</button>
-        </div>
-      </form>
+<div class="container py-5">
+  <h2 class="text-center pb-5 pt-5">Sign Up</h2>
+  <div class="container my-3 py-3">
+    <h3 class="text-center">Create New Account</h3>
+    <div class="row align-items-center justify-content-center ">
+      <div class="col-md-5 py-5 bg-light" tyle="margin: 0 auto;">
+        <p class="text-center text-primary">Please fill out the registration form to get started.
+        </p>
+        <form method="post" class="py-3 text-info">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <div class="text-center">
+            <button type="submit" class="btn btn-warning rounded-pill text-center">Create my account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="py-5">
+      <div class="py-5"></div>
     </div>
   </div>
 </div>

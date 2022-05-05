@@ -12,17 +12,7 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <!--Incorporated CSS-->
-    <link rel="stylesheet" href="{% static " customcss/styles.css" %}" type="text/css">
-    <style>
-        footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: black;
-            text-align: center;
-        }
-    </style>
+    <link href="{% static 'customcss/styles.css' %}" rel="stylesheet" type="text/css">
     <title>{% block title %}Base{% endblock %}</title>
 </head>
 
@@ -60,13 +50,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            {% block domready %}
-            {% endblock %}
-        });
-    </script>
     <script>
         /* Set width of the side navigation and main to 240 px */
         function navOpened() {

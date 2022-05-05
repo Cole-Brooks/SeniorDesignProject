@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
 from django.views.generic.base import TemplateResponseMixin, View
-from customers.forms import ParkingLotMembership, RegisterCarForm
+from customers.forms import ParkingLotMembership, RegisterCarForm, UpdateParkingCarForm
 from customers.models import Car, ParkingHistory
 from administrators.models import ParkingLot
 
@@ -24,7 +24,25 @@ class CarListView(TemplateResponseMixin, View):
         return self.render_to_response({'cars': cars})
 
 
+class ManageCarDetailView(DetailView, LoginRequiredMixin):
+    """ View for managing car details"""
+
+    model = Car
+    template_name = 'customers/car/management/details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cars = Car.objects.filter(owner=self.request.user)
+        context["cars"] = cars
+
+        return context
+
+
 class CreatorMixin(object):
+
+    model = Car
+    form_class = RegisterCarForm
+
     def get_queryset(self):
         """Allows to only display or update the cars created"""
         queryset = super().get_queryset()
@@ -38,8 +56,9 @@ class EditableCreatorMixin(object):
 
 
 class CreatorCarMixin(CreatorMixin, LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin):
-    model = Car
-    form_class = RegisterCarForm
+
+    # model = Car
+    # fields = ['make', 'model', 'license_plate_number', 'state']
     success_url = reverse_lazy('manage_cars_list')
     success_message = "Your car with %(license_plate_number)s was added successfully"
 
@@ -99,7 +118,6 @@ class CustomerParkingLotDetailView(DetailView):
     model = ParkingLot
     template_name = 'customers/parking_lot/customer_parking_lot_detail.html'
 
-
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(customer__in=[self.request.user])
@@ -113,4 +131,16 @@ class CustomerParkingLotDetailView(DetailView):
         return context
 
 
+def update_car_parking(request):
+    form = UpdateParkingCarForm()
 
+    if request.method == 'POST':
+
+        if form.is_valid():
+            parking = form.save(commit=False)
+            parking.save()
+            messages.success(request, 'Your have successfully updated where to park your car.')
+            return redirect('home')
+    else:
+        form = UpdateParkingCarForm()
+    return render(request, 'customers/car/management/update_form.html', {'form': form})
