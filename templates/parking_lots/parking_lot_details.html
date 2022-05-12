@@ -12,11 +12,12 @@
             <h3 class="bg-warning text-center text-primary">Parking Lot Overview</h3>
             <p class="py-3">
                 <br>{{ object.overview|safe }}
+                </br>
                 <br><strong class="text-primary">Address :</strong> {{ object.parking_full_address }}</br>
-                <br><strong class="text-primary">Contact:</strong> {{ object.phone }}</br>
-                <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }}</br>
+                <br><strong class="text-primary">Contact:</strong> {{ object.phone_number }}</br>
+                <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }} spots</br>
                 <br><strong class="text-primary">Maximum overdue:</strong> $ {{ object.max_overdue }}</br>
-                {% if object.capacities == object.free_spots %}
+                {% if object.free_spots == 0 %}
                 <br><strong class="text-primary">Status: </strong>Full</br
                 {% else %}
                 <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} spots available</br>
