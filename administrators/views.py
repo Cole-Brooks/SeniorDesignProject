@@ -17,7 +17,7 @@ from users.models import User
 from django.views import generic
 from customers.models import ParkingHistory
 from .forms import RegisterParkingForm, SearchParking
-from parking.local_settings import MAPS_KEY, IPINFO_TOKEN #comment out
+# from parking.local_settings import MAPS_KEY, IPINFO_TOKEN
 from ipware import get_client_ip
 from django.conf import settings
 from django.db.models import Q
@@ -139,7 +139,7 @@ class ParkingLotsMapsView(TemplateResponseMixin, View):
         map = folium.Map(location=coordinates, zoom_start=14)
 
         for parking_lot in parking_lots:
-            data = geocoder.bing(parking_lot.parking_full_address, key=MAPS_KEY).json #add settings.MAPS_KEY to key value
+            data = geocoder.bing(parking_lot.parking_full_address, key=settings.MAPS_KEY).json 
             parking_coordinates = [data['lat'], data['lng']]
             distance = hs.haversine((coordinates[0], coordinates[1]), (parking_coordinates[0], parking_coordinates[1]),
                                     unit=hs.Unit.MILES)
