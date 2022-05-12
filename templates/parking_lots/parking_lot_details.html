@@ -18,11 +18,11 @@
                 <br><strong class="text-primary">Capacities:</strong> {{ object.capacities }} spots</br>
                 <br><strong class="text-primary">Maximum overdue:</strong> $ {{ object.max_overdue }}</br>
                 {% if object.free_spots == 0 %}
-                <br><strong class="text-primary">Status: </strong>Full</br
-                {% if object.free_spots == 1 %}
-                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} spot available</br>
+                <br><strong class="text-primary">Status: </strong>Full</br>
+                {% elif object.free_spots == 1 %}
+                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} available spot</br>
                 {% else %}
-                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} spots available</br>
+                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} available spots</br>
                 {% endif %}
             </p>
             <div class="text-center py-3">
