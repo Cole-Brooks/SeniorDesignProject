@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.http import HttpResponse
 from django.utils.translation import gettext, gettext_lazy as _
 from django.db import models
 from users.models import User, Profile, Contact
@@ -143,7 +144,7 @@ class ContactForm(forms.ModelForm):
 
         try:
             send_mail(subject, message, from_email=str(settings.SERVICE_EMAIL),
-                      recipient_list=[str(SERVICE_EMAIL)], fail_silently=False, )
+                      recipient_list=[str(settings.SERVICE_EMAIL)], fail_silently=False, )
         except BadHeaderError:
             return HttpResponse('Invalid header found')
 
