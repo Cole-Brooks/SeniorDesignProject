@@ -25,8 +25,11 @@
                 <br><strong class="text-secondary">Address :</strong> {{ parking.parking_full_address }}</br>
                 <br><strong class="text-secondary">Fee per hour :</strong> $ {{ parking.fee_per_hour }}</br>
                 {% if parking.free_spots == 0 %}
-                <br><strong class="text-secondary">Status: </strong>Full</br {% else %} <br><strong
-                  class="text-secondary">Status: </strong> {{ parking.free_spots }} available spots</br>
+                <br><strong class="text-secondary">Status: </strong>Full</br>
+                {% elif object.free_spots == 1 %}
+                <br><strong class="text-primary">Status: </strong> {{ object.free_spots }} spot available</br>
+                {% else %}
+                <br><strong class="text-secondary">Status: </strong> {{ parking.free_spots }} available spots</br>
                 {% endif %}
               </br>
               <div class="pt-2 text-center">
