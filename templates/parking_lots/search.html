@@ -32,7 +32,7 @@
               <p class="text-center bg-warning">
                 <br><strong class="text-secondary">Address :</strong> {{ parking.parking_full_address }}</br>
                 <br><strong class="text-secondary">Fee per hour :</strong> $ {{ parking.fee_per_hour }}</br>
-                {% if parking.capacities == parking.free_spots %}
+                {% if parking.free_spots == 0 %}
                 <br><strong class="text-secondary">Status: </strong>Full</br {% else %} <br><strong
                   class="text-secondary">Status: </strong> {{ parking.free_spots }} available spots</br>
                 {% endif %}
